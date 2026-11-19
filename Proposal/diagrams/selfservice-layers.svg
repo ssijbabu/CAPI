@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="450" viewBox="0 0 960 450" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Layers of the self-service platform</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37474F"/>
+    </marker>
+    <style>
+      .layer { font-size: 13px; font-weight: 700; fill: #1B2733; }
+      .own   { font-size: 10px; fill: #607D8B; }
+      .title { font-size: 13px; font-weight: 600; fill: #1B2733; }
+      .sub   { font-size: 11px; fill: #455A64; }
+      .flow  { stroke: #37474F; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="960" height="450" fill="#FFFFFF"/>
+
+  <!-- Layer labels -->
+  <text x="20" y="62" class="layer">Team API</text>
+  <text x="20" y="78" class="own">platform team owns,</text>
+  <text x="20" y="91" class="own">app teams consume</text>
+
+  <text x="20" y="162" class="layer">Platform logic</text>
+  <text x="20" y="178" class="own">platform team</text>
+
+  <text x="20" y="272" class="layer">Lifecycle engine</text>
+  <text x="20" y="288" class="own">platform team (Azure)</text>
+  <text x="20" y="301" class="own">VMware team (vSphere)</text>
+
+  <text x="20" y="382" class="layer">Infrastructure</text>
+  <text x="20" y="398" class="own">Azure landing zone /</text>
+  <text x="20" y="411" class="own">vSphere platform teams</text>
+
+  <!-- L1 -->
+  <rect x="170" y="30" width="770" height="75" rx="10" fill="#FFF5E6" stroke="#C77700" stroke-width="1.5"/>
+  <text x="555" y="60" text-anchor="middle" class="title">KubernetesCluster (namespaced composite resource)</text>
+  <text x="555" y="82" text-anchor="middle" class="sub">platform · size · version · nodePools · environment · access → status: Ready, endpoint, version</text>
+
+  <!-- L2 -->
+  <rect x="170" y="130" width="375" height="80" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="357" y="156" text-anchor="middle" class="title">Composition: kubernetescluster-azure</text>
+  <text x="357" y="176" text-anchor="middle" class="sub">renders a CAPI Cluster (aks ClusterClass),</text>
+  <text x="357" y="192" text-anchor="middle" class="sub">ASO extras (role assignments) and Helm releases</text>
+
+  <rect x="565" y="130" width="375" height="80" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="752" y="156" text-anchor="middle" class="title">Composition: kubernetescluster-vsphere</text>
+  <text x="752" y="176" text-anchor="middle" class="sub">renders a VKS Cluster on the Supervisor</text>
+  <text x="752" y="192" text-anchor="middle" class="sub">(provider-kubernetes) and Helm releases</text>
+
+  <!-- L3 -->
+  <rect x="170" y="240" width="375" height="80" rx="10" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="357" y="266" text-anchor="middle" class="title">Cluster API core + CAPZ + ASO</text>
+  <text x="357" y="286" text-anchor="middle" class="sub">ordered upgrades, machine pools, Azure resources</text>
+  <text x="357" y="302" text-anchor="middle" class="sub">runs in the platform control plane</text>
+
+  <rect x="565" y="240" width="375" height="80" rx="10" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="752" y="266" text-anchor="middle" class="title">Supervisor: Cluster API + VKS</text>
+  <text x="752" y="286" text-anchor="middle" class="sub">VMware-supported lifecycle, builtin-generic ClusterClass</text>
+  <text x="752" y="302" text-anchor="middle" class="sub">runs in vSphere</text>
+
+  <!-- L4 -->
+  <rect x="170" y="350" width="375" height="75" rx="10" fill="#EEF7EE" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="357" y="377" text-anchor="middle" class="title">Azure Resource Manager</text>
+  <text x="357" y="398" text-anchor="middle" class="sub">AKS · VNet · identities · ACR · Log Analytics</text>
+
+  <rect x="565" y="350" width="375" height="75" rx="10" fill="#EEF7EE" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="752" y="377" text-anchor="middle" class="title">vSphere</text>
+  <text x="752" y="398" text-anchor="middle" class="sub">VM Service · NSX or Avi · storage policies</text>
+
+  <!-- arrows -->
+  <line x1="357" y1="105" x2="357" y2="128" class="flow"/>
+  <line x1="752" y1="105" x2="752" y2="128" class="flow"/>
+  <line x1="357" y1="210" x2="357" y2="238" class="flow"/>
+  <line x1="752" y1="210" x2="752" y2="238" class="flow"/>
+  <line x1="357" y1="320" x2="357" y2="348" class="flow"/>
+  <line x1="752" y1="320" x2="752" y2="348" class="flow"/>
+</svg>

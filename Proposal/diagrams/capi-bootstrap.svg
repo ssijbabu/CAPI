@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="285" viewBox="0 0 960 285" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Management cluster bootstrap</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37474F"/>
+    </marker>
+    <style>
+      .num   { font-size: 13px; font-weight: 700; fill: #FFFFFF; }
+      .title { font-size: 13px; font-weight: 600; fill: #1B2733; }
+      .sub   { font-size: 11px; fill: #455A64; }
+      .flow  { stroke: #37474F; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="960" height="285" fill="#FFFFFF"/>
+
+  <rect x="26" y="60" width="160" height="140" rx="10" fill="#EEF7EE" stroke="#2E7D32" stroke-width="1.5"/>
+  <circle cx="106" cy="60" r="14" fill="#2E7D32"/>
+  <text x="106" y="65" text-anchor="middle" class="num">1</text>
+  <text x="106" y="98" text-anchor="middle" class="title">Management cluster</text>
+  <text x="106" y="120" text-anchor="middle" class="sub">VKS cluster created on</text>
+  <text x="106" y="136" text-anchor="middle" class="sub">the Supervisor in the</text>
+  <text x="106" y="152" text-anchor="middle" class="sub">platform namespace</text>
+
+  <rect x="218" y="60" width="160" height="140" rx="10" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <circle cx="298" cy="60" r="14" fill="#2F6FB0"/>
+  <text x="298" y="65" text-anchor="middle" class="num">2</text>
+  <text x="298" y="98" text-anchor="middle" class="title">Install CAPI + CAPZ</text>
+  <text x="298" y="120" text-anchor="middle" class="sub">clusterctl init</text>
+  <text x="298" y="136" text-anchor="middle" class="sub">--infrastructure azure</text>
+  <text x="298" y="152" text-anchor="middle" class="sub">(ASO included)</text>
+
+  <rect x="410" y="60" width="160" height="140" rx="10" fill="#FFF5E6" stroke="#8E5A00" stroke-width="1.5"/>
+  <circle cx="490" cy="60" r="14" fill="#8E5A00"/>
+  <text x="490" y="65" text-anchor="middle" class="num">3</text>
+  <text x="490" y="98" text-anchor="middle" class="title">Credentials</text>
+  <text x="490" y="120" text-anchor="middle" class="sub">Azure: federated identity</text>
+  <text x="490" y="136" text-anchor="middle" class="sub">or certificate SP</text>
+  <text x="490" y="160" text-anchor="middle" class="sub">Supervisor: SA token</text>
+  <text x="490" y="176" text-anchor="middle" class="sub">per vSphere Namespace</text>
+
+  <rect x="602" y="60" width="160" height="140" rx="10" fill="#FFF5E6" stroke="#C77700" stroke-width="1.5"/>
+  <circle cx="682" cy="60" r="14" fill="#C77700"/>
+  <text x="682" y="65" text-anchor="middle" class="num">4</text>
+  <text x="682" y="98" text-anchor="middle" class="title">Argo CD</text>
+  <text x="682" y="120" text-anchor="middle" class="sub">install; register</text>
+  <text x="682" y="136" text-anchor="middle" class="sub">in-cluster + each</text>
+  <text x="682" y="152" text-anchor="middle" class="sub">Supervisor namespace</text>
+
+  <rect x="794" y="60" width="160" height="140" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <circle cx="874" cy="60" r="14" fill="#6B4FA8"/>
+  <text x="874" y="65" text-anchor="middle" class="num">5</text>
+  <text x="874" y="98" text-anchor="middle" class="title">ApplicationSets</text>
+  <text x="874" y="120" text-anchor="middle" class="sub">cluster requests,</text>
+  <text x="874" y="136" text-anchor="middle" class="sub">registration, add-ons</text>
+  <text x="874" y="160" text-anchor="middle" class="sub">clusters now come</text>
+  <text x="874" y="176" text-anchor="middle" class="sub">from Git</text>
+
+  <line x1="186" y1="130" x2="216" y2="130" class="flow"/>
+  <line x1="378" y1="130" x2="408" y2="130" class="flow"/>
+  <line x1="570" y1="130" x2="600" y2="130" class="flow"/>
+  <line x1="762" y1="130" x2="792" y2="130" class="flow"/>
+
+  <text x="26" y="240" class="sub">No pivot is needed: the Supervisor creates the management cluster directly.</text>
+  <text x="26" y="260" class="sub">Option B (management cluster on AKS) replaces step 1 with a temporary kind cluster, CAPZ, and clusterctl move.</text>
+</svg>

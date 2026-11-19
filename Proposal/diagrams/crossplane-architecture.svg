@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="575" viewBox="0 0 960 575" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Crossplane control plane provisioning Kubernetes on Azure and VMware vSphere with Tanzu</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37474F"/>
+    </marker>
+    <style>
+      .title { font-size: 13px; font-weight: 600; fill: #1B2733; }
+      .sub   { font-size: 11px; fill: #455A64; }
+      .group { font-size: 14px; font-weight: 700; fill: #1F4E79; }
+      .gaz   { font-size: 14px; font-weight: 700; fill: #0B5394; }
+      .gvs   { font-size: 14px; font-weight: 700; fill: #2E7D32; }
+      .lbl   { font-size: 11px; fill: #37474F; font-style: italic; }
+      .ctrl  { fill: #FFFFFF; stroke: #6B4FA8; stroke-width: 1.5; }
+      .prov  { fill: #FFFFFF; stroke: #2F6FB0; stroke-width: 1.5; }
+      .flow  { stroke: #37474F; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+      .dash  { stroke: #37474F; stroke-width: 1.4; fill: none; stroke-dasharray: 6 4; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="960" height="575" fill="#FFFFFF"/>
+
+  <!-- Git -->
+  <rect x="20" y="78" width="150" height="52" rx="8" fill="#FFF5E6" stroke="#C77700" stroke-width="1.5"/>
+  <text x="95" y="100" text-anchor="middle" class="title">Git repository</text>
+  <text x="95" y="118" text-anchor="middle" class="sub">XRs, XRDs, Compositions</text>
+
+  <!-- Control plane -->
+  <rect x="190" y="30" width="750" height="210" rx="12" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="2"/>
+  <text x="210" y="56" class="group">Crossplane control plane cluster</text>
+
+  <rect x="210" y="78" width="165" height="52" rx="6" class="ctrl"/>
+  <text x="292" y="100" text-anchor="middle" class="title">Argo CD / Flux</text>
+  <text x="292" y="118" text-anchor="middle" class="sub">applies XRs from Git</text>
+
+  <rect x="395" y="78" width="165" height="52" rx="6" class="ctrl"/>
+  <text x="477" y="100" text-anchor="middle" class="title">Crossplane core</text>
+  <text x="477" y="118" text-anchor="middle" class="sub">XRDs · Compositions</text>
+
+  <rect x="580" y="78" width="165" height="52" rx="6" class="ctrl"/>
+  <text x="662" y="100" text-anchor="middle" class="title">Functions</text>
+  <text x="662" y="118" text-anchor="middle" class="sub">go-templating, auto-ready</text>
+
+  <rect x="765" y="78" width="165" height="52" rx="6" fill="#FFFFFF" stroke="#8E5A00" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="847" y="100" text-anchor="middle" class="title">Credentials</text>
+  <text x="847" y="118" text-anchor="middle" class="sub">Azure identity · vSphere SA</text>
+
+  <rect x="210" y="165" width="165" height="52" rx="6" class="prov"/>
+  <text x="292" y="187" text-anchor="middle" class="title">provider-azure-*</text>
+  <text x="292" y="205" text-anchor="middle" class="sub">Upjet family providers</text>
+
+  <rect x="395" y="165" width="165" height="52" rx="6" class="prov"/>
+  <text x="477" y="187" text-anchor="middle" class="title">provider-helm</text>
+  <text x="477" y="205" text-anchor="middle" class="sub">add-ons on new clusters</text>
+
+  <rect x="580" y="165" width="165" height="52" rx="6" class="prov"/>
+  <text x="662" y="187" text-anchor="middle" class="title">provider-http</text>
+  <text x="662" y="205" text-anchor="middle" class="sub">vCenter REST (optional)</text>
+
+  <rect x="765" y="165" width="165" height="52" rx="6" class="prov"/>
+  <text x="847" y="187" text-anchor="middle" class="title">provider-kubernetes</text>
+  <text x="847" y="205" text-anchor="middle" class="sub">objects on Supervisor</text>
+
+  <!-- control-plane internal flows -->
+  <line x1="170" y1="104" x2="208" y2="104" class="flow"/>
+  <line x1="375" y1="104" x2="393" y2="104" class="flow"/>
+  <line x1="560" y1="104" x2="578" y2="104" class="flow"/>
+  <polyline points="477,130 477,148" fill="none" stroke="#37474F" stroke-width="1.6"/>
+  <line x1="292" y1="148" x2="847" y2="148" stroke="#37474F" stroke-width="1.6"/>
+  <line x1="292" y1="148" x2="292" y2="163" class="flow"/>
+  <line x1="477" y1="148" x2="477" y2="163" class="flow"/>
+  <line x1="662" y1="148" x2="662" y2="163" class="flow"/>
+  <line x1="847" y1="148" x2="847" y2="163" class="flow"/>
+
+  <!-- Azure -->
+  <rect x="20" y="290" width="450" height="225" rx="12" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="40" y="314" class="gaz">Microsoft Azure</text>
+  <rect x="40" y="330" width="410" height="40" rx="6" fill="#FFFFFF" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="245" y="355" text-anchor="middle" class="title">Azure Resource Manager (ARM)</text>
+
+  <rect x="40" y="400" width="195" height="95" rx="8" fill="#FFFFFF" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="137" y="422" text-anchor="middle" class="title">aks-dev-01</text>
+  <text x="137" y="442" text-anchor="middle" class="sub">AKS + node pools</text>
+  <text x="137" y="459" text-anchor="middle" class="sub">RG · VNet · NSG · identities</text>
+  <text x="137" y="476" text-anchor="middle" class="sub">ACR · Log Analytics</text>
+
+  <rect x="255" y="400" width="195" height="95" rx="8" fill="#FFFFFF" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="352" y="422" text-anchor="middle" class="title">aks-prd-01</text>
+  <text x="352" y="442" text-anchor="middle" class="sub">AKS + node pools</text>
+  <text x="352" y="459" text-anchor="middle" class="sub">RG · VNet · NSG · identities</text>
+  <text x="352" y="476" text-anchor="middle" class="sub">ACR · Log Analytics</text>
+
+  <line x1="137" y1="370" x2="137" y2="398" class="flow"/>
+  <line x1="352" y1="370" x2="352" y2="398" class="flow"/>
+
+  <!-- vSphere -->
+  <rect x="490" y="290" width="450" height="225" rx="12" fill="#EEF7EE" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="510" y="314" class="gvs">VMware vSphere with Tanzu (on-premises)</text>
+  <rect x="560" y="330" width="180" height="40" rx="6" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="650" y="355" text-anchor="middle" class="title">vCenter API</text>
+  <rect x="760" y="330" width="165" height="40" rx="6" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="842" y="355" text-anchor="middle" class="title">Supervisor API</text>
+
+  <rect x="510" y="388" width="415" height="115" rx="8" fill="#F7FBF7" stroke="#2E7D32" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="525" y="406" class="sub" font-weight="600">vSphere Namespace (per team / environment)</text>
+
+  <rect x="525" y="416" width="190" height="75" rx="8" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="620" y="438" text-anchor="middle" class="title">vks-dev-01</text>
+  <text x="620" y="458" text-anchor="middle" class="sub">VKS cluster (Cluster API)</text>
+  <text x="620" y="475" text-anchor="middle" class="sub">control plane + worker VMs</text>
+
+  <rect x="725" y="416" width="190" height="75" rx="8" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="820" y="438" text-anchor="middle" class="title">vks-prd-01</text>
+  <text x="820" y="458" text-anchor="middle" class="sub">VKS cluster (Cluster API)</text>
+  <text x="820" y="475" text-anchor="middle" class="sub">control plane + worker VMs</text>
+
+  <line x1="650" y1="370" x2="650" y2="386" class="flow"/>
+  <line x1="842" y1="370" x2="842" y2="414" class="flow"/>
+
+  <!-- provider → platform -->
+  <line x1="292" y1="217" x2="292" y2="328" class="flow"/>
+  <line x1="650" y1="217" x2="650" y2="328" class="flow"/>
+  <line x1="842" y1="217" x2="842" y2="328" class="flow"/>
+
+  <!-- Helm add-ons -->
+  <polyline points="477,217 477,265" fill="none" stroke="#37474F" stroke-width="1.4" stroke-dasharray="6 4"/>
+  <polyline points="477,265 420,265 420,288" class="dash"/>
+  <polyline points="477,265 530,265 530,288" class="dash"/>
+  <text x="540" y="258" class="lbl">Helm add-ons</text>
+
+  <!-- Legend -->
+  <line x1="40" y1="550" x2="80" y2="550" class="flow"/>
+  <text x="88" y="554" class="sub">provision / reconcile</text>
+  <line x1="240" y1="550" x2="280" y2="550" class="dash"/>
+  <text x="288" y="554" class="sub">install add-ons into new clusters (via kubeconfig connection secret)</text>
+</svg>

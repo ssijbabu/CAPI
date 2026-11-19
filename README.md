@@ -1,0 +1,11 @@
+# Kubernetes Platform Proposals
+
+Proposals for provisioning Kubernetes clusters and their supporting resources on Microsoft Azure (AKS) and VMware vSphere with Tanzu (VKS).
+
+| Document | Summary |
+|---|---|
+| [Self-Service Kubernetes Platform](Proposal/Self-Service-Kubernetes-Platform-Proposal.md) | **Recommended direction.** Crossplane as the self-service API, with Cluster API (CAPZ on Azure, the Supervisor on vSphere) as the lifecycle engine. |
+| [Multi-Platform Kubernetes with Cluster API](Proposal/Multi-Platform-Kubernetes-with-CAPI-Proposal.md) | Cluster API only, with Argo CD rendering one request format per platform. |
+| [Multi-Platform Kubernetes with Crossplane](Proposal/Multi-Platform-Kubernetes-with-Crossplane-Proposal.md) | Crossplane only, with Upjet Azure providers and provider-kubernetes for the Supervisor. |
+
+Diagrams are SVG files in [Proposal/diagrams](Proposal/diagrams/).

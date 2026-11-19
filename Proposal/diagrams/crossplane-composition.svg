@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480" viewBox="0 0 960 480" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>One KubernetesCluster API, two Compositions</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37474F"/>
+    </marker>
+    <style>
+      .title { font-size: 13px; font-weight: 600; fill: #1B2733; }
+      .sub   { font-size: 11px; fill: #455A64; }
+      .ck    { font-size: 11px; font-weight: 600; fill: #1B2733; }
+      .cs    { font-size: 10px; fill: #546E7A; }
+      .gaz   { font-size: 13px; font-weight: 700; fill: #0B5394; }
+      .gvs   { font-size: 13px; font-weight: 700; fill: #2E7D32; }
+      .lbl   { font-size: 11px; fill: #37474F; font-style: italic; }
+      .flow  { stroke: #37474F; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+      .chipA { fill: #FFFFFF; stroke: #2F6FB0; stroke-width: 1.2; }
+      .chipV { fill: #FFFFFF; stroke: #2E7D32; stroke-width: 1.2; }
+      .chipH { fill: #FFFFFF; stroke: #6B4FA8; stroke-width: 1.2; }
+    </style>
+  </defs>
+
+  <rect width="960" height="480" fill="#FFFFFF"/>
+
+  <!-- XR -->
+  <text x="20" y="168" class="lbl">Team request (namespaced XR)</text>
+  <rect x="20" y="178" width="185" height="118" rx="8" fill="#FFF5E6" stroke="#C77700" stroke-width="1.5"/>
+  <text x="112" y="200" text-anchor="middle" class="title">KubernetesCluster</text>
+  <text x="32" y="222" class="sub">platform: azure | vsphere</text>
+  <text x="32" y="240" class="sub">size: small | medium | large</text>
+  <text x="32" y="258" class="sub">version: "1.33"</text>
+  <text x="32" y="276" class="sub">nodePools, network, region</text>
+
+  <!-- Selector -->
+  <rect x="228" y="207" width="130" height="60" rx="30" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="293" y="232" text-anchor="middle" class="title">Composition</text>
+  <text x="293" y="250" text-anchor="middle" class="sub">selected by label</text>
+  <line x1="205" y1="237" x2="226" y2="237" class="flow"/>
+
+  <polyline points="358,237 374,237 374,125 388,125" class="flow"/>
+  <polyline points="374,237 374,355 388,355" class="flow"/>
+  <text x="368" y="160" text-anchor="end" class="lbl">azure</text>
+  <text x="368" y="322" text-anchor="end" class="lbl">vsphere</text>
+
+  <!-- Azure composition -->
+  <rect x="390" y="20" width="555" height="210" rx="10" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="405" y="42" class="gaz">Composition: kubernetescluster-azure</text>
+  <text x="405" y="62" class="sub">Pipeline: function-go-templating → function-auto-ready</text>
+
+  <rect x="405" y="76" width="100" height="44" rx="5" class="chipA"/>
+  <text x="455" y="95" text-anchor="middle" class="ck">ResourceGroup</text>
+  <text x="455" y="110" text-anchor="middle" class="cs">azure</text>
+  <rect x="512" y="76" width="100" height="44" rx="5" class="chipA"/>
+  <text x="562" y="95" text-anchor="middle" class="ck">VirtualNetwork</text>
+  <text x="562" y="110" text-anchor="middle" class="cs">network</text>
+  <rect x="619" y="76" width="100" height="44" rx="5" class="chipA"/>
+  <text x="669" y="95" text-anchor="middle" class="ck">Subnet + NSG</text>
+  <text x="669" y="110" text-anchor="middle" class="cs">network</text>
+  <rect x="726" y="76" width="100" height="44" rx="5" class="chipA"/>
+  <text x="776" y="95" text-anchor="middle" class="ck">Managed identity</text>
+  <text x="776" y="110" text-anchor="middle" class="cs">managedidentity</text>
+  <rect x="833" y="76" width="100" height="44" rx="5" class="chipA"/>
+  <text x="883" y="95" text-anchor="middle" class="ck">RoleAssignment</text>
+  <text x="883" y="110" text-anchor="middle" class="cs">authorization</text>
+
+  <rect x="405" y="130" width="100" height="44" rx="5" class="chipA"/>
+  <text x="455" y="149" text-anchor="middle" class="ck">KubernetesCluster</text>
+  <text x="455" y="164" text-anchor="middle" class="cs">containerservice</text>
+  <rect x="512" y="130" width="100" height="44" rx="5" class="chipA"/>
+  <text x="562" y="149" text-anchor="middle" class="ck">NodePool ×N</text>
+  <text x="562" y="164" text-anchor="middle" class="cs">containerservice</text>
+  <rect x="619" y="130" width="100" height="44" rx="5" class="chipA"/>
+  <text x="669" y="149" text-anchor="middle" class="ck">Log Analytics</text>
+  <text x="669" y="164" text-anchor="middle" class="cs">monitoring</text>
+  <rect x="726" y="130" width="100" height="44" rx="5" class="chipA" stroke-dasharray="4 3"/>
+  <text x="776" y="149" text-anchor="middle" class="ck">Registry (opt.)</text>
+  <text x="776" y="164" text-anchor="middle" class="cs">containerregistry</text>
+  <rect x="833" y="130" width="100" height="44" rx="5" class="chipH"/>
+  <text x="883" y="149" text-anchor="middle" class="ck">Release ×N</text>
+  <text x="883" y="164" text-anchor="middle" class="cs">provider-helm</text>
+
+  <text x="405" y="205" class="sub">Output → XR status (Ready, API endpoint) + connection secret with kubeconfig</text>
+
+  <!-- vSphere composition -->
+  <rect x="390" y="250" width="555" height="210" rx="10" fill="#EEF7EE" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="405" y="272" class="gvs">Composition: kubernetescluster-vsphere</text>
+  <text x="405" y="292" class="sub">Pipeline: function-go-templating → function-auto-ready</text>
+
+  <rect x="405" y="306" width="100" height="44" rx="5" class="chipV"/>
+  <text x="455" y="325" text-anchor="middle" class="ck">vSphere NS</text>
+  <text x="455" y="340" text-anchor="middle" class="cs">kubernetes / http</text>
+  <rect x="512" y="306" width="100" height="44" rx="5" class="chipV"/>
+  <text x="562" y="325" text-anchor="middle" class="ck">Cluster (VKS)</text>
+  <text x="562" y="340" text-anchor="middle" class="cs">provider-kubernetes</text>
+  <rect x="619" y="306" width="100" height="44" rx="5" class="chipV"/>
+  <text x="669" y="325" text-anchor="middle" class="ck">kubeconfig</text>
+  <text x="669" y="340" text-anchor="middle" class="cs">connectionDetails</text>
+  <rect x="726" y="306" width="100" height="44" rx="5" class="chipH"/>
+  <text x="776" y="325" text-anchor="middle" class="ck">ProviderConfig</text>
+  <text x="776" y="340" text-anchor="middle" class="cs">for new cluster</text>
+  <rect x="833" y="306" width="100" height="44" rx="5" class="chipH"/>
+  <text x="883" y="325" text-anchor="middle" class="ck">Release ×N</text>
+  <text x="883" y="340" text-anchor="middle" class="cs">provider-helm</text>
+
+  <line x1="505" y1="328" x2="510" y2="328" class="flow"/>
+  <line x1="612" y1="328" x2="617" y2="328" class="flow"/>
+  <line x1="719" y1="328" x2="724" y2="328" class="flow"/>
+  <line x1="826" y1="328" x2="831" y2="328" class="flow"/>
+
+  <text x="405" y="380" class="sub">Supervisor builds the cluster with its own Cluster API controllers</text>
+  <text x="405" y="398" class="sub">(VM Service, NSX or VDS networking, storage policies).</text>
+  <text x="405" y="435" class="sub">Output → XR status (Ready, API endpoint) + connection secret with kubeconfig</text>
+</svg>
