@@ -23,7 +23,9 @@ This reference design shows the platform at a realistic starting size: **four ap
 
 The numbers scale linearly. Each new team adds three team clusters. The six platform clusters stay the same until the number of teams or the build load needs a split (Section 10).
 
-![Two isolated stacks below a shared Git and Entra ID; the non-production stack has three platform clusters and five VKS team clusters on premises, three AKS team clusters and a registry and key vault in Azure; the production stack has three platform clusters and two VKS team clusters on premises, two AKS team clusters and its own registry and key vault in Azure; there is no network path between the stacks](diagrams/reference-topology.svg)
+![Reference topology on an A4 landscape page: Git (repositories, GitHub Apps, pull request checks), Entra ID and people across the top; below, the non-production and production stacks separated by a no-network-path barrier, each showing its platform, choreo and observe clusters and every team cluster with its components, plus on-premises and Azure services; the connections inside each stack are listed at the bottom](diagrams/reference-topology.svg)
+
+*The diagram is drawn for an A4 landscape page. Open the SVG on its own to zoom in.*
 
 ## 2. Teams and Environments in This Example
 
