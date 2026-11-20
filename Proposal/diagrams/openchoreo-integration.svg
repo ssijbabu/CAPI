@@ -41,12 +41,12 @@
   <text x="120" y="81" text-anchor="middle" class="sub">projects, components, promotions</text>
 
   <rect x="20" y="118" width="200" height="54" rx="8" fill="#FFF5E6" stroke="#C77700" stroke-width="1.5"/>
-  <text x="120" y="141" text-anchor="middle" class="title">Platform team</text>
-  <text x="120" y="159" text-anchor="middle" class="sub">requests data plane clusters</text>
+  <text x="120" y="141" text-anchor="middle" class="title">App team (Git)</text>
+  <text x="120" y="159" text-anchor="middle" class="sub">one cluster per environment</text>
 
   <!-- OpenChoreo control plane -->
   <rect x="500" y="20" width="440" height="318" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="2"/>
-  <text x="520" y="44" class="goc">OpenChoreo control plane (its own cluster)</text>
+  <text x="520" y="44" class="goc">OpenChoreo control plane (one per stack)</text>
 
   <rect x="520" y="58" width="400" height="50" rx="6" class="oc"/>
   <text x="720" y="79" text-anchor="middle" class="title">Developer portal (Backstage)</text>
@@ -62,7 +62,7 @@
 
   <rect x="520" y="250" width="400" height="50" rx="6" class="oc"/>
   <text x="720" y="271" text-anchor="middle" class="title">Cluster gateway</text>
-  <text x="720" y="288" text-anchor="middle" class="sub">ClusterDataPlane per data plane · agents connect here</text>
+  <text x="720" y="288" text-anchor="middle" class="sub">a DataPlane per team cluster · agents connect here</text>
 
   <!-- Platform control plane -->
   <rect x="20" y="200" width="380" height="138" rx="12" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="2"/>
@@ -85,47 +85,44 @@
   <!-- OCM registers the data plane in OpenChoreo -->
   <line x1="384" y1="275" x2="518" y2="275" class="pull"/>
   <text x="451" y="300" text-anchor="middle" class="lblo">ManifestWork:</text>
-  <text x="451" y="314" text-anchor="middle" class="lblo">ClusterDataPlane</text>
+  <text x="451" y="314" text-anchor="middle" class="lblo">team DataPlane</text>
 
   <!-- Data planes -->
   <rect x="20" y="398" width="920" height="140" rx="12" fill="#F7F9FA" stroke="#607D8B" stroke-width="1.5"/>
-  <text x="40" y="422" class="gdp">Data plane clusters · DeploymentPipeline dev → stg → prd</text>
+  <text x="40" y="422" class="gdp">Team payments, non-production stack · promotion dv → te through Git</text>
 
   <rect x="40" y="434" width="280" height="92" rx="8" fill="#EEF7EE" stroke="#2E7D32" stroke-width="1.5"/>
-  <text x="180" y="454" text-anchor="middle" class="title">dp-dev</text>
+  <text x="180" y="454" text-anchor="middle" class="title">payments-dv</text>
   <text x="180" y="470" text-anchor="middle" class="sub">VKS, on premises</text>
-  <text x="180" y="487" text-anchor="middle" class="env">Environment: development</text>
+  <text x="180" y="487" text-anchor="middle" class="env">Environment: dv</text>
   <rect x="62" y="498" width="130" height="18" rx="9" class="pillc"/>
   <text x="127" y="511" text-anchor="middle" class="ptxc">OpenChoreo agent</text>
   <rect x="202" y="498" width="96" height="18" rx="9" class="pillo"/>
   <text x="250" y="511" text-anchor="middle" class="ptxo">OCM agent</text>
 
   <rect x="340" y="434" width="280" height="92" rx="8" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
-  <text x="480" y="454" text-anchor="middle" class="title">dp-stg</text>
+  <text x="480" y="454" text-anchor="middle" class="title">payments-te</text>
   <text x="480" y="470" text-anchor="middle" class="sub">AKS</text>
-  <text x="480" y="487" text-anchor="middle" class="env">Environment: staging</text>
+  <text x="480" y="487" text-anchor="middle" class="env">Environment: te</text>
   <rect x="362" y="498" width="130" height="18" rx="9" class="pillc"/>
   <text x="427" y="511" text-anchor="middle" class="ptxc">OpenChoreo agent</text>
   <rect x="502" y="498" width="96" height="18" rx="9" class="pillo"/>
   <text x="550" y="511" text-anchor="middle" class="ptxo">OCM agent</text>
 
-  <rect x="640" y="434" width="280" height="92" rx="8" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
-  <text x="780" y="454" text-anchor="middle" class="title">dp-prd</text>
-  <text x="780" y="470" text-anchor="middle" class="sub">private AKS</text>
-  <text x="780" y="487" text-anchor="middle" class="env">Environment: production</text>
-  <rect x="662" y="498" width="130" height="18" rx="9" class="pillc"/>
-  <text x="727" y="511" text-anchor="middle" class="ptxc">OpenChoreo agent</text>
-  <rect x="802" y="498" width="96" height="18" rx="9" class="pillo"/>
-  <text x="850" y="511" text-anchor="middle" class="ptxo">OCM agent</text>
+  <rect x="640" y="434" width="280" height="92" rx="8" fill="#FFFFFF" stroke="#B71C1C" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="780" y="456" text-anchor="middle" class="title">payments-pr</text>
+  <text x="780" y="474" text-anchor="middle" class="sub">in the isolated pr stack, with its own</text>
+  <text x="780" y="490" text-anchor="middle" class="sub">platform and OpenChoreo control planes</text>
+  <text x="780" y="511" text-anchor="middle" class="env" fill="#B71C1C">reached only through Git</text>
 
   <!-- builds / agents -->
   <line x1="121" y1="302" x2="121" y2="396" class="flow"/>
   <text x="129" y="360" class="lbl">builds</text>
   <line x1="299" y1="396" x2="299" y2="304" class="pull"/>
   <text x="307" y="360" class="lblo">OCM agents (outbound)</text>
-  <line x1="720" y1="396" x2="720" y2="302" class="agent"/>
-  <text x="728" y="352" class="lblc">OpenChoreo cluster agents</text>
-  <text x="728" y="367" class="lblc">(outbound WebSocket)</text>
+  <line x1="560" y1="396" x2="560" y2="302" class="agent"/>
+  <text x="568" y="352" class="lblc">OpenChoreo cluster agents</text>
+  <text x="568" y="367" class="lblc">(outbound WebSocket)</text>
 
   <!-- Legend -->
   <line x1="20" y1="566" x2="60" y2="566" class="flow"/>

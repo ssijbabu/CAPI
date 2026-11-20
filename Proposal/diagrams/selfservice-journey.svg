@@ -28,7 +28,7 @@
   <text x="298" y="98" text-anchor="middle" class="title">Pull request</text>
   <text x="298" y="120" text-anchor="middle" class="sub">CI: schema, policy</text>
   <text x="298" y="136" text-anchor="middle" class="sub">and quota checks</text>
-  <text x="298" y="160" text-anchor="middle" class="sub">team approves; prd</text>
+  <text x="298" y="160" text-anchor="middle" class="sub">team approves; pr</text>
   <text x="298" y="176" text-anchor="middle" class="sub">needs a second review</text>
 
   <rect x="410" y="60" width="160" height="140" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>

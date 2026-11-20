@@ -38,7 +38,7 @@
 
   <!-- Control plane -->
   <rect x="190" y="30" width="750" height="210" rx="12" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="2"/>
-  <text x="210" y="56" class="group">Platform control plane (VKS cluster on premises)</text>
+  <text x="210" y="56" class="group">Platform control plane (one per stack: non-production and pr)</text>
 
   <rect x="210" y="78" width="165" height="52" rx="6" fill="#FFFFFF" stroke="#C77700" stroke-width="1.5"/>
   <text x="292" y="100" text-anchor="middle" class="title">Argo CD</text>
@@ -90,12 +90,12 @@
   <rect x="40" y="388" width="410" height="115" rx="8" fill="#F7FBF7" stroke="#2E7D32" stroke-width="1.2" stroke-dasharray="5 3"/>
   <text x="55" y="406" class="sub" font-weight="600">vSphere Namespace</text>
   <rect x="55" y="416" width="185" height="75" rx="8" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.5"/>
-  <text x="147" y="435" text-anchor="middle" class="title">payments-onprem</text>
+  <text x="147" y="435" text-anchor="middle" class="title">payments-dv</text>
   <text x="147" y="452" text-anchor="middle" class="sub">VKS · control plane + worker VMs</text>
   <rect x="97" y="462" width="100" height="18" rx="9" class="pill"/>
   <text x="147" y="475" text-anchor="middle" class="ptxt">OCM agent</text>
   <rect x="255" y="416" width="185" height="75" rx="8" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.5"/>
-  <text x="347" y="435" text-anchor="middle" class="title">search-onprem</text>
+  <text x="347" y="435" text-anchor="middle" class="title">search-dv</text>
   <text x="347" y="452" text-anchor="middle" class="sub">VKS · control plane + worker VMs</text>
   <rect x="297" y="462" width="100" height="18" rx="9" class="pill"/>
   <text x="347" y="475" text-anchor="middle" class="ptxt">OCM agent</text>
@@ -108,13 +108,13 @@
   <rect x="510" y="330" width="410" height="40" rx="6" fill="#FFFFFF" stroke="#2F6FB0" stroke-width="1.5"/>
   <text x="715" y="355" text-anchor="middle" class="title">Azure Resource Manager (ARM)</text>
   <rect x="510" y="400" width="195" height="95" rx="8" fill="#FFFFFF" stroke="#2F6FB0" stroke-width="1.5"/>
-  <text x="607" y="420" text-anchor="middle" class="title">payments-prd</text>
-  <text x="607" y="437" text-anchor="middle" class="sub">private AKS + node pools</text>
+  <text x="607" y="420" text-anchor="middle" class="title">payments-te</text>
+  <text x="607" y="437" text-anchor="middle" class="sub">AKS + node pools</text>
   <text x="607" y="453" text-anchor="middle" class="sub">RG · VNet · NSG · identities</text>
   <rect x="557" y="466" width="100" height="18" rx="9" class="pill"/>
   <text x="607" y="479" text-anchor="middle" class="ptxt">OCM agent</text>
   <rect x="725" y="400" width="195" height="95" rx="8" fill="#FFFFFF" stroke="#2F6FB0" stroke-width="1.5"/>
-  <text x="822" y="420" text-anchor="middle" class="title">search-dev</text>
+  <text x="822" y="420" text-anchor="middle" class="title">search-te</text>
   <text x="822" y="437" text-anchor="middle" class="sub">AKS + node pools</text>
   <text x="822" y="453" text-anchor="middle" class="sub">RG · VNet · NSG · identities</text>
   <rect x="772" y="466" width="100" height="18" rx="9" class="pill"/>

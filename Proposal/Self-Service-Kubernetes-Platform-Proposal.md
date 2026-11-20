@@ -22,7 +22,9 @@ This proposal builds a self-service platform in layers:
   - **On Azure:** Cluster API core, the Azure provider (CAPZ) and Azure Service Operator (ASO) build AKS and its supporting Azure resources.
   - **On vSphere with Tanzu:** the vSphere **Supervisor**, which is VMware's own CAPI management cluster, builds vSphere Kubernetes Service (VKS) clusters.
 - **Open Cluster Management (OCM)** is the fleet layer once a cluster exists. Each new cluster registers with an OCM hub on the control plane. An agent on the cluster then pulls its baseline add-ons and in-cluster policy, and reports health back to the hub. The connection is outbound only, so private clusters need no inbound access.
-- **OpenChoreo** is the application platform on top, for teams that want to deploy applications rather than run clusters. Developers work with projects, components and promotions through OpenChoreo's portal, CLI or Git. The clusters OpenChoreo deploys to (its *data planes*) are ordinary `KubernetesCluster` requests on this platform, registered with OpenChoreo automatically (Section 9).
+- **OpenChoreo** is the application platform on top, for teams that want to deploy applications rather than run clusters. Developers work with projects, components and promotions through OpenChoreo's portal, CLI or Git. The clusters OpenChoreo deploys to (its *data planes*) are the team's own `KubernetesCluster`s, registered with OpenChoreo automatically (Section 9).
+
+Every team has its own cluster in each environment: `dv` (development), `te` (test) and `pr` (production). **`pr` runs on a completely separate production stack**, with its own control planes, subscriptions, registry, secrets and identities. **Git is the only link between environments**, so every promotion, including every promotion to production, is a reviewed commit (Section 5.4).
 
 Both platforms therefore get CAPI's ordered upgrades and standard health conditions, and on vSphere we stay on VMware's supported path. Teams see **one API** whichever platform they choose, and teams that only need somewhere to run applications never handle a cluster at all. The same control plane can later offer more self-service APIs, such as databases, storage and DNS.
 
@@ -37,13 +39,15 @@ Both platforms therefore get CAPI's ordered upgrades and standard health conditi
 5. **Least privilege:** teams need no access to Azure, vCenter, the Supervisor or the control plane beyond their own namespace.
 6. **Transparency:** teams see their cluster's status, version and access instructions on the object they created.
 7. **Extensible:** new self-service APIs can be added on the same control plane without new tooling.
-8. **Applications without clusters:** teams that only want to build and deploy applications use OpenChoreo, on shared data planes that the platform provisions, upgrades and registers.
+8. **Applications without cluster work:** teams that only want to build and deploy applications use OpenChoreo, on their own data plane clusters that the platform provisions, upgrades and registers.
+9. **One cluster per team per environment:** each team has its own `dv`, `te` and `pr` clusters.
+10. **Production isolated at every level:** `pr` shares no control plane, network path, credential, registry or secret store with `dv` and `te`. Git is the only link.
 
 ### Non-Goals
 
 - Installing or upgrading vSphere, vCenter, NSX or the Supervisor. The VMware platform team owns these.
 - Shared Azure landing-zone resources (hub networks, firewalls, private DNS zones, Azure Policy). These are owned by the landing-zone team and built with Bicep.
-- Deploying applications to *dedicated team clusters*. Teams that own a whole cluster use their own GitOps or CI/CD once it is ready. (Application deployment on shared data planes is in scope, through OpenChoreo.)
+- Deploying applications to `self-managed` clusters. Teams that choose them use their own GitOps or CI/CD. (On OpenChoreo data planes, the default, application delivery is in scope.)
 - Changing OpenChoreo itself. The platform installs and configures released versions of it.
 - Tanzu Kubernetes Grid with a standalone management cluster (TKGm), and self-managed VM clusters through CAPV in direct vCenter mode.
 
@@ -51,7 +55,7 @@ Both platforms therefore get CAPI's ordered upgrades and standard health conditi
 
 1. **The API is a product.** `KubernetesCluster` is versioned, documented and backwards compatible. Platform details stay behind it.
 2. **Reuse the vendors' lifecycle engines.** We do not rebuild cluster lifecycle logic. CAPI with CAPZ handles AKS, and the Supervisor handles VKS. Crossplane decides *what* to build; CAPI decides *how* to roll it out; OCM keeps each built cluster configured and reports its health.
-3. **Git is the audit trail.** Every request and change is a commit. Direct `kubectl` changes are allowed only in `dev` namespaces.
+3. **Git is the audit trail and the only link between environments.** Every request, change and promotion is a commit. Nothing else connects the non-production and production stacks. Direct `kubectl` changes are allowed only on `dv` clusters.
 4. **Guardrails run automatically.** Schema, policy and quota checks run in CI and again at admission. People review only what policy cannot decide.
 5. **Clusters are an implementation detail for application teams.** OpenChoreo data planes are built through the same `KubernetesCluster` API as team clusters, so they get the same upgrades, policies and add-ons. OpenChoreo owns what runs *on* them.
 6. **Same experience on both platforms, honest about differences.** Where AKS and VKS differ, the API either hides the difference or rejects the request with a clear message.
@@ -96,19 +100,52 @@ Option C keeps the best part of each. It also removes the need for Crossplane's 
 | **Argo CD** | Syncs platform configuration and each team's requests from Git into the team's namespace. |
 | **Backstage (portal)** | Software template that writes a `KubernetesCluster` file into the team repository and opens a pull request. It also shows cluster status. |
 
-### 5.3 Where the control plane runs
+### 5.3 Where the control planes run
 
-**Recommendation: on premises, as a VKS cluster in a dedicated platform vSphere Namespace.**
+**There are two stacks, and each has its own control planes (Section 5.4).** In each stack, the platform control plane runs on premises, as a VKS cluster in that stack's platform vSphere Namespace:
 
 - It is created directly by the Supervisor, so no bootstrap pivot is needed.
 - It has direct access to the Supervisor API.
 - It reaches Azure Resource Manager and Entra ID over outbound HTTPS, which is easy to allow.
 
-The alternative, hosting on AKS, needs private connectivity into the Supervisor.
+The alternative, hosting on AKS, needs private connectivity into the Supervisor. Each stack's OpenChoreo control plane runs on a separate cluster in the same stack (Section 9.1).
 
-Workload clusters keep running if the control plane is lost. Its configuration is in Git and can be rebuilt (Section 12.1).
+Workload clusters keep running if a control plane is lost. Its configuration is in Git and can be rebuilt (Section 12.1).
 
 Private AKS API servers do not need to be reachable from the control plane after a cluster is registered: the OCM agent on each cluster connects out to the hub (Section 8.4). Only the one-time import needs to reach the new cluster's API server (Open Question 4).
+
+### 5.4 Environments and isolation
+
+![Two isolated stacks: non-production (dv, te) and production (pr), each with its own platform and OpenChoreo control planes, registry, secret store, identities, subscriptions and team clusters; Git, holding the platform, stack configuration, team and application source repositories, is the only link between them](diagrams/environment-isolation.svg)
+
+Every team gets its own cluster in each of three environments: `dv` (development), `te` (test) and `pr` (production). `dv` and `te` run on the **non-production stack**. `pr` runs on the **production stack**, which is a complete, separate copy of the platform.
+
+| Level | Non-production stack (`dv`, `te`) | Production stack (`pr`) |
+|---|---|---|
+| Platform control plane (Crossplane, CAPI, CAPZ, ASO, OCM hub, Kyverno, Argo CD) | Own | Own |
+| OpenChoreo control plane, workflow plane and observability plane | Own | Own |
+| Team clusters | `<team>-dv`, `<team>-te` | `<team>-pr` |
+| Azure | Non-production subscriptions and spoke networks; non-production workload identity | Production subscriptions, hub and spokes; production workload identity, trusted only by the production control plane's issuer |
+| vSphere | Non-production vSphere Namespaces | Production vSphere Namespaces, on a separate vSphere cluster and Supervisor where available (Open Question 11) |
+| Container registry | Non-production registry | Production registry, written only by the production workflow plane |
+| Secret store | Non-production store | Production store |
+| Portal and monitoring | Non-production | Production |
+| People's access | Team groups | Separate production groups; break-glass through just-in-time elevation (Entra PIM) |
+
+**Rules that make the isolation real:**
+
+- **No network path.** Neither stack can reach the other's control planes, clusters, registry or secret store. Firewall rules deny it, and Phase 5 tests it.
+- **No shared credentials.** Each stack has its own Azure identities, Supervisor service accounts, OCM and OpenChoreo certificate authorities, and secret store.
+- **Git is the only link.** Each stack's Argo CD reads only the repositories and paths that belong to it, with its own read-only credential. Nothing else flows between the stacks.
+- **Each stack accepts only its own environments.** The production stack's Kyverno rejects any `KubernetesCluster` or `ReleaseBinding` whose environment is not `pr`; the non-production stack rejects `pr`.
+
+**What moves through Git, and how:**
+
+| Change | Path to `pr` |
+|---|---|
+| Platform (XRDs, Compositions, ClusterClasses, policies, add-on versions) | Released as a tag of the `platform` repository. Non-production moves to the new tag first. Production follows with a pull request to `platform-pr`. |
+| Cluster (Kubernetes version, node pools) | Changed in `<team>-dv`, then `<team>-te`, then by a pull request under the team repository's protected `pr/` folder. |
+| Application | A release snapshot promoted by pull request; production rebuilds the image from the same commit (Section 9.3). |
 
 ## 6. Self-Service Experience
 
@@ -118,7 +155,7 @@ Private AKS API servers do not need to be reachable from the control plane after
 |---|---|---|
 | **App team developer** | Request, change and delete clusters in their team namespace; see status; get cluster access through their group | Access Azure subscriptions, vCenter, the Supervisor or the control plane; read kubeconfig secrets |
 | **Application developer (OpenChoreo)** | Create projects and components, build, deploy and promote through OpenChoreo; see logs and metrics | Request clusters; access data plane clusters directly |
-| **App team lead** | Approve the team's production requests | Override platform policy |
+| **App team lead** | Approve the team's `pr` changes and promotions | Override platform policy |
 | **Platform engineer** | Own the API, Compositions, policies and control plane; onboard teams | Hold standing admin access to team clusters (break-glass only) |
 | **VMware or Azure landing-zone admin** | Own the infrastructure underneath | N/A |
 
@@ -126,9 +163,9 @@ Private AKS API servers do not need to be reachable from the control plane after
 
 ![Five steps: request through Backstage or YAML, pull request with automated checks, Argo CD applies with admission policy, Crossplane and CAPI provision, the team uses the cluster](diagrams/selfservice-journey.svg)
 
-1. **Request:** fill in the Backstage form, or commit a `KubernetesCluster` file to `clusters/` in the team repository.
-2. **Review:** CI validates the file against the XRD schema, the Kyverno policies (run with `kyverno apply` in CI) and the team's remaining quota. The team approves its own `dev` and `stg` requests. `prd` needs a second approver from the team lead group.
-3. **Apply:** Argo CD syncs the file into the team's namespace on the control plane. Kyverno enforces the same policies again at admission.
+1. **Request:** fill in the Backstage form, or commit a `KubernetesCluster` file to `nonprod/clusters/` (`dv`, `te`) or `pr/clusters/` (`pr`) in the team repository.
+2. **Review:** CI validates the file against the XRD schema, the Kyverno policies (run with `kyverno apply` in CI) and the team's remaining quota. The team approves its own `dv` and `te` requests. Anything under `pr/` needs a second approver from the team lead group.
+3. **Apply:** the Argo CD of the stack that owns the environment syncs the file into the team's namespace on that stack's control plane. Kyverno enforces the same policies again at admission.
 4. **Provision:** Crossplane runs the Composition for the chosen platform. CAPZ, or the Supervisor, builds the cluster. Target time: under 30 minutes.
 5. **Use:** `status` shows `Ready`, the API endpoint and the running version. Members of the team's access group can sign in:
    - **Azure:** `az aks get-credentials` with Entra ID.
@@ -141,7 +178,7 @@ Private AKS API servers do not need to be reachable from the control plane after
 | Item | Azure | vSphere |
 |---|---|---|
 | Cluster | AKS with a system pool plus the requested node pools | VKS with 1 or 3 control-plane VMs plus the requested worker pools |
-| Network | Dedicated spoke VNet, subnets and NSG; peered to the hub for `stg` and `prd` | NSX or VDS segment and load balancer from the Supervisor |
+| Network | Dedicated spoke VNet, subnets and NSG; peered to the hub for `te` and `pr` | NSX or VDS segment and load balancer from the Supervisor |
 | Identity and access | Entra ID integration; team group granted the AKS RBAC Cluster Admin role on the cluster | vSphere SSO group bound to the vSphere Namespace (at onboarding) |
 | Images | `AcrPull` on the shared environment registry | Pull access to the on-premises registry |
 | Monitoring | Container Insights to a per-cluster Log Analytics workspace | Monitoring agent add-on to the central stack |
@@ -149,15 +186,17 @@ Private AKS API servers do not need to be reachable from the control plane after
 
 ### 6.4 Team onboarding
 
-A team is onboarded once, by adding a `Tenant` entry to the platform repository. A platform-only `Tenant` XR composes:
+A team is onboarded once in each stack, by adding a `Tenant` entry to `platform-nonprod` and to `platform-pr`. In its stack, the platform-only `Tenant` XR composes:
 
 - A namespace on the control plane, labelled with the allowed platforms and cost centre.
 - A RoleBinding granting the team group the `platform-consumer` role in that namespace.
-- A ResourceQuota limiting the number of clusters.
-- An Argo CD AppProject and Application that sync the team repository's `clusters/` folder into the namespace.
+- A ResourceQuota limiting the number of clusters (default: one per environment, so two in non-production and one in production).
+- An Argo CD AppProject and Application that sync the team repository's folder for that stack (`nonprod/` or `pr/`) into the namespace.
 - An OCM `ManagedClusterSet` for the team, bound into the namespace with a `ManagedClusterSetBinding`, so the team's clusters are grouped and isolated on the hub.
-- Optionally, for teams that use OpenChoreo: the team's OpenChoreo namespace and role bindings, delivered to the OpenChoreo control plane through OCM.
-- For vSphere: a reference to the team's vSphere Namespace and its Supervisor credentials. Creating that vSphere Namespace, and binding the team's SSO group to it, is done by the VMware team or by Supervisor namespace self-service where it is enabled.
+- The team's OpenChoreo namespace in that stack's OpenChoreo control plane, with its role bindings and environments (`dv` and `te` with a `dv` → `te` pipeline in non-production; `pr` in production), delivered through OCM.
+- For vSphere: a reference to the team's vSphere Namespace in that stack and its Supervisor credentials. Creating that vSphere Namespace, and binding the team's SSO group to it, is done by the VMware team or by Supervisor namespace self-service where it is enabled.
+
+Onboarding also scaffolds the team repository with one `KubernetesCluster` per environment (`<team>-dv`, `<team>-te` and `<team>-pr`), which the team owns from then on.
 
 ## 7. Platform API
 
@@ -166,13 +205,13 @@ A team is onboarded once, by adding a `Tenant` entry to the platform repository.
 | Field | Type | Applies to | Description |
 |---|---|---|---|
 | `spec.crossplane.compositionSelector.matchLabels.platform` | `azure` or `vsphere` | both | Chooses the platform (set by the Backstage template). |
-| `spec.purpose` | `team` (default), `openchoreo-control-plane` or `openchoreo-data-plane` | both | What the cluster is for. The OpenChoreo values are allowed only in the platform tenant's namespace (Section 10). |
-| `spec.environment` | `dev`, `stg` or `prd` | both | Drives defaults: private API server, zones, control-plane replicas, approval rules. |
+| `spec.purpose` | `openchoreo-data-plane` (default), `self-managed` or `openchoreo-control-plane` | both | What the cluster is for. `self-managed` clusters get no OpenChoreo agent, and the team deploys with its own GitOps. `openchoreo-control-plane` is allowed only in the platform tenant's namespace (Section 10). |
+| `spec.environment` | `dv`, `te` or `pr` | both | Drives defaults: private API server, zones, control-plane replicas, approval rules. Each stack accepts only its own environments (Section 5.4). |
 | `spec.version` | string, for example `"1.33"` | both | Kubernetes minor version; must be in the supported list (Section 7.4). |
 | `spec.size` | `small`, `medium` or `large` | both | Size of the control plane and system nodes. |
 | `spec.nodePools[]` | list | both | `name`, `size`, `count`, optional `autoscale: {min, max}`. |
 | `spec.access.groups[]` | list of group IDs | both | Entra group object IDs (Azure). On vSphere, informational: access comes from the vSphere Namespace binding. |
-| `spec.deletionProtection` | bool | both | Default `true` for `prd`; deletion is denied while it is `true`. |
+| `spec.deletionProtection` | bool | both | Default `true` for `pr`; deletion is denied while it is `true`. |
 | `spec.azure.location` | string | azure | Azure region, from the allowed list. |
 | `spec.azure.vnetCidr` | CIDR | azure | Spoke address space (validated against the IPAM allocation). |
 | `spec.vsphere.storageClass` | string | vsphere | One of the storage policies bound to the team's vSphere Namespace. |
@@ -208,7 +247,7 @@ vSphere VM class names are defined per site and bound per namespace; the names a
 
 - Start at `v1alpha1`; move to `v1beta1` after rollout (Phase 6); then `v1` once the API has been stable for two quarters.
 - Changes are **additive only** within a version: new optional fields with defaults. Crossplane XRDs can serve several versions, but they cannot convert between incompatible schemas. Breaking changes therefore need a new version, a documented migration and an automated pull request to each team.
-- Every Composition change is released as a new Composition revision and rolled out `dev` → `stg` → `prd`.
+- Every Composition change is released in a `platform` tag as a new Composition revision. It reaches the non-production stack first, and production only through a pull request to `platform-pr` (Section 5.4).
 
 ## 8. How It Works on Each Platform
 
@@ -225,9 +264,9 @@ The Azure Composition renders these objects into the team's namespace on the con
 
 AKS baseline:
 
-- **Networking:** Azure CNI Overlay with the Cilium dataplane; hub firewall egress for `stg` and `prd`.
-- **Identity and security:** Entra ID with Azure RBAC; local accounts disabled; OIDC issuer and Workload Identity enabled; private API server for `prd`; Azure Policy add-on; Defender for Containers.
-- **Availability:** zones 1, 2 and 3; Standard tier control plane for `stg` and `prd`.
+- **Networking:** Azure CNI Overlay with the Cilium dataplane; hub firewall egress for `te` and `pr`.
+- **Identity and security:** Entra ID with Azure RBAC; local accounts disabled; OIDC issuer and Workload Identity enabled; private API server for `pr`; Azure Policy add-on; Defender for Containers.
+- **Availability:** zones 1, 2 and 3; Standard tier control plane for `te` and `pr`.
 
 **Authentication:** CAPZ and ASO use a federated identity that trusts the control plane's service-account issuer. If Entra ID cannot reach that issuer, the fallback is a certificate-based service principal held in an external secret store and rotated automatically. Permissions:
 
@@ -265,8 +304,8 @@ The vSphere Composition renders:
 | Cluster autoscaling | Native | Supported on newer VKS releases through the autoscaler package | `autoscale` honoured where supported; otherwise rejected with a clear message |
 | Access groups | Entra groups per cluster | SSO groups per vSphere Namespace | `access.groups` applied on Azure; on vSphere, managed at tenant onboarding |
 | Pod identity to the cloud | Entra Workload Identity | Not applicable | Azure-only add-on |
-| Control-plane VMs | Managed by Azure, not visible | VMs in the team vSphere Namespace (1 for `dev`, 3 for `stg` and `prd`) | Counted against the vSphere Namespace limits |
-| Private API server | Option (set for `prd`) | Always internal (load balancer VIP) | Driven by `environment` |
+| Control-plane VMs | Managed by Azure, not visible | VMs in the team vSphere Namespace (1 for `dv`, 3 for `te` and `pr`) | Counted against the vSphere Namespace limits |
+| Private API server | Option (set for `pr`) | Always internal (load balancer VIP) | Driven by `environment` |
 | Capacity | Subscription quotas | vSphere Namespace CPU, memory and storage limits | Requests that would exceed limits fail with the platform's reason in status |
 
 ### 8.4 Fleet layer on both platforms (Open Cluster Management)
@@ -287,7 +326,7 @@ CAPI and the Supervisor stop at a running, empty cluster. Everything the platfor
 |---|---|---|
 | Registration and health | `ManagedCluster`, agent heartbeat (lease) | The `Ready` condition on `KubernetesCluster` (Section 7.2) |
 | Tenant grouping | `ManagedClusterSet` per team, bound to the team namespace | Matches the `Tenant` model (Section 6.4); a team's objects only ever target its own clusters |
-| Targeting | `Placement` by label (`platform`, `environment`) | Different add-on values for Azure and vSphere, or for `prd` |
+| Targeting | `Placement` by label (`platform`, `environment`) | Different add-on values for Azure and vSphere, or for `pr` |
 | Baseline add-ons | Add-on framework (`ClusterManagementAddOn`, `ManagedClusterAddOn`) and `ManifestWork` | cert-manager, ingress, external-dns, monitoring agent, GitOps agent (Section 6.3). An add-on version change is one fleet-wide change, not a re-render of every Composition. |
 | In-cluster policy | OCM Policy framework | Pod Security, required namespaces and fleet-wide Kyverno policies inside workload clusters, with compliance reported per cluster |
 | Break-glass access | cluster-proxy and `ManagedServiceAccount` | Short-lived, audited platform access to team clusters (Section 6.1) |
@@ -300,11 +339,11 @@ CAPI and the Supervisor stop at a running, empty cluster. Everything the platfor
 apiVersion: cluster.open-cluster-management.io/v1
 kind: ManagedCluster
 metadata:
-  name: payments-prd
+  name: payments-pr
   labels:
     cluster.open-cluster-management.io/clusterset: team-payments
     platform: azure
-    environment: prd
+    environment: pr
 spec:
   hubAcceptsClient: true
 ---
@@ -312,30 +351,30 @@ apiVersion: addon.open-cluster-management.io/v1alpha1
 kind: ManagedClusterAddOn
 metadata:
   name: monitoring-agent
-  namespace: payments-prd        # the cluster's namespace on the hub
+  namespace: payments-pr        # the cluster's namespace on the hub
 spec:
   installNamespace: platform-monitoring
 ```
 
-**Example: one Placement drives an add-on for all production clusters**
+**Example: one Placement drives an add-on for all `dv` clusters in the non-production stack**
 
 ```yaml
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  name: prd-clusters
+  name: dv-clusters
   namespace: platform-addons
 spec:
   clusterSets: [team-payments, team-search]   # generated from the Tenant list
   predicates:
     - requiredClusterSelector:
         labelSelector:
-          matchLabels: { environment: prd }
+          matchLabels: { environment: dv }
 ```
 
 ## 9. Application Platform: OpenChoreo
 
-![The platform team requests data plane clusters through KubernetesCluster; Crossplane and CAPI build them on VKS and AKS; the OCM hub installs the OpenChoreo data plane chart on them and registers each one with the OpenChoreo control plane as a ClusterDataPlane; developers deploy through OpenChoreo, whose cluster agents on each data plane connect out to its cluster gateway](diagrams/openchoreo-integration.svg)
+![A team requests its clusters through KubernetesCluster, one per environment; Crossplane and CAPI build them on VKS and AKS; the OCM hub installs the OpenChoreo data plane chart on them and registers each one as a DataPlane in the team's OpenChoreo namespace; developers deploy through OpenChoreo, whose cluster agents connect out to its cluster gateway; the pr cluster lives in the separate production stack and is reached only through Git](diagrams/openchoreo-integration.svg)
 
 [OpenChoreo](https://openchoreo.dev) (a CNCF Sandbox project) is a developer platform for Kubernetes: projects, components, builds, environments, promotion pipelines and observability, with a Backstage-based portal. The layers in Sections 5 to 8 answer *"give me a cluster"*. OpenChoreo answers *"run my application"*. They fit together without overlap:
 
@@ -347,72 +386,75 @@ spec:
 
 ### 9.1 How OpenChoreo is laid out
 
-OpenChoreo has a control plane and several kinds of *planes*, each a Kubernetes cluster (or a namespace in a shared one):
+OpenChoreo has a control plane and several kinds of *planes*, each a Kubernetes cluster (or a namespace in a shared one). **Each stack has its own complete OpenChoreo:** the non-production one knows only `dv` and `te`, and the production one knows only `pr`.
 
 | OpenChoreo part | What it does | Where it runs here |
 |---|---|---|
-| Control plane | API, controllers, developer portal, and the cluster gateway that plane agents connect to | Its own cluster: a `KubernetesCluster` with `purpose: openchoreo-control-plane`, on VKS in the platform vSphere Namespace |
+| Control plane | API, controllers, developer portal, and the cluster gateway that plane agents connect to | Its own cluster in each stack: a `KubernetesCluster` with `purpose: openchoreo-control-plane`, on VKS in that stack's platform vSphere Namespace |
 | Workflow plane | Builds (CI workflows) | Same cluster as the control plane to start; split out if build load needs it |
 | Observability plane | Logs, metrics, traces and alerts for applications | Same cluster as the control plane to start |
-| Data planes | Run the applications; one per environment, or shared | `KubernetesCluster` requests with `purpose: openchoreo-data-plane`, on either platform |
+| Data planes | Run the applications | The team's own clusters: `<team>-dv` and `<team>-te` in non-production, `<team>-pr` in production |
 
-Every plane runs an OpenChoreo **cluster agent** that connects *out* to the control plane's cluster gateway over a WebSocket, secured with mutual TLS. This is the same outbound pattern as OCM, so data planes on private AKS need no inbound access for either one.
+Every plane runs an OpenChoreo **cluster agent** that connects *out* to its own stack's cluster gateway over a WebSocket, secured with mutual TLS. This is the same outbound pattern as OCM, so data planes on private AKS need no inbound access for either one.
 
 OpenChoreo is not placed on the platform control plane. Keeping it separate means a problem in the application platform cannot affect cluster lifecycle, and the other way round.
 
-### 9.2 How a data plane is created and registered
+### 9.2 How a team cluster becomes a data plane
 
-1. The platform team adds a `KubernetesCluster` with `purpose: openchoreo-data-plane` to the platform tenant's repository, for example `dp-prd` on private AKS.
-2. The Composition builds the cluster exactly as in Section 8, and labels its OCM `ManagedCluster` with `openchoreo.dev/plane: data`.
-3. An OCM Placement on that label installs the OpenChoreo data plane prerequisites and the `openchoreo-data-plane` Helm chart as an OCM add-on. Its values point the cluster agent at the control plane's cluster gateway, and set `planeID` to the cluster name. The agent's client certificate is issued from a CA that the platform shares with the control plane through External Secrets.
-4. The Composition also renders an OCM `ManifestWork` addressed to the OpenChoreo control plane cluster. It creates the matching `ClusterDataPlane`, and feeds the agent's connection status back.
-5. The `KubernetesCluster` reports `Ready` only when the OCM checks in Section 7.2 pass **and** the OpenChoreo agent is connected.
-6. The platform team points an OpenChoreo `Environment` at the new `ClusterDataPlane`, and adds it to a `DeploymentPipeline`. These live in the platform repository.
+1. The team's `KubernetesCluster` (`purpose: openchoreo-data-plane` is the default) is built as in Section 8. Its OCM `ManagedCluster` is labelled `openchoreo.dev/plane: data` and with the team name.
+2. An OCM Placement on that label installs the OpenChoreo data plane prerequisites and the `openchoreo-data-plane` Helm chart as an OCM add-on. Its values point the cluster agent at the stack's own cluster gateway, and set `planeID` to the cluster name. The agent's client certificate is issued from that stack's CA, shared with its OpenChoreo control plane through that stack's secret store.
+3. The Composition renders an OCM `ManifestWork` addressed to the stack's OpenChoreo control plane cluster. It creates a namespaced `DataPlane` in the **team's** OpenChoreo namespace, so the team's components can only ever land on the team's clusters. The agent's connection status is fed back.
+4. The `KubernetesCluster` reports `Ready` only when the OCM checks in Section 7.2 pass **and** the OpenChoreo agent is connected.
+5. The team's OpenChoreo `Environment` for that environment (`dv`, `te` or `pr`, created at onboarding) points at this `DataPlane`.
 
 Data planes skip two baseline add-ons from Section 6.3: the team GitOps agent (OpenChoreo deploys the applications) and the separate ingress controller (the OpenChoreo data plane chart brings its own Gateway API gateway). The rest of the baseline (monitoring agent, cert-manager, external-dns, in-cluster policy) still applies.
 
-### 9.3 Environments across platforms
+### 9.3 Promotion through Git
 
-An OpenChoreo `DeploymentPipeline` promotes the same component through environments, and each environment can sit on a different platform. For example:
+Every promotion between environments is a commit in the team repository. Nothing is promoted through the OpenChoreo API, and nothing connects the two stacks.
 
-| Environment | Data plane | Platform |
-|---|---|---|
-| `development` | `dp-dev` | VKS, on premises |
-| `staging` | `dp-stg` | AKS |
-| `production` | `dp-prd` | Private AKS |
+1. **Build (non-production).** A commit to the application's source triggers a build in the non-production workflow plane. The image goes to the non-production registry. OpenChoreo creates an immutable `ComponentRelease` (the component type, traits and workload, including the image and its source commit) and deploys it to `dv` automatically.
+2. **Promote to `te`.** A pipeline step exports the `ComponentRelease` and opens a pull request that adds it, with a `te` `ReleaseBinding`, under `nonprod/releases/`. After the team approves, the non-production Argo CD applies it.
+3. **Promote to `pr`.** A pull request copies the same release into `pr/releases/` with a `pr` `ReleaseBinding`. CI checks that the same release is bound to `te` in Git, and has been for the agreed soak time. Branch protection requires a team lead's approval.
+4. **Rebuild (production).** While the pull request is open, the production workflow plane builds the image again from the commit recorded in the release. It pushes the image to the production registry and adds the production digest to the pull request. Builds are pinned and reproducible, and both builds publish provenance for the same commit.
+5. **Deploy (production).** After merge, the production Argo CD applies the release and binding to the production OpenChoreo, which deploys to `<team>-pr`.
 
-Developers see one promotion path. Whether an environment runs on premises or in Azure is a platform decision, and moving an environment to a new data plane does not change any component.
+**Guarding the path.** OpenChoreo checks promotion paths only for requests through its API; writes from GitOps bypass that check by design. Here, the pull request rules replace it, and Kyverno admits `te` and `pr` `ReleaseBinding`s only from Argo CD, so these environments cannot be changed from a portal or the API.
+
+**Rebuild trade-off.** Rebuilding in production means the production image is not byte-for-byte the image tested in `te`. Reproducible builds and provenance narrow the gap, and smoke tests run in `pr` after deploy. The alternative, a one-way import of signed images into the production registry verified against the digest in Git, would be a second link between the stacks; Open Question 12 asks whether that exception is acceptable.
+
+**Hotfixes** follow the same path with an expedited approval rule. A team lead can waive the `te` soak time with a recorded reason, but not the `te` step itself.
 
 ### 9.4 Portal
 
-OpenChoreo ships a Backstage-based portal, and recent releases let it be left out at install time. Use one portal, not two:
+OpenChoreo ships a Backstage-based portal, and recent releases let it be left out at install time. **Each stack has its own portal.** Developers work mainly in the non-production portal. The production portal is read-mostly (status, logs, releases), because changes to `pr` come through Git.
 
-- **If the organisation has no Backstage yet:** use OpenChoreo's portal, and add the `KubernetesCluster` software template and the OCM plugin to it (Sections 6.2 and 12.5).
-- **If it already runs Backstage:** install OpenChoreo with its portal left out, and add OpenChoreo's plugins to the existing Backstage.
+- **If the organisation has no Backstage yet:** use OpenChoreo's portal in each stack, and add the `KubernetesCluster` software template and the OCM plugin to it (Sections 6.2 and 12.5).
+- **If it already runs Backstage:** install OpenChoreo with its portal left out, and add OpenChoreo's plugins to that Backstage, with one instance per stack.
 
 This replaces Open Question 3 with a narrower choice (Section 16).
 
 ### 9.5 Identity and access
 
-- OpenChoreo signs users in through an external identity provider; configure it with Entra ID, using the same groups as `spec.access.groups`.
-- Application developers get OpenChoreo roles in their team's OpenChoreo namespace. They get no access to data plane clusters, and no `KubernetesCluster` rights unless they also own a team cluster.
-- Platform engineers reach data planes through the same audited break-glass path as any other cluster (OCM cluster-proxy).
+- OpenChoreo signs users in through an external identity provider; configure each stack with Entra ID.
+- Non-production uses the team groups. Production uses separate production groups, with read access by default and just-in-time elevation (Entra PIM) for break-glass.
+- Application developers get OpenChoreo roles in their team's OpenChoreo namespace. In production, those roles are read-only: deployments to `pr` come only from Git.
+- Platform engineers reach team clusters through the audited break-glass path of that stack (OCM cluster-proxy).
 
 ### 9.6 Example manifests
 
 ```yaml
-# Platform tenant: a production data plane on private AKS
+# Team repository, pr/clusters/payments-pr.yaml (applied by the production stack only)
 apiVersion: platform.example.org/v1alpha1
 kind: KubernetesCluster
 metadata:
-  name: dp-prd
-  namespace: platform
+  name: payments-pr
+  namespace: team-payments
 spec:
   crossplane:
     compositionSelector:
       matchLabels: { platform: azure }
-  purpose: openchoreo-data-plane
-  environment: prd
+  environment: pr                     # purpose defaults to openchoreo-data-plane
   version: "1.33"
   size: large
   deletionProtection: true
@@ -420,41 +462,52 @@ spec:
   nodePools:
     - { name: apps, size: large, count: 3, autoscale: { min: 3, max: 20 } }
 ---
-# Rendered by the Composition: registers the data plane with OpenChoreo
+# Rendered by the Composition: registers the cluster as the team's data plane
 apiVersion: work.open-cluster-management.io/v1
 kind: ManifestWork
 metadata:
-  name: dataplane-dp-prd
-  namespace: openchoreo-cp            # OCM namespace of the OpenChoreo control plane cluster
+  name: dataplane-payments-pr
+  namespace: openchoreo-cp            # OCM namespace of this stack's OpenChoreo control plane cluster
 spec:
   workload:
     manifests:
       - apiVersion: openchoreo.dev/v1alpha1
-        kind: ClusterDataPlane
+        kind: DataPlane
         metadata:
-          name: dp-prd
+          name: payments-pr
+          namespace: payments         # the team's OpenChoreo namespace
         spec:
-          planeID: dp-prd
+          planeID: payments-pr
           clusterAgent:
             clientCA:
               secretKeyRef: { name: cluster-agent-ca, namespace: openchoreo-control-plane, key: ca.crt }
-          observabilityPlaneRef: { kind: ClusterObservabilityPlane, name: default }
   manifestConfigs:
-    - resourceIdentifier: { group: openchoreo.dev, resource: clusterdataplanes, name: dp-prd }
+    - resourceIdentifier: { group: openchoreo.dev, resource: dataplanes, namespace: payments, name: payments-pr }
       feedbackRules:
         - type: JSONPaths
           jsonPaths:
             - { name: agentConnected, path: .status.agentConnection.connected }
 ---
-# Platform repository: the environment that uses it
+# Created at onboarding: the team's production environment
 apiVersion: openchoreo.dev/v1alpha1
 kind: Environment
 metadata:
-  name: production
-  namespace: default
+  name: pr
+  namespace: payments
 spec:
-  dataPlaneRef: { kind: ClusterDataPlane, name: dp-prd }
+  dataPlaneRef: { kind: DataPlane, name: payments-pr }
   isProduction: true
+---
+# Team repository, pr/releases/: the promotion itself (Section 9.3)
+apiVersion: openchoreo.dev/v1alpha1
+kind: ReleaseBinding
+metadata:
+  name: api-pr
+  namespace: payments
+spec:
+  owner: { projectName: payments, componentName: api }
+  environment: pr
+  releaseName: api-7f3c2a1           # ComponentRelease copied alongside, with the production image digest
 ```
 
 ## 10. Guardrails and Governance
@@ -463,10 +516,12 @@ spec:
 |---|---|---|
 | Valid input | XRD OpenAPI schema plus CEL rules | `azure.location` is required when the platform is `azure`; `nodePools[].count` ≥ 1 |
 | Allowed platform per team | Kyverno, using namespace labels | A team without on-premises capacity cannot request `vsphere` |
-| OpenChoreo clusters | Kyverno | Only the platform tenant's namespace may set `purpose` to an OpenChoreo value |
-| Production standards | Kyverno | `prd` requires `deletionProtection: true`, `size` ≥ `medium`, and at least 3 nodes per pool |
+| Environments per stack | Kyverno | Non-production rejects `environment: pr`; production rejects `dv` and `te` |
+| Release changes only from Git | Kyverno | `te` and `pr` `ReleaseBinding`s are admitted only from Argo CD's service account |
+| OpenChoreo control planes | Kyverno | Only the platform tenant's namespace may set `purpose: openchoreo-control-plane` |
+| Production standards | Kyverno | `pr` requires `deletionProtection: true`, `size` ≥ `medium`, and at least 3 nodes per pool |
 | Supported versions | Kyverno, reading `platform-defaults` | `version: "1.30"` is rejected after end of support |
-| Cluster count | `ResourceQuota` on `count/kubernetesclusters.platform.example.org` | Default: 3 per team; raised on request |
+| Cluster count | `ResourceQuota` on `count/kubernetesclusters.platform.example.org` | Default: one per environment (two in non-production, one in production); raised on request |
 | Infrastructure capacity | vSphere Namespace limits; Azure subscription quotas and budgets | Over-capacity requests fail fast with a status message |
 | Cost visibility | Azure tags and vSphere Namespace labels from the tenant's cost centre | Monthly showback per team |
 | In-cluster baseline | OCM Policy, placed on every cluster | Pod Security `restricted` on team namespaces; a non-compliant cluster is reported in Backstage |
@@ -483,13 +538,13 @@ API versions, ClusterClass names and VKS releases below are illustrative. Pin th
 apiVersion: platform.example.org/v1alpha1
 kind: KubernetesCluster
 metadata:
-  name: payments-prd
+  name: payments-pr
   namespace: team-payments
 spec:
   crossplane:
     compositionSelector:
       matchLabels: { platform: azure }
-  environment: prd
+  environment: pr
   version: "1.33"
   size: medium
   deletionProtection: true
@@ -539,8 +594,8 @@ spec:
                 - rule: "!has(self.azure) || has(self.azure.location)"
                   message: "azure.location is required for Azure clusters"
               properties:
-                purpose:     { type: string, enum: [team, openchoreo-control-plane, openchoreo-data-plane], default: team }
-                environment: { type: string, enum: [dev, stg, prd] }
+                purpose:     { type: string, enum: [openchoreo-data-plane, self-managed, openchoreo-control-plane], default: openchoreo-data-plane }
+                environment: { type: string, enum: [dv, te, pr] }
                 version:     { type: string, pattern: '^1\.[0-9]+$' }
                 size:        { type: string, enum: [small, medium, large] }
                 deletionProtection: { type: boolean }
@@ -617,7 +672,7 @@ spec:
             {{- $xr   := .observed.composite.resource }}
             {{- $env  := index .context "apiextensions.crossplane.io/environment" }}
             {{- $name := $xr.metadata.name }}
-            {{- $prd  := eq $xr.spec.environment "prd" }}
+            {{- $pr  := eq $xr.spec.environment "pr" }}
             ---
             apiVersion: cluster.x-k8s.io/v1beta1
             kind: Cluster
@@ -627,7 +682,7 @@ spec:
                 gotemplating.fn.crossplane.io/composition-resource-name: capi-cluster
             spec:
               topology:
-                class: {{ if $prd }}aks-private{{ else }}aks-standard{{ end }}
+                class: {{ if $pr }}aks-private{{ else }}aks-standard{{ end }}
                 version: {{ index $env.azure.versions $xr.spec.version }}
                 variables:
                   - { name: location,         value: {{ $xr.spec.azure.location }} }
@@ -656,7 +711,7 @@ spec:
 apiVersion: kubernetes.m.crossplane.io/v1alpha1
 kind: Object
 metadata:
-  name: payments-onprem-vks
+  name: payments-dv-vks
   namespace: team-payments
 spec:
   providerConfigRef:
@@ -667,8 +722,8 @@ spec:
       apiVersion: cluster.x-k8s.io/v1beta1
       kind: Cluster
       metadata:
-        name: payments-onprem
-        namespace: payments-prd             # team vSphere Namespace
+        name: payments-dv
+        namespace: payments-nonprod         # team vSphere Namespace (non-production)
       spec:
         clusterNetwork:
           pods:     { cidrBlocks: ["192.168.0.0/16"] }
@@ -688,12 +743,12 @@ spec:
   connectionDetails:
     - apiVersion: v1
       kind: Secret
-      name: payments-onprem-kubeconfig
-      namespace: payments-prd
+      name: payments-dv-kubeconfig
+      namespace: payments-nonprod
       fieldPath: data.value
       toConnectionSecretKey: kubeconfig
   writeConnectionSecretToRef:
-    name: payments-onprem-kubeconfig        # platform-only; teams cannot read secrets
+    name: payments-dv-kubeconfig            # platform-only; teams cannot read secrets
 ```
 
 ### 11.5 Guardrails
@@ -703,11 +758,11 @@ spec:
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: kubernetescluster-prd-standards
+  name: kubernetescluster-pr-standards
 spec:
   validationFailureAction: Enforce
   rules:
-    - name: prd-standards
+    - name: pr-standards
       match:
         any:
           - resources:
@@ -716,9 +771,9 @@ spec:
         all:
           - key: "{{ request.object.spec.environment }}"
             operator: Equals
-            value: prd
+            value: pr
       validate:
-        message: "prd clusters need deletionProtection: true and size medium or large."
+        message: "pr clusters need deletionProtection: true and size medium or large."
         deny:
           conditions:
             any:
@@ -757,24 +812,25 @@ rules:
 
 ### 12.1 Bootstrap and recovery
 
-1. Create the control plane as a VKS cluster in the platform vSphere Namespace by applying a `Cluster` to the Supervisor.
-2. Install, at pinned versions:
+Each stack is bootstrapped separately, with the same steps and its own credentials. The production stack is built from a `platform` tag already proven in non-production.
+
+1. Create the stack's platform control plane as a VKS cluster in that stack's platform vSphere Namespace, by applying a `Cluster` to its Supervisor.
+2. Install, at the versions pinned in the stack's repository:
    - CAPI core, CAPZ and ASO with `clusterctl init --infrastructure azure`.
    - Crossplane v2 and its functions.
    - provider-kubernetes.
    - The OCM hub (cluster manager) with the add-on manager, Policy framework and cluster-proxy.
    - Kyverno, Argo CD and External Secrets.
-3. Configure credentials: the Azure federated identity, and the Supervisor ServiceAccount tokens per tenant.
-4. Point Argo CD at the platform repository. Everything else (XRDs, Compositions, ClusterClasses, policies, tenants) comes from Git.
-5. The platform tenant's `KubernetesCluster` objects then create the OpenChoreo control plane cluster and its data planes. OpenChoreo's own configuration (environments, deployment pipelines, component types) is synced from `openchoreo/` in the platform repository.
+3. Configure the stack's own credentials: its Azure federated identity, and its Supervisor ServiceAccount tokens per tenant.
+4. Point Argo CD at the `platform` tag and the stack's repository (`platform-nonprod` or `platform-pr`). Everything else (XRDs, Compositions, ClusterClasses, policies, tenants) comes from Git.
+5. The platform tenant's `KubernetesCluster` then creates the stack's OpenChoreo control plane cluster. Teams' clusters follow from their repositories, and OpenChoreo's configuration (component types, traits, team namespaces and environments) from Git.
 
-**Recovery:** rebuild by repeating these steps. Team requests are re-applied from Git, and CAPZ and the Supervisor re-adopt existing clusters by name. OCM agents keep running on the clusters while the hub is down; after a rebuild, clusters are re-imported (or re-accepted, if the hub's registration credentials are restored from backup). Target: rebuilt within 2 hours. Running clusters are not affected during the outage; only changes are paused.
+**Recovery:** rebuild the affected stack by repeating these steps. Team requests and releases are re-applied from Git, and CAPZ and the Supervisor re-adopt existing clusters by name. OCM agents keep running on the clusters while the hub is down; after a rebuild, clusters are re-imported (or re-accepted, if the hub's registration credentials are restored from backup). Target: rebuilt within 2 hours. Running clusters are not affected during the outage; only changes are paused. The other stack is never involved.
 
 ### 12.2 Repositories
 
 ```
-platform/                              # owned by the platform team
-├── bootstrap/                         # pinned installs: CAPI/CAPZ/ASO, Crossplane, providers, OCM hub, Kyverno, Argo CD
+platform/                              # shared definitions, released by tag (vX.Y.Z)
 ├── apis/
 │   └── kubernetescluster/
 │       ├── definition.yaml            # XRD
@@ -782,32 +838,45 @@ platform/                              # owned by the platform team
 │       ├── composition-vsphere.yaml
 │       └── tests/                     # crossplane render fixtures and expected output
 ├── clusterclasses/                    # aks-standard, aks-private (ASO-based CAPZ templates)
-├── environment/platform-defaults.yaml # sizes, versions, regions, add-on versions
 ├── policies/                          # Kyverno ClusterPolicies
-├── addons/                            # OCM add-on definitions, Placements and values per platform
+├── addons/                            # OCM add-on definitions and Placements
 ├── fleet-policies/                    # OCM Policies applied inside workload clusters
-├── tenants/                           # one Tenant per team (namespace, RBAC, quota, repo sync)
-├── platform-clusters/                 # the platform tenant's KubernetesClusters: OpenChoreo control plane and data planes
-└── openchoreo/                        # Environments, DeploymentPipelines, ComponentTypes, Traits
+└── openchoreo/                        # ComponentTypes, Traits, Workflows
+
+platform-nonprod/                      # non-production stack (dv, te)
+├── platform-version                   # the platform tag this stack runs
+├── bootstrap/                         # pinned installs and values for this stack
+├── environment/platform-defaults.yaml # sizes, versions, regions, add-on versions
+├── tenants/                           # one Tenant per team
+└── platform-clusters/                 # this stack's OpenChoreo control plane cluster
+
+platform-pr/                           # production stack (pr): same layout, production approvers only
 
 team-payments/                         # owned by the app team
-└── clusters/
-    ├── payments-prd.yaml
-    └── payments-onprem.yaml
+├── nonprod/                           # read only by the non-production stack
+│   ├── clusters/
+│   │   ├── payments-dv.yaml
+│   │   └── payments-te.yaml
+│   └── releases/te/                   # ComponentReleases and te ReleaseBindings
+└── pr/                                # protected (CODEOWNERS: team leads); read only by the production stack
+    ├── clusters/payments-pr.yaml
+    └── releases/                      # ComponentReleases with production digests and pr ReleaseBindings
 ```
+
+If organisational policy requires it, `pr/` can be a separate repository (`team-payments-pr`) without changing the design (Open Question 13).
 
 ### 12.3 Day-2 operations
 
 | Operation | Who | How |
 |---|---|---|
-| Upgrade Kubernetes minor version | Team (or an automated pull request at end of support) | Change `spec.version`. CAPZ or the Supervisor rolls the control plane, then the workers. |
+| Upgrade Kubernetes minor version | Team (or automated pull requests at end of support) | Change `spec.version` in `<team>-dv`, then `<team>-te`, then `<team>-pr` (a pull request under `pr/`). CAPZ or the Supervisor rolls the control plane, then the workers. |
 | Scale or add a node pool | Team | Change `spec.nodePools`. |
 | Patch upgrades and node images | Platform (automatic) | AKS auto-upgrade channel; latest VKS release per minor version. |
-| Change platform defaults | Platform team | Pull request to `platform/`; a new Composition revision promoted `dev` → `stg` → `prd`. |
+| Change the platform | Platform team | Pull request to `platform/`, released as a tag; `platform-nonprod` moves to it first, then a pull request moves `platform-pr`. |
 | Delete a cluster | Team | Set `deletionProtection: false` (approved like any change), then remove the file and sync in Argo CD. |
-| Add or move an OpenChoreo environment | Platform team | Add a `KubernetesCluster` with `purpose: openchoreo-data-plane`; point the `Environment` at the new `ClusterDataPlane`. |
-| Upgrade OpenChoreo | Platform team | Upgrade the control plane chart, then the data plane add-on through Placements `dev` → `stg` → `prd`, following OpenChoreo's upgrade notes. |
-| Upgrade a baseline add-on | Platform team | Change the add-on version in `addons/`; roll out with Placements `dev` → `stg` → `prd`. |
+| Promote an application | Team | Pull requests under `nonprod/releases/` for `te` and `pr/releases/` for `pr` (Section 9.3). |
+| Upgrade OpenChoreo | Platform team | In non-production first (control plane, then data planes on `dv`, then `te`), then in production through `platform-pr`, following OpenChoreo's upgrade notes. |
+| Upgrade a baseline add-on | Platform team | Change the add-on version in the stack's `platform-defaults`; Placements roll it to `dv` then `te`, then production through `platform-pr`. |
 | Incident on a team cluster | Team first; platform for platform faults | Teams have full admin on their cluster. Platform engineers use break-glass access through OCM cluster-proxy, which is audited. |
 | Test platform changes | Platform team | CI runs `crossplane render`, `crossplane beta validate`, `kyverno apply` and `clusterctl alpha topology plan` before merge. |
 
@@ -829,6 +898,8 @@ team-payments/                         # owned by the app team
 
 ## 13. Security
 
+- **Production is isolated at every level** (Section 5.4): separate control planes, subscriptions, vSphere Namespaces or cluster, registry, secret store, identities and network, with Git as the only link.
+- **Git is a security boundary.** `pr/` and `platform-pr` are protected by branch protection, CODEOWNERS and required reviews; commits are signed; each stack reads Git with its own read-only credential.
 - **Teams hold no infrastructure credentials.** Only the control plane talks to Azure and the Supervisor, using federated identity or rotated, namespace-scoped tokens held in an external secret store.
 - **Kubeconfig secrets are platform-only, and used once.** The bootstrap kubeconfig is used only for the OCM import; after that, the agent on each cluster connects out with its own scoped hub credential. Teams sign in to their clusters with Entra ID or vSphere SSO groups, never with stored admin kubeconfigs.
 - **Tenant isolation:** one namespace per team, with tenant-scoped ProviderConfigs, so a team's request can only target its own vSphere Namespace and the allowed Azure subscriptions.
@@ -841,12 +912,12 @@ team-payments/                         # owned by the app team
 
 | Phase | Deliverables | Exit criteria |
 |---|---|---|
-| **1. Foundation** (weeks 1–3) | Control plane on VKS; CAPI, CAPZ, ASO, Crossplane, providers, OCM hub, Kyverno and Argo CD installed; Azure and Supervisor credentials validated | A test VKS `Cluster` and a test ASO resource are created from the control plane; Supervisor token approach confirmed; a test VKS cluster and a test AKS cluster are imported into OCM and report `Available` |
-| **2. Azure path** (weeks 4–6) | `aks-standard` ClusterClass; XRD v1alpha1; Azure Composition; render tests in CI | A `dev` AKS cluster is requested, ready, used and deleted through the API with no orphaned resources |
-| **3. vSphere path** (weeks 6–8) | vSphere Composition; kubeconfig handling; version and size mappings | A `dev` VKS cluster is requested through the same API with the same status contract |
+| **1. Foundation** (weeks 1–3) | Non-production stack: control plane on VKS; CAPI, CAPZ, ASO, Crossplane, providers, OCM hub, Kyverno and Argo CD installed; Azure and Supervisor credentials validated | A test VKS `Cluster` and a test ASO resource are created from the control plane; Supervisor token approach confirmed; a test VKS cluster and a test AKS cluster are imported into OCM and report `Available` |
+| **2. Azure path** (weeks 4–6) | `aks-standard` ClusterClass; XRD v1alpha1; Azure Composition; render tests in CI | A `dv` AKS cluster is requested, ready, used and deleted through the API with no orphaned resources |
+| **3. vSphere path** (weeks 6–8) | vSphere Composition; kubeconfig handling; version and size mappings | A `dv` VKS cluster is requested through the same API with the same status contract |
 | **4. Self-service** (weeks 9–11) | `Tenant` onboarding (including the team's `ManagedClusterSet`); RBAC, quotas and Kyverno policies; Backstage template and catalog; baseline add-ons and in-cluster policies through OCM on both platforms; team documentation | A pilot team gets a ready cluster on either platform from one pull request, with no platform-team action |
-| **5. Production readiness** (weeks 12–14) | `aks-private` ClusterClass, hub peering, `prd` policies, alerts, rebuild drill (including OCM re-import), upgrade rehearsal on both platforms | Security sign-off; control plane rebuilt within target; SLOs measured on the pilot |
-| **6. Application platform** (weeks 15–18) | OpenChoreo control plane cluster; data plane add-on and `ClusterDataPlane` registration through OCM; `development`, `staging` and `production` environments across VKS and AKS; portal decision applied (Section 9.4); Entra ID sign-in | A pilot team builds a component and promotes it from `development` on VKS to `production` on AKS with no cluster access |
+| **5. Production stack** (weeks 12–14) | Production stack built from the `platform` tag proven in non-production, with its own control planes, subscriptions, vSphere Namespaces or cluster, registry, secret store and identities; `aks-private` ClusterClass, hub peering, `pr` policies, alerts, rebuild drill (including OCM re-import), upgrade rehearsal on both platforms | Security sign-off; isolation tests show no network path or shared credential between the stacks; a cluster change reaches `pr` only through a pull request; control plane rebuilt within target; SLOs measured on the pilot |
+| **6. Application platform** (weeks 15–18) | OpenChoreo in each stack; team clusters registered as data planes through OCM; `dv` and `te` environments in non-production and `pr` in production; promotion through Git, including the production rebuild; portal decision applied (Section 9.4); Entra ID sign-in | A pilot team promotes a component from `dv` to `te` to `pr` using only pull requests, with no cluster access |
 | **7. General availability** (week 19 onward) | Onboard teams in waves, to team clusters or OpenChoreo; promote the API to `v1beta1` | Ticket-based cluster and deployment requests retired |
 | **Next** | Further self-service APIs on the same control plane: `Database` (Azure through ASO), `Bucket`, `DnsRecord`, `TeamNamespace` | Prioritised by team demand |
 
@@ -857,15 +928,20 @@ team-payments/                         # owned by the app team
 | Supervisor authentication for controllers (token expiry, ServiceAccount permissions in vSphere Namespaces) | vSphere path cannot work unattended | Validate first in Phase 1; rotate through External Secrets; escalate to VMware support if namespace-scoped ServiceAccounts are not permitted |
 | Two layers (Crossplane over CAPI) make debugging harder | Slower incident resolution | Status contract surfaces the underlying CAPI conditions; runbooks per layer; `crossplane beta trace` plus `clusterctl describe` |
 | API design mistakes are hard to undo once teams depend on it | Painful migrations | Start as `v1alpha1` with a pilot team; additive-only changes; automated migration pull requests |
-| A Composition change affects every cluster | Fleet-wide incident | Composition revisions with staged promotion; render tests; `dev` first |
+| A Composition change affects every cluster | Fleet-wide incident | Composition revisions with staged promotion; render tests; `dv` first |
 | CAPZ's bundled ASO installs a limited set of CRDs | Extra Azure resources unavailable | Enable additional ASO CRDs through CAPZ configuration; test on CAPZ upgrades |
 | On-premises capacity runs out as self-service increases demand | Requests fail | vSphere Namespace limits plus quotas; capacity dashboard; requests over capacity fail fast with a clear reason |
-| Cost growth on Azure | Budget overrun | Per-team quotas, tags and showback; Azure budgets with alerts; `dev` clusters can be scheduled to scale to zero |
+| Cost growth on Azure | Budget overrun | Per-team quotas, tags and showback; Azure budgets with alerts; `dv` clusters can be scheduled to scale to zero |
 | Feature gaps between AKS and VKS | Confused teams | Documented differences (Section 8.3); clear rejection messages |
 | Control plane outage | No changes possible; running clusters unaffected | Rebuild from Git; tested recovery drill |
-| OCM agent on every cluster | Extra footprint per cluster; one more component to upgrade | Pin agent versions with the hub; upgrade with the hub through the same `dev` → `stg` → `prd` promotion |
+| OCM agent on every cluster | Extra footprint per cluster; one more component to upgrade | Pin agent versions with the hub; upgrade with the hub through the same `dv` → `te` → `pr` promotion |
+| Two full stacks double the platform's running cost and operating effort | Budget and team load | Both stacks built from the same Git and tags; automation for every step; non-production control planes sized smaller; `dv` clusters can scale to zero |
+| The stacks drift apart | Production behaves differently from what was tested | Both stacks pinned to `platform` tags; a report compares each stack's tag and add-on versions |
+| Production image is rebuilt, not copied | A defect appears only in the production build | Pinned, reproducible builds; provenance for both builds; smoke tests in `pr` after deploy (Open Question 12) |
+| Git is now critical for every change | A Git outage stops promotions; a compromised repository could reach production | Running workloads are unaffected by an outage; branch protection, signed commits, CODEOWNERS and per-stack read-only credentials |
+| One cluster per team per environment | Many clusters; cost and capacity | Quotas, small `dv` defaults, scale-to-zero for `dv`, capacity dashboard |
 | Two agents on each data plane (OCM and OpenChoreo) | Overlap and confusion during incidents | Clear split: OCM for platform baseline, OpenChoreo for applications (Section 9); separate namespaces and runbooks |
-| OpenChoreo APIs are `v1alpha1` and change between releases | Upgrade work; breaking changes for developers | Pin releases; read upgrade notes; rehearse upgrades on `dev` data planes first; keep OpenChoreo configuration in Git |
+| OpenChoreo APIs are `v1alpha1` and change between releases | Upgrade work; breaking changes for developers | Pin releases; read upgrade notes; rehearse upgrades on `dv` data planes first; keep OpenChoreo configuration in Git |
 | OpenChoreo control plane outage | No new deployments or promotions; running applications unaffected | Rebuild from Git through `KubernetesCluster` and the `openchoreo/` folder; include it in the recovery drill |
 | Two tools could deliver add-ons (OCM and Argo CD) | Drift and unclear ownership | OCM owns platform baseline add-ons; teams' own GitOps agent owns their applications |
 | OCM import of Supervisor-built clusters | vSphere add-ons blocked | Validate the import in Phase 1 with the Supervisor kubeconfig; fall back to a manual import step in the Composition |
@@ -880,8 +956,11 @@ team-payments/                         # owned by the app team
 6. What are the chargeback or showback expectations, and who owns budget alerts?
 7. Do existing AKS or VKS clusters need to be brought under the platform, or is it new clusters only?
 8. Which self-service API should come after `KubernetesCluster`? Databases are a candidate to expose inside OpenChoreo, with Crossplane fulfilling them.
-9. Which environments should run on which platform, and should data planes be shared by all teams or split by business unit?
-10. Which teams start on OpenChoreo, and which keep dedicated team clusters?
+9. Which platform (VKS or AKS) does each environment use by default, and can a team choose per environment?
+10. Which teams start on OpenChoreo, and which choose `self-managed` clusters?
+11. Can the production stack have its own vSphere cluster and Supervisor, or only separate vSphere Namespaces on a shared one?
+12. Is rebuilding images in production acceptable, or is a one-way import of signed images into the production registry allowed as an exception to "Git is the only link"?
+13. Is a protected `pr/` folder in each team repository enough, or must production configuration live in separate repositories?
 
 ## 17. References
 

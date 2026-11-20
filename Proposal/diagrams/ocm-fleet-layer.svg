@@ -51,7 +51,7 @@
 
   <!-- Row 2: OCM hub -->
   <rect x="20" y="130" width="920" height="178" rx="12" fill="#F0F8F8" stroke="#00838F" stroke-width="2"/>
-  <text x="40" y="154" class="gocm">OCM hub (on the platform control plane)</text>
+  <text x="40" y="154" class="gocm">OCM hub (one per stack, on its platform control plane)</text>
 
   <rect x="40" y="168" width="285" height="54" rx="6" class="ocm"/>
   <text x="182" y="190" text-anchor="middle" class="title">Registration</text>
@@ -79,19 +79,19 @@
 
   <!-- Row 3: workload clusters -->
   <rect x="40" y="390" width="285" height="96" rx="8" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
-  <text x="182" y="413" text-anchor="middle" class="title">payments-prd</text>
-  <text x="182" y="431" text-anchor="middle" class="sub">private AKS (Azure)</text>
+  <text x="182" y="413" text-anchor="middle" class="title">payments-te</text>
+  <text x="182" y="431" text-anchor="middle" class="sub">AKS (Azure)</text>
   <rect x="87" y="446" width="190" height="22" rx="11" class="pill"/>
   <text x="182" y="461" text-anchor="middle" class="ptxt">klusterlet + add-on agents</text>
 
   <rect x="337" y="390" width="285" height="96" rx="8" fill="#EEF7EE" stroke="#2E7D32" stroke-width="1.5"/>
-  <text x="479" y="413" text-anchor="middle" class="title">payments-onprem</text>
+  <text x="479" y="413" text-anchor="middle" class="title">payments-dv</text>
   <text x="479" y="431" text-anchor="middle" class="sub">VKS (team vSphere Namespace)</text>
   <rect x="384" y="446" width="190" height="22" rx="11" class="pill"/>
   <text x="479" y="461" text-anchor="middle" class="ptxt">klusterlet + add-on agents</text>
 
   <rect x="634" y="390" width="285" height="96" rx="8" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
-  <text x="776" y="413" text-anchor="middle" class="title">search-dev</text>
+  <text x="776" y="413" text-anchor="middle" class="title">search-te</text>
   <text x="776" y="431" text-anchor="middle" class="sub">AKS (Azure)</text>
   <rect x="681" y="446" width="190" height="22" rx="11" class="pill"/>
   <text x="776" y="461" text-anchor="middle" class="ptxt">klusterlet + add-on agents</text>
