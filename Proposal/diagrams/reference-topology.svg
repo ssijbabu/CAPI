@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Reference topology: 18 clusters in two isolated stacks, with Git and Entra ID shared</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37474F"/>
+    </marker>
+    <style>
+      .title { font-size: 13px; font-weight: 600; fill: #1B2733; }
+      .ct    { font-size: 11px; font-weight: 600; fill: #1B2733; }
+      .sub   { font-size: 11px; fill: #455A64; }
+      .tiny  { font-size: 10px; fill: #455A64; }
+      .gnp   { font-size: 14px; font-weight: 700; fill: #0B5394; }
+      .gpr   { font-size: 14px; font-weight: 700; fill: #B71C1C; }
+      .zone  { font-size: 11px; font-weight: 700; fill: #37474F; }
+      .lbl   { font-size: 11px; fill: #37474F; font-style: italic; }
+      .plat  { fill: #F3F0FA; stroke: #6B4FA8; stroke-width: 1.3; }
+      .vks   { fill: #EEF7EE; stroke: #2E7D32; stroke-width: 1.2; }
+      .aks   { fill: #EEF4FB; stroke: #2F6FB0; stroke-width: 1.2; }
+      .svc   { fill: #FFFFFF; stroke: #78909C; stroke-width: 1.2; stroke-dasharray: 4 3; }
+      .flow  { stroke: #37474F; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="960" height="640" fill="#FFFFFF"/>
+
+  <!-- Shared foundations -->
+  <rect x="20" y="20" width="270" height="76" rx="8" fill="#FFFFFF" stroke="#78909C" stroke-width="1.3"/>
+  <text x="155" y="44" text-anchor="middle" class="title">Entra ID (one tenant)</text>
+  <text x="155" y="63" text-anchor="middle" class="sub">separate groups, app registrations</text>
+  <text x="155" y="79" text-anchor="middle" class="sub">and workload identities per stack</text>
+
+  <rect x="320" y="20" width="320" height="76" rx="8" fill="#FFF8EC" stroke="#C77700" stroke-width="2"/>
+  <text x="480" y="44" text-anchor="middle" class="title">Git (GitHub organisation): the only link</text>
+  <text x="480" y="63" text-anchor="middle" class="sub">platform · platform-nonprod · platform-pr</text>
+  <text x="480" y="79" text-anchor="middle" class="sub">team-* (nonprod/, pr/) · application source</text>
+
+  <rect x="670" y="20" width="270" height="76" rx="8" fill="#FFF5E6" stroke="#C77700" stroke-width="1.3"/>
+  <text x="805" y="44" text-anchor="middle" class="title">People</text>
+  <text x="805" y="63" text-anchor="middle" class="sub">portals and Git; cluster access through</text>
+  <text x="805" y="79" text-anchor="middle" class="sub">Entra ID (AKS) or vSphere SSO (VKS)</text>
+
+  <polyline points="400,96 400,112 245,112 245,128" class="flow"/>
+  <polyline points="560,96 560,112 715,112 715,128" class="flow"/>
+  <text x="480" y="122" text-anchor="middle" class="lbl">each stack pulls only its own paths</text>
+
+  <!-- ===== Non-production stack ===== -->
+  <rect x="20" y="130" width="450" height="440" rx="12" fill="#F4F8FC" stroke="#2F6FB0" stroke-width="2"/>
+  <text x="38" y="154" class="gnp">Non-production stack (dv, te): 11 clusters</text>
+
+  <rect x="34" y="166" width="422" height="236" rx="8" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="46" y="184" class="zone">On premises · vSphere Supervisor</text>
+
+  <rect x="44" y="194" width="130" height="100" rx="6" class="plat"/>
+  <text x="109" y="213" text-anchor="middle" class="ct">np-platform</text>
+  <text x="109" y="231" text-anchor="middle" class="tiny">Crossplane · CAPI · CAPZ</text>
+  <text x="109" y="246" text-anchor="middle" class="tiny">ASO · OCM hub</text>
+  <text x="109" y="261" text-anchor="middle" class="tiny">Kyverno · Argo CD</text>
+  <text x="109" y="280" text-anchor="middle" class="tiny">VKS</text>
+
+  <rect x="180" y="194" width="130" height="100" rx="6" class="plat"/>
+  <text x="245" y="213" text-anchor="middle" class="ct">np-choreo</text>
+  <text x="245" y="231" text-anchor="middle" class="tiny">OpenChoreo control plane</text>
+  <text x="245" y="246" text-anchor="middle" class="tiny">portal · cluster gateway</text>
+  <text x="245" y="261" text-anchor="middle" class="tiny">workflow plane (builds)</text>
+  <text x="245" y="280" text-anchor="middle" class="tiny">VKS</text>
+
+  <rect x="316" y="194" width="130" height="100" rx="6" class="plat"/>
+  <text x="381" y="213" text-anchor="middle" class="ct">np-observe</text>
+  <text x="381" y="231" text-anchor="middle" class="tiny">observability plane</text>
+  <text x="381" y="246" text-anchor="middle" class="tiny">OpenSearch · Prometheus</text>
+  <text x="381" y="261" text-anchor="middle" class="tiny">Alertmanager · Grafana</text>
+  <text x="381" y="280" text-anchor="middle" class="tiny">VKS</text>
+
+  <text x="46" y="320" class="tiny" font-weight="600">Team clusters (VKS)</text>
+  <rect x="44" y="328" width="76" height="60" rx="6" class="vks"/>
+  <text x="82" y="353" text-anchor="middle" class="ct">payments</text>
+  <text x="82" y="370" text-anchor="middle" class="tiny">dv</text>
+  <rect x="125" y="328" width="76" height="60" rx="6" class="vks"/>
+  <text x="163" y="353" text-anchor="middle" class="ct">orders</text>
+  <text x="163" y="370" text-anchor="middle" class="tiny">dv</text>
+  <rect x="206" y="328" width="76" height="60" rx="6" class="vks"/>
+  <text x="244" y="353" text-anchor="middle" class="ct">orders</text>
+  <text x="244" y="370" text-anchor="middle" class="tiny">te</text>
+  <rect x="287" y="328" width="76" height="60" rx="6" class="vks"/>
+  <text x="325" y="353" text-anchor="middle" class="ct">ledger</text>
+  <text x="325" y="370" text-anchor="middle" class="tiny">dv</text>
+  <rect x="368" y="328" width="78" height="60" rx="6" class="vks"/>
+  <text x="407" y="353" text-anchor="middle" class="ct">ledger</text>
+  <text x="407" y="370" text-anchor="middle" class="tiny">te</text>
+
+  <rect x="34" y="414" width="422" height="142" rx="8" fill="#FFFFFF" stroke="#2F6FB0" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="46" y="432" class="zone">Azure · sub-k8s-nonprod</text>
+  <text x="46" y="450" class="tiny" font-weight="600">Team clusters (AKS)</text>
+  <rect x="44" y="458" width="96" height="60" rx="6" class="aks"/>
+  <text x="92" y="483" text-anchor="middle" class="ct">payments</text>
+  <text x="92" y="500" text-anchor="middle" class="tiny">te</text>
+  <rect x="146" y="458" width="96" height="60" rx="6" class="aks"/>
+  <text x="194" y="483" text-anchor="middle" class="ct">search</text>
+  <text x="194" y="500" text-anchor="middle" class="tiny">dv</text>
+  <rect x="248" y="458" width="96" height="60" rx="6" class="aks"/>
+  <text x="296" y="483" text-anchor="middle" class="ct">search</text>
+  <text x="296" y="500" text-anchor="middle" class="tiny">te</text>
+  <rect x="352" y="458" width="94" height="60" rx="6" class="svc"/>
+  <text x="399" y="481" text-anchor="middle" class="ct">ACR</text>
+  <text x="399" y="498" text-anchor="middle" class="ct">Key Vault</text>
+  <text x="399" y="512" text-anchor="middle" class="tiny">non-prod</text>
+  <text x="46" y="542" class="tiny">Agents on every cluster connect out to np-platform (OCM) and np-choreo (OpenChoreo)</text>
+
+  <!-- ===== Production stack ===== -->
+  <rect x="490" y="130" width="450" height="440" rx="12" fill="#FDF5F4" stroke="#B71C1C" stroke-width="2"/>
+  <text x="508" y="154" class="gpr">Production stack (pr): 7 clusters</text>
+
+  <rect x="504" y="166" width="422" height="236" rx="8" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="516" y="184" class="zone">On premises · production vSphere Supervisor</text>
+
+  <rect x="514" y="194" width="130" height="100" rx="6" class="plat"/>
+  <text x="579" y="213" text-anchor="middle" class="ct">pr-platform</text>
+  <text x="579" y="231" text-anchor="middle" class="tiny">Crossplane · CAPI · CAPZ</text>
+  <text x="579" y="246" text-anchor="middle" class="tiny">ASO · OCM hub</text>
+  <text x="579" y="261" text-anchor="middle" class="tiny">Kyverno · Argo CD</text>
+  <text x="579" y="280" text-anchor="middle" class="tiny">VKS</text>
+
+  <rect x="650" y="194" width="130" height="100" rx="6" class="plat"/>
+  <text x="715" y="213" text-anchor="middle" class="ct">pr-choreo</text>
+  <text x="715" y="231" text-anchor="middle" class="tiny">OpenChoreo control plane</text>
+  <text x="715" y="246" text-anchor="middle" class="tiny">portal · cluster gateway</text>
+  <text x="715" y="261" text-anchor="middle" class="tiny">workflow plane (rebuilds)</text>
+  <text x="715" y="280" text-anchor="middle" class="tiny">VKS</text>
+
+  <rect x="786" y="194" width="130" height="100" rx="6" class="plat"/>
+  <text x="851" y="213" text-anchor="middle" class="ct">pr-observe</text>
+  <text x="851" y="231" text-anchor="middle" class="tiny">observability plane</text>
+  <text x="851" y="246" text-anchor="middle" class="tiny">OpenSearch · Prometheus</text>
+  <text x="851" y="261" text-anchor="middle" class="tiny">Alertmanager · Grafana</text>
+  <text x="851" y="280" text-anchor="middle" class="tiny">VKS</text>
+
+  <text x="516" y="320" class="tiny" font-weight="600">Team clusters (VKS)</text>
+  <rect x="514" y="328" width="76" height="60" rx="6" class="vks"/>
+  <text x="552" y="353" text-anchor="middle" class="ct">orders</text>
+  <text x="552" y="370" text-anchor="middle" class="tiny">pr</text>
+  <rect x="595" y="328" width="76" height="60" rx="6" class="vks"/>
+  <text x="633" y="353" text-anchor="middle" class="ct">ledger</text>
+  <text x="633" y="370" text-anchor="middle" class="tiny">pr</text>
+
+  <rect x="504" y="414" width="422" height="142" rx="8" fill="#FFFFFF" stroke="#2F6FB0" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="516" y="432" class="zone">Azure · sub-k8s-prod</text>
+  <text x="516" y="450" class="tiny" font-weight="600">Team clusters (private AKS)</text>
+  <rect x="514" y="458" width="96" height="60" rx="6" class="aks"/>
+  <text x="562" y="483" text-anchor="middle" class="ct">payments</text>
+  <text x="562" y="500" text-anchor="middle" class="tiny">pr</text>
+  <rect x="616" y="458" width="96" height="60" rx="6" class="aks"/>
+  <text x="664" y="483" text-anchor="middle" class="ct">search</text>
+  <text x="664" y="500" text-anchor="middle" class="tiny">pr</text>
+  <rect x="822" y="458" width="94" height="60" rx="6" class="svc"/>
+  <text x="869" y="481" text-anchor="middle" class="ct">ACR</text>
+  <text x="869" y="498" text-anchor="middle" class="ct">Key Vault</text>
+  <text x="869" y="512" text-anchor="middle" class="tiny">production</text>
+  <text x="516" y="542" class="tiny">Agents on every cluster connect out to pr-platform (OCM) and pr-choreo (OpenChoreo)</text>
+
+  <!-- Isolation and legend -->
+  <rect x="20" y="582" width="920" height="28" rx="6" fill="#FFFFFF" stroke="#B71C1C" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="480" y="601" text-anchor="middle" class="ct" fill="#B71C1C">No network path, credential, registry or secret store shared between the stacks</text>
+
+  <rect x="20" y="620" width="18" height="12" rx="3" class="plat"/>
+  <text x="44" y="630" class="tiny">platform cluster (VKS)</text>
+  <rect x="190" y="620" width="18" height="12" rx="3" class="vks"/>
+  <text x="214" y="630" class="tiny">team cluster on VKS</text>
+  <rect x="350" y="620" width="18" height="12" rx="3" class="aks"/>
+  <text x="374" y="630" class="tiny">team cluster on AKS</text>
+  <rect x="510" y="620" width="18" height="12" rx="3" class="svc"/>
+  <text x="534" y="630" class="tiny">per-stack Azure service</text>
+</svg>

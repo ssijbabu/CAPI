@@ -21,7 +21,7 @@ This proposal builds a self-service platform in layers:
 - **Cluster API (CAPI)** does the cluster lifecycle work underneath:
   - **On Azure:** Cluster API core, the Azure provider (CAPZ) and Azure Service Operator (ASO) build AKS and its supporting Azure resources.
   - **On vSphere with Tanzu:** the vSphere **Supervisor**, which is VMware's own CAPI management cluster, builds vSphere Kubernetes Service (VKS) clusters.
-- **Open Cluster Management (OCM)** is the fleet layer once a cluster exists. Each new cluster registers with an OCM hub on the control plane. An agent on the cluster then pulls its baseline add-ons and in-cluster policy, and reports health back to the hub. The connection is outbound only, so private clusters need no inbound access.
+- **Open Cluster Management (OCM)** is the fleet layer once a cluster exists. Each new cluster registers with an OCM hub on the control plane. An agent on the cluster then pulls its baseline add-ons and in-cluster policy, and reports health back to the hub. The agent's connection is outbound only, so add-ons and policy reach private clusters without the hub connecting in.
 - **OpenChoreo** is the application platform on top, for teams that want to deploy applications rather than run clusters. Developers work with projects, components and promotions through OpenChoreo's portal, CLI or Git. The clusters OpenChoreo deploys to (its *data planes*) are the team's own `KubernetesCluster`s, registered with OpenChoreo automatically (Section 9).
 
 Every team has its own cluster in each environment: `dv` (development), `te` (test) and `pr` (production). **`pr` runs on a completely separate production stack**, with its own control planes, subscriptions, registry, secrets and identities. **Git is the only link between environments**, so every promotion, including every promotion to production, is a reviewed commit (Section 5.4).
@@ -112,7 +112,7 @@ The alternative, hosting on AKS, needs private connectivity into the Supervisor.
 
 Workload clusters keep running if a control plane is lost. Its configuration is in Git and can be rebuilt (Section 12.1).
 
-Private AKS API servers do not need to be reachable from the control plane after a cluster is registered: the OCM agent on each cluster connects out to the hub (Section 8.4). Only the one-time import needs to reach the new cluster's API server (Open Question 4).
+Add-ons and policy do not need a path from the control plane into a cluster, because the OCM agent on each cluster connects out to the hub (Section 8.4). Cluster API, however, keeps reading node state from AKS API servers through the cluster's kubeconfig. Private AKS API servers in a stack must therefore be reachable from that stack's platform control plane over the hybrid connection, through private endpoints and private DNS. VKS clusters are watched by the Supervisor, so only the one-time OCM import needs to reach them (Open Question 4).
 
 ### 5.4 Environments and isolation
 
@@ -205,7 +205,7 @@ Onboarding also scaffolds the team repository with one `KubernetesCluster` per e
 | Field | Type | Applies to | Description |
 |---|---|---|---|
 | `spec.crossplane.compositionSelector.matchLabels.platform` | `azure` or `vsphere` | both | Chooses the platform (set by the Backstage template). |
-| `spec.purpose` | `openchoreo-data-plane` (default), `self-managed` or `openchoreo-control-plane` | both | What the cluster is for. `self-managed` clusters get no OpenChoreo agent, and the team deploys with its own GitOps. `openchoreo-control-plane` is allowed only in the platform tenant's namespace (Section 10). |
+| `spec.purpose` | `openchoreo-data-plane` (default), `self-managed`, `openchoreo-control-plane` or `openchoreo-observability-plane` | both | What the cluster is for. `self-managed` clusters get no OpenChoreo agent, and the team deploys with its own GitOps. The last two are allowed only in the platform tenant's namespace (Section 10). |
 | `spec.environment` | `dv`, `te` or `pr` | both | Drives defaults: private API server, zones, control-plane replicas, approval rules. Each stack accepts only its own environments (Section 5.4). |
 | `spec.version` | string, for example `"1.33"` | both | Kubernetes minor version; must be in the supported list (Section 7.4). |
 | `spec.size` | `small`, `medium` or `large` | both | Size of the control plane and system nodes. |
@@ -318,7 +318,7 @@ CAPI and the Supervisor stop at a running, empty cluster. Everything the platfor
 
 1. The Composition renders a `ManagedCluster` next to the lifecycle objects. It is labelled with the team's cluster set, the platform and the environment.
 2. When the cluster is up, the hub imports it once: it installs the OCM agent (klusterlet) using the bootstrap kubeconfig. That is CAPI's `<name>-kubeconfig` secret on Azure and the Supervisor kubeconfig on vSphere. Recent OCM releases can import CAPI-built clusters from that secret automatically; confirm this on the version pinned in Phase 1.
-3. From then on the agent holds its own hub credential and connects **out** to the hub over HTTPS. The control plane no longer needs to reach the cluster's API server, and it does not keep admin kubeconfigs for add-on installs.
+3. From then on the agent holds its own hub credential and connects **out** to the hub over HTTPS. Add-on installs no longer need a path into the cluster or an admin kubeconfig. (On Azure, Cluster API still reads node state from the cluster; see Section 5.3.)
 
 **What OCM does for the platform:**
 
@@ -392,10 +392,10 @@ OpenChoreo has a control plane and several kinds of *planes*, each a Kubernetes 
 |---|---|---|
 | Control plane | API, controllers, developer portal, and the cluster gateway that plane agents connect to | Its own cluster in each stack: a `KubernetesCluster` with `purpose: openchoreo-control-plane`, on VKS in that stack's platform vSphere Namespace |
 | Workflow plane | Builds (CI workflows) | Same cluster as the control plane to start; split out if build load needs it |
-| Observability plane | Logs, metrics, traces and alerts for applications | Same cluster as the control plane to start |
+| Observability plane | Logs, metrics, traces and alerts for applications | Its own cluster in each stack (`purpose: openchoreo-observability-plane`), because OpenSearch and Prometheus need the most storage; it can share the control plane cluster in a small installation |
 | Data planes | Run the applications | The team's own clusters: `<team>-dv` and `<team>-te` in non-production, `<team>-pr` in production |
 
-Every plane runs an OpenChoreo **cluster agent** that connects *out* to its own stack's cluster gateway over a WebSocket, secured with mutual TLS. This is the same outbound pattern as OCM, so data planes on private AKS need no inbound access for either one.
+Every plane runs an OpenChoreo **cluster agent** that connects *out* to its own stack's cluster gateway over a WebSocket, secured with mutual TLS. This is the same outbound pattern as OCM, so neither OpenChoreo nor OCM needs a path into the data planes.
 
 OpenChoreo is not placed on the platform control plane. Keeping it separate means a problem in the application platform cannot affect cluster lifecycle, and the other way round.
 
@@ -518,7 +518,7 @@ spec:
 | Allowed platform per team | Kyverno, using namespace labels | A team without on-premises capacity cannot request `vsphere` |
 | Environments per stack | Kyverno | Non-production rejects `environment: pr`; production rejects `dv` and `te` |
 | Release changes only from Git | Kyverno | `te` and `pr` `ReleaseBinding`s are admitted only from Argo CD's service account |
-| OpenChoreo control planes | Kyverno | Only the platform tenant's namespace may set `purpose: openchoreo-control-plane` |
+| Platform-owned clusters | Kyverno | Only the platform tenant's namespace may set `purpose` to `openchoreo-control-plane` or `openchoreo-observability-plane` |
 | Production standards | Kyverno | `pr` requires `deletionProtection: true`, `size` ≥ `medium`, and at least 3 nodes per pool |
 | Supported versions | Kyverno, reading `platform-defaults` | `version: "1.30"` is rejected after end of support |
 | Cluster count | `ResourceQuota` on `count/kubernetesclusters.platform.example.org` | Default: one per environment (two in non-production, one in production); raised on request |
@@ -594,7 +594,7 @@ spec:
                 - rule: "!has(self.azure) || has(self.azure.location)"
                   message: "azure.location is required for Azure clusters"
               properties:
-                purpose:     { type: string, enum: [openchoreo-data-plane, self-managed, openchoreo-control-plane], default: openchoreo-data-plane }
+                purpose:     { type: string, enum: [openchoreo-data-plane, self-managed, openchoreo-control-plane, openchoreo-observability-plane], default: openchoreo-data-plane }
                 environment: { type: string, enum: [dv, te, pr] }
                 version:     { type: string, pattern: '^1\.[0-9]+$' }
                 size:        { type: string, enum: [small, medium, large] }
@@ -951,7 +951,7 @@ If organisational policy requires it, `pr/` can be a separate repository (`team-
 1. Is outbound access from on premises to Azure Resource Manager and Entra ID approved for the control plane?
 2. Which vSphere and VKS versions are in production, and is vSphere Namespace self-service enabled?
 3. Does the organisation already run Backstage? If not, OpenChoreo's portal becomes the single portal; if so, OpenChoreo is installed without its portal and its plugins are added to the existing one (Section 9.4).
-4. ~~Should private AKS add-ons be installed directly from the control plane, or handed to the AKS GitOps extension?~~ **Proposed:** neither. The OCM agent pulls add-ons from the hub (Section 8.4). The remaining question is network access to the private API server for the one-time import, either over hybrid connectivity or with an `az aks command invoke` step.
+4. ~~Should private AKS add-ons be installed directly from the control plane, or handed to the AKS GitOps extension?~~ **Proposed:** neither. The OCM agent pulls add-ons from the hub (Section 8.4). The remaining question is network design: Cluster API needs continuing access to private AKS API servers from the stack's platform control plane (Section 5.3), so private endpoints and private DNS must be reachable over the hybrid connection in each stack.
 5. Is approval for production clusters by the team lead enough, or does a platform or security review also need to sign off?
 6. What are the chargeback or showback expectations, and who owns budget alerts?
 7. Do existing AKS or VKS clusters need to be brought under the platform, or is it new clusters only?
@@ -963,6 +963,8 @@ If organisational policy requires it, `pr/` can be a separate repository (`team-
 13. Is a protected `pr/` folder in each team repository enough, or must production configuration live in separate repositories?
 
 ## 17. References
+
+- [Reference deployment design](Reference-Deployment-Design.md): 18-cluster topology, components per cluster, Git layout, network flows and sizing
 
 - Crossplane documentation: https://docs.crossplane.io
 - Cluster API Book: https://cluster-api.sigs.k8s.io
