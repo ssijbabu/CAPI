@@ -205,7 +205,7 @@ Onboarding also scaffolds the team repository with one `KubernetesCluster` per e
 | Field | Type | Applies to | Description |
 |---|---|---|---|
 | `spec.crossplane.compositionSelector.matchLabels.platform` | `azure` or `vsphere` | both | Chooses the platform (set by the Backstage template). |
-| `spec.purpose` | `openchoreo-data-plane` (default), `self-managed`, `openchoreo-control-plane` or `openchoreo-observability-plane` | both | What the cluster is for. `self-managed` clusters get no OpenChoreo agent, and the team deploys with its own GitOps. The last two are allowed only in the platform tenant's namespace (Section 10). |
+| `spec.purpose` | `openchoreo-data-plane` (default), `self-managed`, or one of the platform-only values `platform-fleet`, `openchoreo-control-plane`, `openchoreo-workflow-plane`, `openchoreo-observability-plane` | both | What the cluster is for. `self-managed` clusters get no OpenChoreo agent, and the team deploys with its own GitOps. Platform-only values are allowed only in the platform tenant's namespace (Section 10). |
 | `spec.environment` | `dv`, `te` or `pr` | both | Drives defaults: private API server, zones, control-plane replicas, approval rules. Each stack accepts only its own environments (Section 5.4). |
 | `spec.version` | string, for example `"1.33"` | both | Kubernetes minor version; must be in the supported list (Section 7.4). |
 | `spec.size` | `small`, `medium` or `large` | both | Size of the control plane and system nodes. |
@@ -391,7 +391,7 @@ OpenChoreo has a control plane and several kinds of *planes*, each a Kubernetes 
 | OpenChoreo part | What it does | Where it runs here |
 |---|---|---|
 | Control plane | API, controllers, developer portal, and the cluster gateway that plane agents connect to | Its own cluster in each stack: a `KubernetesCluster` with `purpose: openchoreo-control-plane`, on VKS in that stack's platform vSphere Namespace |
-| Workflow plane | Builds (CI workflows) | Same cluster as the control plane to start; split out if build load needs it |
+| Workflow plane | Builds (CI workflows) | Its own cluster in each stack (`purpose: openchoreo-workflow-plane`), so build load cannot affect the OpenChoreo API; it can share the control plane cluster in a small installation |
 | Observability plane | Logs, metrics, traces and alerts for applications | Its own cluster in each stack (`purpose: openchoreo-observability-plane`), because OpenSearch and Prometheus need the most storage; it can share the control plane cluster in a small installation |
 | Data planes | Run the applications | The team's own clusters: `<team>-dv` and `<team>-te` in non-production, `<team>-pr` in production |
 
@@ -518,7 +518,7 @@ spec:
 | Allowed platform per team | Kyverno, using namespace labels | A team without on-premises capacity cannot request `vsphere` |
 | Environments per stack | Kyverno | Non-production rejects `environment: pr`; production rejects `dv` and `te` |
 | Release changes only from Git | Kyverno | `te` and `pr` `ReleaseBinding`s are admitted only from Argo CD's service account |
-| Platform-owned clusters | Kyverno | Only the platform tenant's namespace may set `purpose` to `openchoreo-control-plane` or `openchoreo-observability-plane` |
+| Platform-owned clusters | Kyverno | Only the platform tenant's namespace may set `purpose` to `platform-fleet` or an `openchoreo-*-plane` value |
 | Production standards | Kyverno | `pr` requires `deletionProtection: true`, `size` ≥ `medium`, and at least 3 nodes per pool |
 | Supported versions | Kyverno, reading `platform-defaults` | `version: "1.30"` is rejected after end of support |
 | Cluster count | `ResourceQuota` on `count/kubernetesclusters.platform.example.org` | Default: one per environment (two in non-production, one in production); raised on request |
@@ -594,7 +594,7 @@ spec:
                 - rule: "!has(self.azure) || has(self.azure.location)"
                   message: "azure.location is required for Azure clusters"
               properties:
-                purpose:     { type: string, enum: [openchoreo-data-plane, self-managed, openchoreo-control-plane, openchoreo-observability-plane], default: openchoreo-data-plane }
+                purpose:     { type: string, enum: [openchoreo-data-plane, self-managed, platform-fleet, openchoreo-control-plane, openchoreo-workflow-plane, openchoreo-observability-plane], default: openchoreo-data-plane }
                 environment: { type: string, enum: [dv, te, pr] }
                 version:     { type: string, pattern: '^1\.[0-9]+$' }
                 size:        { type: string, enum: [small, medium, large] }
@@ -964,7 +964,7 @@ If organisational policy requires it, `pr/` can be a separate repository (`team-
 
 ## 17. References
 
-- [Reference deployment design](Reference-Deployment-Design.md): 18-cluster topology, components per cluster, Git layout, network flows and sizing
+- [Reference deployment design](Reference-Deployment-Design.md): 22-cluster topology, components per cluster, Git layout, network flows and sizing
 
 - Crossplane documentation: https://docs.crossplane.io
 - Cluster API Book: https://cluster-api.sigs.k8s.io
