@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="450" viewBox="0 0 960 450" font-family="Segoe UI, Helvetica, Arial, sans-serif">
-  <title>Layers of the self-service platform</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="555" viewBox="0 0 960 555" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Layers of the self-service platform, with OpenChoreo as the application platform on top</title>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#37474F"/>
@@ -13,7 +13,19 @@
     </style>
   </defs>
 
-  <rect width="960" height="450" fill="#FFFFFF"/>
+  <rect width="960" height="555" fill="#FFFFFF"/>
+
+  <!-- L0: application platform -->
+  <text x="20" y="52" class="layer">Application</text>
+  <text x="20" y="67" class="layer">platform</text>
+  <text x="20" y="83" class="own">platform team owns,</text>
+  <text x="20" y="96" class="own">developers consume</text>
+  <rect x="170" y="25" width="770" height="75" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+  <text x="555" y="55" text-anchor="middle" class="title">OpenChoreo: Project · Component · Environment · DeploymentPipeline</text>
+  <text x="555" y="77" text-anchor="middle" class="sub">its control plane and data planes are clusters requested through the layer below</text>
+  <line x1="555" y1="100" x2="555" y2="127" class="flow"/>
+
+  <g transform="translate(0,105)">
 
   <!-- Layer labels -->
   <text x="20" y="62" class="layer">Team API</text>
@@ -40,12 +52,12 @@
   <rect x="170" y="130" width="375" height="80" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
   <text x="357" y="156" text-anchor="middle" class="title">Composition: kubernetescluster-azure</text>
   <text x="357" y="176" text-anchor="middle" class="sub">renders a CAPI Cluster (aks ClusterClass),</text>
-  <text x="357" y="192" text-anchor="middle" class="sub">ASO extras (role assignments) and Helm releases</text>
+  <text x="357" y="192" text-anchor="middle" class="sub">ASO extras and OCM ManagedCluster + add-ons</text>
 
   <rect x="565" y="130" width="375" height="80" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
   <text x="752" y="156" text-anchor="middle" class="title">Composition: kubernetescluster-vsphere</text>
   <text x="752" y="176" text-anchor="middle" class="sub">renders a VKS Cluster on the Supervisor</text>
-  <text x="752" y="192" text-anchor="middle" class="sub">(provider-kubernetes) and Helm releases</text>
+  <text x="752" y="192" text-anchor="middle" class="sub">(provider-kubernetes) and OCM ManagedCluster + add-ons</text>
 
   <!-- L3 -->
   <rect x="170" y="240" width="375" height="80" rx="10" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
@@ -74,4 +86,5 @@
   <line x1="752" y1="210" x2="752" y2="238" class="flow"/>
   <line x1="357" y1="320" x2="357" y2="348" class="flow"/>
   <line x1="752" y1="320" x2="752" y2="348" class="flow"/>
+  </g>
 </svg>
