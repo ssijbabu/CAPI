@@ -1,5 +1,14 @@
 # Plan
 
+## Progress (2026-11-21)
+
+| Weeks | State |
+|---|---|
+| 1–3 Cluster provisioning (local) | Implemented in [ssijbabu/ssp](https://github.com/ssijbabu/ssp). One end-to-end rerun pending after the last week 3 fix. |
+| 4–25 | Not started |
+
+Details, pending items and how to resume: [ssp STATUS.md](https://github.com/ssijbabu/ssp/blob/main/STATUS.md).
+
 Implementation plan for [SSP-0001](../enhancements/0001-self-service-platform-on-ocm/README.md).
 
 - [Implementation Plan](Implementation-Plan.md): assumptions, workstreams, milestones, decisions, risks and the week-by-week summary.
