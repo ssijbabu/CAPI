@@ -964,7 +964,9 @@ If organisational policy requires it, `pr/` can be a separate repository (`team-
 
 ## 17. References
 
-- [Reference deployment design](Reference-Deployment-Design.md): 22-cluster topology, components per cluster, Git layout, network flows and sizing
+- [Requirements](Requirements.md): the requirements this proposal meets
+
+- [Reference deployment design](Reference-Deployment-Design.md): 19-cluster topology, components per cluster, Git layout, network flows and sizing
 
 - Crossplane documentation: https://docs.crossplane.io
 - Cluster API Book: https://cluster-api.sigs.k8s.io

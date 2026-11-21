@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="450" viewBox="0 0 1160 450" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Observability: telemetry add-on on every cluster, the observability cluster with the observer API, alert rules delivered by ManifestWork, and fleet health from the hub</title>
+  <defs><marker id="a_EF6C00" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#EF6C00"/></marker><marker id="a_607D8B" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#607D8B"/></marker><marker id="a_6B4FA8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B4FA8"/></marker><marker id="a_00838F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00838F"/></marker></defs>
+  <rect x="0" y="0" width="1160" height="450" fill="#FFFFFF"/>
+  <text x="20.0" y="30.0" font-size="11" fill="#1B5E20" text-anchor="start" font-weight="600">MANAGED CLUSTERS</text>
+  <rect x="20.0" y="44.0" width="200.0" height="76.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="34.0" y="66.0" font-size="12" fill="#1B5E20" text-anchor="start" font-weight="600">payments-dv</text>
+  <rect x="34.0" y="82.0" width="172.0" height="22" rx="11" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1"/>
+  <text x="120.0" y="96.6" font-size="10" fill="#A84300" text-anchor="middle">telemetry add-on (OTel)</text>
+  <path d="M220.0,94.0 L300.0,182.0" fill="none" stroke="#EF6C00" stroke-width="1.3" marker-end="url(#a_EF6C00)"/>
+  <rect x="20.0" y="136.0" width="200.0" height="76.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="34.0" y="158.0" font-size="12" fill="#1B5E20" text-anchor="start" font-weight="600">shared-te</text>
+  <rect x="34.0" y="174.0" width="172.0" height="22" rx="11" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1"/>
+  <text x="120.0" y="188.6" font-size="10" fill="#A84300" text-anchor="middle">telemetry add-on (OTel)</text>
+  <path d="M220.0,186.0 L300.0,186.0" fill="none" stroke="#EF6C00" stroke-width="1.3" marker-end="url(#a_EF6C00)"/>
+  <rect x="20.0" y="228.0" width="200.0" height="76.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="34.0" y="250.0" font-size="12" fill="#1B5E20" text-anchor="start" font-weight="600">np-build</text>
+  <rect x="34.0" y="266.0" width="172.0" height="22" rx="11" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1"/>
+  <text x="120.0" y="280.6" font-size="10" fill="#A84300" text-anchor="middle">telemetry add-on (OTel)</text>
+  <path d="M220.0,278.0 L300.0,182.0" fill="none" stroke="#EF6C00" stroke-width="1.3" marker-end="url(#a_EF6C00)"/>
+  <text x="120.0" y="324.0" font-size="10" fill="#A84300" text-anchor="middle" font-style="italic">→ OTLP over mTLS (SVID)</text>
+  <rect x="300.0" y="40.0" width="420.0" height="300.0" rx="12" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.5"/>
+  <text x="316.0" y="64.0" font-size="14" fill="#A84300" text-anchor="start" font-weight="600">np-observe</text>
+  <rect x="316.0" y="80.0" width="188.0" height="66.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="410.0" y="109.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">OTel gateway</text>
+  <text x="410.0" y="125.0" font-size="10" fill="#455A64" text-anchor="middle">tags app, component, env, cluster</text>
+  <rect x="516.0" y="80.0" width="188.0" height="66.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="610.0" y="109.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Prometheus / Mimir</text>
+  <text x="610.0" y="125.0" font-size="10" fill="#455A64" text-anchor="middle">metrics, PrometheusRules</text>
+  <rect x="316.0" y="162.0" width="188.0" height="66.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="410.0" y="191.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">OpenSearch</text>
+  <text x="410.0" y="207.0" font-size="10" fill="#455A64" text-anchor="middle">logs, traces</text>
+  <rect x="516.0" y="162.0" width="188.0" height="66.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="610.0" y="191.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Alertmanager</text>
+  <text x="610.0" y="207.0" font-size="10" fill="#455A64" text-anchor="middle">routes per environment</text>
+  <rect x="316.0" y="244.0" width="188.0" height="66.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="410.0" y="273.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Observer API</text>
+  <text x="410.0" y="289.0" font-size="10" fill="#455A64" text-anchor="middle">queries by application (S1)</text>
+  <rect x="516.0" y="244.0" width="188.0" height="66.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="610.0" y="273.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Incidents</text>
+  <text x="610.0" y="289.0" font-size="10" fill="#455A64" text-anchor="middle">opened from alerts (S3)</text>
+  <text x="780.0" y="30.0" font-size="11" fill="#37474F" text-anchor="start" font-weight="600">CONSUMERS</text>
+  <rect x="780.0" y="44.0" width="220.0" height="62.0" rx="8" fill="#F5F7F8" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="890.0" y="71.0" font-size="12" fill="#37474F" text-anchor="middle" font-weight="600">kubectl ssp</text>
+  <text x="890.0" y="87.0" font-size="10" fill="#455A64" text-anchor="middle">logs, metrics, status</text>
+  <path d="M720.0,240.0 L750.0,240.0 L750.0,75.0 L780.0,75.0" fill="none" stroke="#607D8B" stroke-width="1.2" marker-end="url(#a_607D8B)"/>
+  <rect x="780.0" y="124.0" width="220.0" height="62.0" rx="8" fill="#F5F7F8" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="890.0" y="151.0" font-size="12" fill="#37474F" text-anchor="middle" font-weight="600">Backstage plugins</text>
+  <text x="890.0" y="167.0" font-size="10" fill="#455A64" text-anchor="middle">per application views</text>
+  <path d="M720.0,240.0 L750.0,240.0 L750.0,155.0 L780.0,155.0" fill="none" stroke="#607D8B" stroke-width="1.2" marker-end="url(#a_607D8B)"/>
+  <rect x="780.0" y="204.0" width="220.0" height="62.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="890.0" y="231.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">Analysis agent (later)</text>
+  <text x="890.0" y="247.0" font-size="10" fill="#455A64" text-anchor="middle">read-only RCA (S4)</text>
+  <path d="M720.0,240.0 L750.0,240.0 L750.0,235.0 L780.0,235.0" fill="none" stroke="#607D8B" stroke-width="1.2" marker-end="url(#a_607D8B)"/>
+  <rect x="1030.0" y="44.0" width="110.0" height="62.0" rx="8" fill="#E5F1FB" stroke="#0078D4" stroke-width="1.5"/>
+  <text x="1085.0" y="64.0" font-size="12" fill="#005A9E" text-anchor="middle" font-weight="600">Channels</text>
+  <text x="1085.0" y="80.0" font-size="10" fill="#455A64" text-anchor="middle">email, webhook</text>
+  <text x="1085.0" y="94.0" font-size="10" fill="#455A64" text-anchor="middle">via Key Vault</text>
+  <path d="M720.0,286.0 L1085.0,286.0 L1085.0,106.0" fill="none" stroke="#EF6C00" stroke-width="1.6" marker-end="url(#a_EF6C00)"/>
+  <text x="900.0" y="280.0" font-size="11" fill="#A84300" text-anchor="middle" font-style="italic">notifications (S2)</text>
+  <rect x="300.0" y="370.0" width="840.0" height="60.0" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="316.0" y="394.0" font-size="12" fill="#4A3480" text-anchor="start" font-weight="600">Alert rules</text>
+  <text x="316.0" y="412.0" font-size="11" fill="#263238" text-anchor="start">alert-rules trait on a Component → SSP renders PrometheusRule + log rules → ManifestWork in np-observe&#x27;s cluster namespace</text>
+  <path d="M510.0,370.0 L510.0,340.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <rect x="20.0" y="340.0" width="200.0" height="90.0" rx="10" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="34.0" y="362.0" font-size="12" fill="#00695C" text-anchor="start" font-weight="600">Fleet health from the hub</text>
+  <text x="34.0" y="382.0" font-size="10" fill="#263238" text-anchor="start">• ManagedCluster conditions</text>
+  <text x="34.0" y="398.0" font-size="10" fill="#263238" text-anchor="start">• add-on health</text>
+  <text x="34.0" y="414.0" font-size="10" fill="#263238" text-anchor="start">• ManifestWork conditions</text>
+  <path d="M220.0,385.0 L260.0,385.0 L260.0,300.0 L300.0,300.0" fill="none" stroke="#00838F" stroke-width="1.2" marker-end="url(#a_00838F)"/>
+</svg>

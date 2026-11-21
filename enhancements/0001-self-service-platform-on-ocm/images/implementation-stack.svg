@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="470" viewBox="0 0 1160 470" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Implementation stack: SSP in Java on Quarkus and the Java Operator SDK, Backstage plugins in TypeScript</title>
+  <defs></defs>
+  <rect x="0" y="0" width="1160" height="470" fill="#FFFFFF"/>
+  <text x="20.0" y="32.0" font-size="16" fill="#263238" text-anchor="start" font-weight="600">What each part of SSP is written in</text>
+  <rect x="20.0" y="50.0" width="360.0" height="360.0" rx="12" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="36.0" y="76.0" font-size="14" fill="#4A3480" text-anchor="start" font-weight="600">Java 25 · Quarkus</text>
+  <rect x="34.0" y="90.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="200.0" y="113.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">SSP controllers</text>
+  <text x="200.0" y="129.0" font-size="10" fill="#455A64" text-anchor="middle">Java Operator SDK · Fabric8 client</text>
+  <rect x="34.0" y="152.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="200.0" y="175.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Admission webhooks</text>
+  <text x="200.0" y="191.0" font-size="10" fill="#455A64" text-anchor="middle">JOSDK webhooks framework</text>
+  <rect x="34.0" y="214.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="200.0" y="237.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Template engine</text>
+  <text x="200.0" y="253.0" font-size="10" fill="#455A64" text-anchor="middle">cel-java (dev.cel)</text>
+  <rect x="34.0" y="276.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="200.0" y="299.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Observer API</text>
+  <text x="200.0" y="315.0" font-size="10" fill="#455A64" text-anchor="middle">Quarkus REST service</text>
+  <rect x="34.0" y="338.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="200.0" y="361.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">kubectl ssp</text>
+  <text x="200.0" y="377.0" font-size="10" fill="#455A64" text-anchor="middle">Picocli · GraalVM native binary</text>
+  <rect x="400.0" y="50.0" width="360.0" height="360.0" rx="12" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="416.0" y="76.0" font-size="14" fill="#1F4F82" text-anchor="start" font-weight="600">Java libraries</text>
+  <rect x="414.0" y="90.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="580.0" y="113.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">API types → CRDs</text>
+  <text x="580.0" y="129.0" font-size="10" fill="#455A64" text-anchor="middle">Fabric8 CRD generator</text>
+  <rect x="414.0" y="152.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="580.0" y="175.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">OCM API models</text>
+  <text x="580.0" y="191.0" font-size="10" fill="#455A64" text-anchor="middle">Fabric8 java-generator from OCM CRDs</text>
+  <rect x="414.0" y="214.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="580.0" y="237.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">SPIFFE</text>
+  <text x="580.0" y="253.0" font-size="10" fill="#455A64" text-anchor="middle">java-spiffe (Workload API)</text>
+  <rect x="414.0" y="276.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="580.0" y="299.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Metrics</text>
+  <text x="580.0" y="315.0" font-size="10" fill="#455A64" text-anchor="middle">Micrometer · Prometheus</text>
+  <rect x="414.0" y="338.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="580.0" y="361.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Tests</text>
+  <text x="580.0" y="377.0" font-size="10" fill="#455A64" text-anchor="middle">JUnit 5 · Testcontainers K3s · kind</text>
+  <rect x="780.0" y="50.0" width="360.0" height="360.0" rx="12" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.5"/>
+  <text x="796.0" y="76.0" font-size="14" fill="#A84300" text-anchor="start" font-weight="600">Other languages</text>
+  <rect x="794.0" y="90.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="960.0" y="113.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Backstage plugins</text>
+  <text x="960.0" y="129.0" font-size="10" fill="#455A64" text-anchor="middle">TypeScript (Backstage&#x27;s language)</text>
+  <rect x="794.0" y="152.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="960.0" y="175.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">OCM</text>
+  <text x="960.0" y="191.0" font-size="10" fill="#455A64" text-anchor="middle">used as released; no changes</text>
+  <rect x="794.0" y="214.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="960.0" y="237.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Build templates</text>
+  <text x="960.0" y="253.0" font-size="10" fill="#455A64" text-anchor="middle">Argo Workflows YAML</text>
+  <rect x="794.0" y="276.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="960.0" y="299.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Platform content</text>
+  <text x="960.0" y="315.0" font-size="10" fill="#455A64" text-anchor="middle">YAML in Git (types, traits)</text>
+  <rect x="794.0" y="338.0" width="332.0" height="54.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="960.0" y="361.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Scripts</text>
+  <text x="960.0" y="377.0" font-size="10" fill="#455A64" text-anchor="middle">Bash (kind, CI)</text>
+  <text x="580.0" y="444.0" font-size="11" fill="#455A64" text-anchor="middle" font-style="italic">SSP talks to OCM only through its Kubernetes APIs (ManagedCluster, Placement, ManifestWorkReplicaSet, add-ons) and makes no changes to OCM.</text>
+</svg>

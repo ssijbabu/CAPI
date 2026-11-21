@@ -1,6 +1,6 @@
 # Reference Design: Deployment Topology
 
-**Where every component runs, for a platform of 22 clusters**
+**Where every component runs, for a platform of 19 clusters**
 
 | | |
 |---|---|
@@ -12,7 +12,7 @@
 
 ## 1. Summary
 
-This reference design shows the platform at a realistic starting size: **four application teams, three environments each, two isolated stacks, 22 clusters in total.**
+This reference design shows the platform at a realistic starting size: **three application teams, three environments each, two isolated stacks, 19 clusters in total.**
 
 - **10 platform clusters**, five per stack, all VKS on premises, each with one job:
   - `platform`: the self-service control plane (Crossplane, Cluster API, CAPZ, ASO, Argo CD, Kyverno).
@@ -20,7 +20,7 @@ This reference design shows the platform at a realistic starting size: **four ap
   - `choreo`: the OpenChoreo control plane and portal.
   - `build`: the OpenChoreo workflow plane.
   - `observe`: logs, metrics and alerts.
-- **12 team clusters**: each team has one cluster per environment (`dv`, `te`, `pr`). They are a mix of VKS and AKS, according to each team's needs.
+- **9 team clusters**: each team has one cluster per environment (`dv`, `te`, `pr`). They are a mix of VKS and AKS, according to each team's needs.
 - **Git** is outside both stacks and is the only link between them.
 
 Keeping each platform role on its own cluster means each one can be upgraded, scaled and recovered without touching the others. For example, a heavy build cannot slow the OpenChoreo API, and an OCM hub upgrade cannot interrupt cluster provisioning.
@@ -38,13 +38,12 @@ The numbers scale linearly. Each new team adds three team clusters, and the ten 
 | payments | VKS | AKS | AKS | Customer-facing on Azure; cheap on-premises development |
 | orders | VKS | VKS | VKS | Data must stay on premises |
 | search | AKS | AKS | AKS | Uses Azure services throughout |
-| ledger | VKS | VKS | VKS | Regulated; on premises only |
 
-All twelve team clusters have the default `purpose: openchoreo-data-plane`. A team that chooses `self-managed` keeps the same cluster count. The only difference is that its clusters run a GitOps agent instead of the OpenChoreo data plane components (Section 5.6).
+All nine team clusters have the default `purpose: openchoreo-data-plane`. A team that chooses `self-managed` keeps the same cluster count. The only difference is that its clusters run a GitOps agent instead of the OpenChoreo data plane components (Section 5.6).
 
 ## 3. Cluster Inventory
 
-### 3.1 Non-production stack: 13 clusters
+### 3.1 Non-production stack: 11 clusters
 
 | # | Cluster | Platform | Location | Created by | Role |
 |---|---|---|---|---|---|
@@ -59,22 +58,19 @@ All twelve team clusters have the default `purpose: openchoreo-data-plane`. A te
 | 9 | `orders-te` | VKS | vSphere Namespace `orders-np` | `np-platform` | Team data plane |
 | 10 | `search-dv` | AKS | `sub-k8s-nonprod`, `rg-search-dv` | `np-platform` | Team data plane |
 | 11 | `search-te` | AKS | `sub-k8s-nonprod`, `rg-search-te` | `np-platform` | Team data plane |
-| 12 | `ledger-dv` | VKS | vSphere Namespace `ledger-np` | `np-platform` | Team data plane |
-| 13 | `ledger-te` | VKS | vSphere Namespace `ledger-np` | `np-platform` | Team data plane |
 
-### 3.2 Production stack: 9 clusters
+### 3.2 Production stack: 8 clusters
 
 | # | Cluster | Platform | Location | Created by | Role |
 |---|---|---|---|---|---|
-| 14 | `pr-platform` | VKS | vSphere Namespace `pr-platform` (production Supervisor) | Supervisor, directly (bootstrap) | Self-service control plane |
-| 15 | `pr-fleet` | VKS | vSphere Namespace `pr-platform` | `pr-platform` | OCM hub |
-| 16 | `pr-choreo` | VKS | vSphere Namespace `pr-platform` | `pr-platform` | OpenChoreo control plane and portal |
-| 17 | `pr-build` | VKS | vSphere Namespace `pr-platform` | `pr-platform` | OpenChoreo workflow plane (production rebuilds) |
-| 18 | `pr-observe` | VKS | vSphere Namespace `pr-platform` | `pr-platform` | OpenChoreo observability plane, platform monitoring |
-| 19 | `payments-pr` | Private AKS | Subscription `sub-k8s-prod`, `rg-payments-pr` | `pr-platform` | Team data plane |
-| 20 | `orders-pr` | VKS | vSphere Namespace `orders-pr` | `pr-platform` | Team data plane |
-| 21 | `search-pr` | Private AKS | `sub-k8s-prod`, `rg-search-pr` | `pr-platform` | Team data plane |
-| 22 | `ledger-pr` | VKS | vSphere Namespace `ledger-pr` | `pr-platform` | Team data plane |
+| 12 | `pr-platform` | VKS | vSphere Namespace `pr-platform` (production Supervisor) | Supervisor, directly (bootstrap) | Self-service control plane |
+| 13 | `pr-fleet` | VKS | vSphere Namespace `pr-platform` | `pr-platform` | OCM hub |
+| 14 | `pr-choreo` | VKS | vSphere Namespace `pr-platform` | `pr-platform` | OpenChoreo control plane and portal |
+| 15 | `pr-build` | VKS | vSphere Namespace `pr-platform` | `pr-platform` | OpenChoreo workflow plane (production rebuilds) |
+| 16 | `pr-observe` | VKS | vSphere Namespace `pr-platform` | `pr-platform` | OpenChoreo observability plane, platform monitoring |
+| 17 | `payments-pr` | Private AKS | Subscription `sub-k8s-prod`, `rg-payments-pr` | `pr-platform` | Team data plane |
+| 18 | `orders-pr` | VKS | vSphere Namespace `orders-pr` | `pr-platform` | Team data plane |
+| 19 | `search-pr` | Private AKS | `sub-k8s-prod`, `rg-search-pr` | `pr-platform` | Team data plane |
 
 ### 3.3 Naming
 
@@ -119,7 +115,7 @@ Every cluster carries the **baseline** in 5.6. The platform clusters add their o
 | `azureserviceoperator-system` | Azure Service Operator v2 | Resource groups, VNets, NSGs, identities, role assignments, Log Analytics |
 | `kyverno` | Kyverno | Admission guardrails for requests and releases |
 | `argocd` | Argo CD | Syncs Git into this cluster; installs and configures the OCM hub on `fleet`; applies OpenChoreo configuration and releases to `choreo` |
-| `team-<team>` (×4) | Team `KubernetesCluster` XRs, CAPI `Cluster` objects, ASO objects, kubeconfig secrets (platform-only) | One per team |
+| `team-<team>` (×3) | Team `KubernetesCluster` XRs, CAPI `Cluster` objects, ASO objects, kubeconfig secrets (platform-only) | One per team |
 | `platform` | Platform tenant: `KubernetesCluster` for `fleet`, `choreo`, `build` and `observe` | Platform-owned clusters |
 
 ### 5.2 `np-fleet` and `pr-fleet`: OCM hub
@@ -140,7 +136,7 @@ The hub manages itself as a cluster, so it receives the baseline too. It holds n
 | `openchoreo-control-plane` | `openchoreo-control-plane` chart: controller manager, OpenChoreo API, cluster gateway, event forwarder | OpenChoreo API and controllers; the gateway that every plane agent connects to |
 | `openchoreo-control-plane` | Backstage portal (part of the same chart) | Developer portal; also hosts the `KubernetesCluster` template and the OCM plugin (proposal Section 9.4) |
 | `kgateway-system` | Gateway API CRDs and kgateway | Ingress for the API, portal and cluster gateway |
-| `<team>` (×4) | OpenChoreo namespaces: Projects, Components, Environments, the team's `DataPlane`s, releases and bindings | Delivered by OCM and Argo CD from Git |
+| `<team>` (×3) | OpenChoreo namespaces: Projects, Components, Environments, the team's `DataPlane`s, releases and bindings | Delivered by OCM and Argo CD from Git |
 
 OpenChoreo is configured to sign users in through **Entra ID**, instead of the identity provider it bundles. The `WorkflowPlane` and `ObservabilityPlane` registrations for `build` and `observe` live here.
 
@@ -224,7 +220,7 @@ Git is the only thing both stacks read, and the only path from non-production to
 | `platform` | Platform team | XRDs, Compositions and render tests, ClusterClasses, Kyverno policies, OCM add-ons and fleet policies, OpenChoreo component types, traits and workflows | Both stacks' Argo CD, **by tag only** | Platform engineers, by pull request; released as `vX.Y.Z` |
 | `platform-nonprod` | Platform team | Non-production stack: platform tag in use, bootstrap values, `platform-defaults`, tenants, platform tenant's clusters | `np-platform` Argo CD | Platform engineers |
 | `platform-pr` | Platform team (production approvers) | The same, for production | `pr-platform` Argo CD | Platform engineers, with production approval |
-| `team-payments`, `team-orders`, `team-search`, `team-ledger` | Each team | `nonprod/clusters/`, `nonprod/releases/te/`, `pr/clusters/`, `pr/releases/` | `np-platform` Argo CD reads `nonprod/`; `pr-platform` Argo CD reads `pr/` | Team members; release bots (7.3) |
+| `team-payments`, `team-orders`, `team-search` | Each team | `nonprod/clusters/`, `nonprod/releases/te/`, `pr/clusters/`, `pr/releases/` | `np-platform` Argo CD reads `nonprod/`; `pr-platform` Argo CD reads `pr/` | Team members; release bots (7.3) |
 | Application source (for example `payments-api`) | Each team | Code and Dockerfile or buildpack settings | `np-build` and `pr-build` (clone at a commit) | Team members |
 
 ### 7.2 Protection rules
@@ -315,7 +311,7 @@ VM classes and Azure sizes follow the proposal's size mapping. Revisit them afte
 
 **Totals for this example:**
 
-- VKS: 17 clusters (10 platform, 7 team), 45 control-plane VMs and 49 worker VMs. Production uses only the production vSphere capacity.
+- VKS: 14 clusters (10 platform, 4 team), 38 control-plane VMs and 41 worker VMs. Production uses only the production vSphere capacity.
 - AKS: 5 clusters, about 23 nodes, counting system pools (three nodes, across zones, in production).
 
 ## 10. Bootstrap Order

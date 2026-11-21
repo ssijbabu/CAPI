@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="470" viewBox="0 0 1120 470" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Endpoint visibility levels from project to external, and how dependencies are resolved and injected</title>
+  <defs><marker id="a_2E7D32" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker><marker id="a_EF6C00" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#EF6C00"/></marker><marker id="a_6B4FA8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B4FA8"/></marker><marker id="a_C62828" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C62828"/></marker><marker id="a_00838F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00838F"/></marker></defs>
+  <rect x="0" y="0" width="1120" height="470" fill="#FFFFFF"/>
+  <rect x="20.0" y="20.0" width="640.0" height="430.0" rx="14" fill="#FFFFFF" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="40.0" y="46.0" font-size="12" fill="#37474F" text-anchor="start" font-weight="600">external · internet, through the environment&#x27;s external gateway</text>
+  <rect x="40.0" y="60.0" width="600.0" height="370.0" rx="12" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.5"/>
+  <text x="56.0" y="84.0" font-size="12" fill="#A84300" text-anchor="start" font-weight="600">internal · any cluster in the environment, through the gateway</text>
+  <rect x="60.0" y="100.0" width="340.0" height="310.0" rx="12" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="76.0" y="124.0" font-size="12" fill="#1F4F82" text-anchor="start" font-weight="600">namespace · same cluster, allowed apps</text>
+  <rect x="80.0" y="140.0" width="300.0" height="250.0" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="96.0" y="164.0" font-size="12" fill="#1B5E20" text-anchor="start" font-weight="600">project · same application</text>
+  <rect x="100.0" y="180.0" width="120.0" height="56.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="160.0" y="203.5" font-size="11" fill="#263238" text-anchor="middle" font-weight="600">checkout-api</text>
+  <text x="160.0" y="219.5" font-size="10" fill="#455A64" text-anchor="middle">Endpoint</text>
+  <rect x="240.0" y="180.0" width="120.0" height="56.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="300.0" y="203.5" font-size="11" fill="#263238" text-anchor="middle" font-weight="600">checkout-web</text>
+  <text x="300.0" y="219.5" font-size="10" fill="#455A64" text-anchor="middle">calls api</text>
+  <path d="M240.0,208.0 L220.0,208.0" fill="none" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#a_2E7D32)"/>
+  <text x="230.0" y="280.0" font-size="10" fill="#455A64" text-anchor="middle" font-style="italic">Rendered by the ClusterEndpointType:</text>
+  <text x="230.0" y="296.0" font-size="10" fill="#455A64" text-anchor="middle" font-style="italic">routes, network policy per visibility</text>
+  <rect x="420.0" y="200.0" width="200.0" height="60.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="520.0" y="225.5" font-size="11" fill="#263238" text-anchor="middle" font-weight="600">other cluster, same env</text>
+  <text x="520.0" y="241.5" font-size="10" fill="#455A64" text-anchor="middle">internal callers</text>
+  <path d="M420.0,222.0 L392.0,222.0 L392.0,256.0 L160.0,256.0 L160.0,236.0" fill="none" stroke="#EF6C00" stroke-width="1.6" marker-end="url(#a_EF6C00)"/>
+  <rect x="420.0" y="300.0" width="200.0" height="26" rx="13" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1"/>
+  <text x="520.0" y="317.0" font-size="11" fill="#A84300" text-anchor="middle">internal gateway</text>
+  <rect x="420.0" y="340.0" width="200.0" height="26" rx="13" fill="#F5F7F8" stroke="#607D8B" stroke-width="1"/>
+  <text x="520.0" y="357.0" font-size="11" fill="#37474F" text-anchor="middle">external gateway</text>
+  <rect x="690.0" y="20.0" width="410.0" height="430.0" rx="14" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="895.0" y="46.0" font-size="14" fill="#4A3480" text-anchor="middle" font-weight="600">Dependencies</text>
+  <rect x="730.0" y="66.0" width="330.0" height="70.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="895.0" y="90.0" font-size="12" fill="#1B5E20" text-anchor="middle" font-weight="600">Workload (caller)</text>
+  <text x="895.0" y="106.0" font-size="10" fill="#455A64" text-anchor="middle">dependencies.endpoints:</text>
+  <text x="895.0" y="120.0" font-size="10" fill="#455A64" text-anchor="middle">catalog-web / http</text>
+  <rect x="730.0" y="160.0" width="330.0" height="70.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="895.0" y="184.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">SSP resolves</text>
+  <text x="895.0" y="200.0" font-size="10" fill="#455A64" text-anchor="middle">target ReleaseBinding.status</text>
+  <text x="895.0" y="214.0" font-size="10" fill="#455A64" text-anchor="middle">in the same environment</text>
+  <path d="M895.0,136.0 L895.0,160.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <rect x="730.0" y="254.0" width="330.0" height="70.0" rx="8" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="895.0" y="278.0" font-size="12" fill="#8E1B1B" text-anchor="middle" font-weight="600">Allowed?</text>
+  <text x="895.0" y="294.0" font-size="10" fill="#455A64" text-anchor="middle">target Endpoint visibility</text>
+  <text x="895.0" y="308.0" font-size="10" fill="#455A64" text-anchor="middle">and allowed callers</text>
+  <path d="M895.0,230.0 L895.0,254.0" fill="none" stroke="#C62828" stroke-width="1.6" marker-end="url(#a_C62828)"/>
+  <rect x="730.0" y="348.0" width="330.0" height="70.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="895.0" y="372.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">Injected</text>
+  <text x="895.0" y="388.0" font-size="10" fill="#455A64" text-anchor="middle">CATALOG_URL into the rendered</text>
+  <text x="895.0" y="402.0" font-size="10" fill="#455A64" text-anchor="middle">manifests of the caller</text>
+  <path d="M895.0,324.0 L895.0,348.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+</svg>

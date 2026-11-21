@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="470" viewBox="0 0 1120 470" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>A release journey across the four personas: from golden paths to production, with Operator approval in Git</title>
+  <defs><marker id="a_6B4FA8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B4FA8"/></marker><marker id="a_2E7D32" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker><marker id="a_E65100" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E65100"/></marker><marker id="a_C62828" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C62828"/></marker><marker id="a_EF6C00" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#EF6C00"/></marker></defs>
+  <rect x="0" y="0" width="1120" height="470" fill="#FFFFFF"/>
+  <rect x="152.0" y="26.0" width="486.0" height="30.0" rx="6" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="395.0" y="46.0" font-size="12" fill="#1F4F82" text-anchor="middle" font-weight="600">Non-production stack (np-hub)</text>
+  <rect x="642.0" y="26.0" width="156.0" height="30.0" rx="6" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <text x="720.0" y="46.0" font-size="12" fill="#A33A00" text-anchor="middle" font-weight="600">Git</text>
+  <rect x="802.0" y="26.0" width="296.0" height="30.0" rx="6" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="950.0" y="46.0" font-size="12" fill="#8E1B1B" text-anchor="middle" font-weight="600">Production stack (pr-hub)</text>
+  <rect x="20.0" y="70.0" width="1080.0" height="84.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1"/>
+  <circle cx="46" cy="100.0" r="5.6" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.4"/>
+  <path d="M37,117.1 Q37,109.0 46,109.0 Q55,109.0 55,117.1 Z" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.4"/>
+  <text x="64.0" y="112.0" font-size="12" fill="#4A3480" text-anchor="start" font-weight="600">Platform</text>
+  <text x="64.0" y="126.0" font-size="12" fill="#4A3480" text-anchor="start" font-weight="600">Engineer</text>
+  <rect x="20.0" y="160.0" width="1080.0" height="84.0" rx="8" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1"/>
+  <circle cx="46" cy="190.0" r="5.6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.4"/>
+  <path d="M37,207.1 Q37,199.0 46,199.0 Q55,199.0 55,207.1 Z" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.4"/>
+  <text x="64.0" y="202.0" font-size="12" fill="#1B5E20" text-anchor="start" font-weight="600">Application</text>
+  <text x="64.0" y="216.0" font-size="12" fill="#1B5E20" text-anchor="start" font-weight="600">Team</text>
+  <rect x="20.0" y="250.0" width="1080.0" height="84.0" rx="8" fill="#FDECEA" stroke="#C62828" stroke-width="1"/>
+  <circle cx="46" cy="280.0" r="5.6" fill="#FDECEA" stroke="#C62828" stroke-width="1.4"/>
+  <path d="M37,297.1 Q37,289.0 46,289.0 Q55,289.0 55,297.1 Z" fill="#FDECEA" stroke="#C62828" stroke-width="1.4"/>
+  <text x="64.0" y="299.0" font-size="12" fill="#8E1B1B" text-anchor="start" font-weight="600">Operator</text>
+  <rect x="20.0" y="340.0" width="1080.0" height="84.0" rx="8" fill="#FFFFFF" stroke="#EF6C00" stroke-width="1"/>
+  <circle cx="46" cy="370.0" r="5.6" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.4"/>
+  <path d="M37,387.1 Q37,379.0 46,379.0 Q55,379.0 55,387.1 Z" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.4"/>
+  <text x="64.0" y="389.0" font-size="12" fill="#A84300" text-anchor="start" font-weight="600">SRE</text>
+  <path d="M640.0,26.0 L640.0,430.0" fill="none" stroke="#607D8B" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <path d="M800.0,26.0 L800.0,430.0" fill="none" stroke="#607D8B" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <rect x="160.0" y="80.0" width="110.0" height="64.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="215.0" y="100.5" font-size="11" fill="#4A3480" text-anchor="middle" font-weight="600">1. Golden paths</text>
+  <text x="215.0" y="116.5" font-size="10" fill="#455A64" text-anchor="middle">cluster + component</text>
+  <text x="215.0" y="130.5" font-size="10" fill="#455A64" text-anchor="middle">types, environments</text>
+  <rect x="280.0" y="80.0" width="110.0" height="64.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="335.0" y="100.5" font-size="11" fill="#4A3480" text-anchor="middle" font-weight="600">2. Clusters + app</text>
+  <text x="335.0" y="116.5" font-size="10" fill="#455A64" text-anchor="middle">clusters requested,</text>
+  <text x="335.0" y="130.5" font-size="10" fill="#455A64" text-anchor="middle">app onboarded</text>
+  <rect x="400.0" y="170.0" width="110.0" height="64.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="455.0" y="190.5" font-size="11" fill="#1B5E20" text-anchor="middle" font-weight="600">3. Deploy dv</text>
+  <text x="455.0" y="206.5" font-size="10" fill="#455A64" text-anchor="middle">Component +</text>
+  <text x="455.0" y="220.5" font-size="10" fill="#455A64" text-anchor="middle">dv binding</text>
+  <rect x="520.0" y="170.0" width="110.0" height="64.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="575.0" y="190.5" font-size="11" fill="#1B5E20" text-anchor="middle" font-weight="600">4. Promote te</text>
+  <text x="575.0" y="206.5" font-size="10" fill="#455A64" text-anchor="middle">admission checks</text>
+  <text x="575.0" y="220.5" font-size="10" fill="#455A64" text-anchor="middle">dv health</text>
+  <rect x="660.0" y="170.0" width="110.0" height="64.0" rx="8" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <text x="715.0" y="190.5" font-size="11" fill="#A33A00" text-anchor="middle" font-weight="600">5. Export PR</text>
+  <text x="715.0" y="206.5" font-size="10" fill="#455A64" text-anchor="middle">kubectl ssp</text>
+  <text x="715.0" y="220.5" font-size="10" fill="#455A64" text-anchor="middle">release export</text>
+  <rect x="660.0" y="260.0" width="110.0" height="64.0" rx="8" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="715.0" y="280.5" font-size="11" fill="#8E1B1B" text-anchor="middle" font-weight="600">6. Approve</text>
+  <text x="715.0" y="296.5" font-size="10" fill="#455A64" text-anchor="middle">CODEOWNERS</text>
+  <text x="715.0" y="310.5" font-size="10" fill="#455A64" text-anchor="middle">review (SR-9)</text>
+  <rect x="820.0" y="260.0" width="110.0" height="64.0" rx="8" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="875.0" y="280.5" font-size="11" fill="#8E1B1B" text-anchor="middle" font-weight="600">7. Merge → Flux</text>
+  <text x="875.0" y="296.5" font-size="10" fill="#455A64" text-anchor="middle">signed commit</text>
+  <text x="875.0" y="310.5" font-size="10" fill="#455A64" text-anchor="middle">only Flux writes</text>
+  <rect x="960.0" y="170.0" width="110.0" height="64.0" rx="8" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="1015.0" y="190.5" font-size="11" fill="#8E1B1B" text-anchor="middle" font-weight="600">8. Runs in pr</text>
+  <text x="1015.0" y="206.5" font-size="10" fill="#455A64" text-anchor="middle">rebuild on</text>
+  <text x="1015.0" y="220.5" font-size="10" fill="#455A64" text-anchor="middle">pr-build, bind</text>
+  <rect x="400.0" y="350.0" width="110.0" height="64.0" rx="8" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.5"/>
+  <text x="455.0" y="370.5" font-size="11" fill="#A84300" text-anchor="middle" font-weight="600">9. Observe dv, te</text>
+  <text x="455.0" y="386.5" font-size="10" fill="#455A64" text-anchor="middle">logs · metrics</text>
+  <text x="455.0" y="400.5" font-size="10" fill="#455A64" text-anchor="middle">alerts</text>
+  <rect x="960.0" y="350.0" width="110.0" height="64.0" rx="8" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.5"/>
+  <text x="1015.0" y="370.5" font-size="11" fill="#A84300" text-anchor="middle" font-weight="600">10. Observe pr</text>
+  <text x="1015.0" y="386.5" font-size="10" fill="#455A64" text-anchor="middle">incidents · RCA</text>
+  <text x="1015.0" y="400.5" font-size="10" fill="#455A64" text-anchor="middle">read-only</text>
+  <path d="M270.0,112.0 L280.0,112.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <path d="M335.0,144.0 L335.0,205.0 L390.0,205.0 L400.0,202.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <path d="M510.0,202.0 L520.0,202.0" fill="none" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#a_2E7D32)"/>
+  <path d="M630.0,202.0 L660.0,202.0" fill="none" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#a_2E7D32)"/>
+  <path d="M715.0,234.0 L715.0,260.0" fill="none" stroke="#E65100" stroke-width="1.6" marker-end="url(#a_E65100)"/>
+  <path d="M770.0,292.0 L820.0,292.0" fill="none" stroke="#C62828" stroke-width="1.6" marker-end="url(#a_C62828)"/>
+  <path d="M930.0,292.0 L945.0,292.0 L945.0,202.0 L960.0,202.0" fill="none" stroke="#C62828" stroke-width="1.6" marker-end="url(#a_C62828)"/>
+  <path d="M575.0,234.0 L575.0,320.0 L455.0,320.0 L455.0,350.0" fill="none" stroke="#EF6C00" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a_EF6C00)"/>
+  <path d="M1015.0,234.0 L1015.0,350.0" fill="none" stroke="#EF6C00" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a_EF6C00)"/>
+  <text x="560.0" y="454.0" font-size="11" fill="#455A64" text-anchor="middle" font-style="italic">Dashed arrows: telemetry and alerts. Every step in a stack is applied from Git by Flux; nothing crosses from np to pr except the approved pull request.</text>
+</svg>

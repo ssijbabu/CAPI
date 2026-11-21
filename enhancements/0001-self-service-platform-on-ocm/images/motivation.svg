@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>OpenChoreo next to OCM needs two agents and two inventories; SSP on OCM needs one agent and one inventory</title>
+  <defs><marker id="a_6B4FA8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B4FA8"/></marker><marker id="a_00838F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00838F"/></marker></defs>
+  <rect x="0" y="0" width="1000" height="420" fill="#FFFFFF"/>
+  <rect x="20.0" y="20.0" width="460.0" height="380.0" rx="12" fill="#FFFFFF" stroke="#C62828" stroke-width="1.5"/>
+  <text x="250.0" y="46.0" font-size="15" fill="#8E1B1B" text-anchor="middle" font-weight="600">Today: OpenChoreo next to OCM</text>
+  <rect x="520.0" y="20.0" width="460.0" height="380.0" rx="12" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="750.0" y="46.0" font-size="15" fill="#1B5E20" text-anchor="middle" font-weight="600">Proposed: SSP on OCM</text>
+  <rect x="40.0" y="70.0" width="200.0" height="90.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="140.0" y="103.5" font-size="13" fill="#4A3480" text-anchor="middle" font-weight="600">OpenChoreo control plane</text>
+  <text x="140.0" y="120.5" font-size="11" fill="#455A64" text-anchor="middle">controllers · API</text>
+  <text x="140.0" y="135.5" font-size="11" fill="#455A64" text-anchor="middle">cluster gateway (WSS)</text>
+  <rect x="260.0" y="70.0" width="200.0" height="90.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="360.0" y="103.5" font-size="13" fill="#00695C" text-anchor="middle" font-weight="600">OCM hub</text>
+  <text x="360.0" y="120.5" font-size="11" fill="#455A64" text-anchor="middle">registration · work</text>
+  <text x="360.0" y="135.5" font-size="11" fill="#455A64" text-anchor="middle">placement · add-ons</text>
+  <rect x="40.0" y="230.0" width="420.0" height="110.0" rx="10" fill="#F5F7F8" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="250.0" y="252.0" font-size="13" fill="#37474F" text-anchor="middle" font-weight="600">Managed cluster</text>
+  <rect x="60.0" y="266.0" width="180.0" height="60.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="150.0" y="292.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">OpenChoreo agent</text>
+  <text x="150.0" y="308.0" font-size="10" fill="#455A64" text-anchor="middle">mTLS cert, 2160 h</text>
+  <rect x="260.0" y="266.0" width="180.0" height="60.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="350.0" y="292.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">klusterlet</text>
+  <text x="350.0" y="308.0" font-size="10" fill="#455A64" text-anchor="middle">OCM registration</text>
+  <path d="M150.0,266.0 L150.0,160.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <text x="156.0" y="210.0" font-size="11" fill="#4A3480" text-anchor="start" font-style="italic">outbound WSS</text>
+  <path d="M350.0,266.0 L350.0,160.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+  <text x="356.0" y="210.0" font-size="11" fill="#00695C" text-anchor="start" font-style="italic">outbound</text>
+  <text x="40.0" y="362.0" font-size="11" fill="#8E1B1B" text-anchor="start">✕ Two agents, two registrations, two inventories</text>
+  <text x="40.0" y="378.0" font-size="11" fill="#8E1B1B" text-anchor="start">✕ Long-lived agent certificates (conflicts with SR-4, SR-5)</text>
+  <text x="40.0" y="394.0" font-size="11" fill="#8E1B1B" text-anchor="start">✕ Promotion checks bypassed by GitOps (SR-3)</text>
+  <rect x="540.0" y="70.0" width="420.0" height="90.0" rx="10" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="750.0" y="90.0" font-size="13" fill="#00695C" text-anchor="middle" font-weight="600">OCM hub</text>
+  <rect x="556.0" y="104.0" width="190.0" height="22" rx="11" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1"/>
+  <text x="651.0" y="119.0" font-size="11" fill="#4A3480" text-anchor="middle">SSP controllers + webhooks</text>
+  <rect x="756.0" y="104.0" width="190.0" height="22" rx="11" fill="#E0F2F1" stroke="#00838F" stroke-width="1"/>
+  <text x="851.0" y="119.0" font-size="11" fill="#00695C" text-anchor="middle">registration · work · placement</text>
+  <rect x="556.0" y="132.0" width="190.0" height="22" rx="11" fill="#E8EAF6" stroke="#3949AB" stroke-width="1"/>
+  <text x="651.0" y="147.0" font-size="11" fill="#283593" text-anchor="middle">Flux</text>
+  <rect x="756.0" y="132.0" width="190.0" height="22" rx="11" fill="#FCE4EC" stroke="#AD1457" stroke-width="1"/>
+  <text x="851.0" y="147.0" font-size="11" fill="#880E4F" text-anchor="middle">SPIRE server</text>
+  <rect x="540.0" y="230.0" width="420.0" height="110.0" rx="10" fill="#F5F7F8" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="750.0" y="252.0" font-size="13" fill="#37474F" text-anchor="middle" font-weight="600">Managed cluster</text>
+  <rect x="560.0" y="266.0" width="180.0" height="60.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="650.0" y="292.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">klusterlet</text>
+  <text x="650.0" y="308.0" font-size="10" fill="#455A64" text-anchor="middle">work agent applies ManifestWork</text>
+  <rect x="760.0" y="266.0" width="180.0" height="60.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="850.0" y="292.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">Add-ons</text>
+  <text x="850.0" y="308.0" font-size="10" fill="#455A64" text-anchor="middle">SPIRE agent · telemetry</text>
+  <path d="M650.0,266.0 L650.0,160.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+  <text x="656.0" y="210.0" font-size="11" fill="#00695C" text-anchor="start" font-style="italic">outbound, SPIFFE identity</text>
+  <text x="540.0" y="362.0" font-size="11" fill="#1B5E20" text-anchor="start">✓ One agent, one inventory, one namespace per cluster (SR-6)</text>
+  <text x="540.0" y="378.0" font-size="11" fill="#1B5E20" text-anchor="start">✓ Short-lived SVIDs, no stored secrets (SR-4, SR-5)</text>
+  <text x="540.0" y="394.0" font-size="11" fill="#1B5E20" text-anchor="start">✓ Promotion checked at admission, Git writes included (SR-3)</text>
+</svg>

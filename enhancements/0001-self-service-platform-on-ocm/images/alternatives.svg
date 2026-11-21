@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="230" viewBox="0 0 1160 230" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Alternatives compared with SSP on OCM</title>
+  <defs></defs>
+  <rect x="0" y="0" width="1160" height="230" fill="#FFFFFF"/>
+  <rect x="20.0" y="20.0" width="214.0" height="190.0" rx="10" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <circle cx="210" cy="44" r="10" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.6"/>
+  <path d="M206.15,44 L209.3,47.5 L214.2,40.5" fill="none" stroke="#2E7D32" stroke-width="2.2"/>
+  <text x="34.0" y="48.0" font-size="13" fill="#1B5E20" text-anchor="start" font-weight="600">SSP on OCM</text>
+  <text x="34.0" y="68.0" font-size="10" fill="#455A64" text-anchor="start" font-style="italic">chosen</text>
+  <text x="34.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">+ one agent, one inventory</text>
+  <text x="34.0" y="122.0" font-size="11" fill="#263238" text-anchor="start">+ namespace per cluster (SR-6)</text>
+  <text x="34.0" y="144.0" font-size="11" fill="#263238" text-anchor="start">+ SPIFFE, no stored secrets</text>
+  <text x="34.0" y="166.0" font-size="11" fill="#263238" text-anchor="start">+ admission-enforced promotion</text>
+  <rect x="244.0" y="20.0" width="214.0" height="190.0" rx="10" fill="#FFFFFF" stroke="#607D8B" stroke-width="1.5"/>
+  <circle cx="434" cy="44" r="10" fill="#FFFFFF" stroke="#C62828" stroke-width="1.6"/>
+  <path d="M430.15,40.15 L437.85,47.85 M437.85,40.15 L430.15,47.85" stroke="#C62828" stroke-width="2.2"/>
+  <text x="258.0" y="48.0" font-size="13" fill="#263238" text-anchor="start" font-weight="600">OpenChoreo next to OCM</text>
+  <text x="258.0" y="68.0" font-size="10" fill="#455A64" text-anchor="start" font-style="italic">current proposal</text>
+  <text x="258.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">– two agents, two inventories</text>
+  <text x="258.0" y="122.0" font-size="11" fill="#263238" text-anchor="start">– long-lived agent certificates</text>
+  <text x="258.0" y="144.0" font-size="11" fill="#263238" text-anchor="start">– GitOps bypasses promotion checks</text>
+  <rect x="468.0" y="20.0" width="214.0" height="190.0" rx="10" fill="#FFFFFF" stroke="#607D8B" stroke-width="1.5"/>
+  <circle cx="658" cy="44" r="10" fill="#FFFFFF" stroke="#C62828" stroke-width="1.6"/>
+  <path d="M654.15,40.15 L661.85,47.85 M661.85,40.15 L654.15,47.85" stroke="#C62828" stroke-width="2.2"/>
+  <text x="482.0" y="48.0" font-size="13" fill="#263238" text-anchor="start" font-weight="600">OpenChoreo over OCM</text>
+  <text x="482.0" y="68.0" font-size="10" fill="#455A64" text-anchor="start" font-style="italic">agent as an add-on</text>
+  <text x="482.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">– still a second delivery path</text>
+  <text x="482.0" y="122.0" font-size="11" fill="#263238" text-anchor="start">– own identity model</text>
+  <text x="482.0" y="144.0" font-size="11" fill="#263238" text-anchor="start">– no hub namespace per cluster</text>
+  <text x="482.0" y="166.0" font-size="11" fill="#263238" text-anchor="start">– for application work</text>
+  <rect x="692.0" y="20.0" width="214.0" height="190.0" rx="10" fill="#FFFFFF" stroke="#607D8B" stroke-width="1.5"/>
+  <circle cx="882" cy="44" r="10" fill="#FFFFFF" stroke="#C62828" stroke-width="1.6"/>
+  <path d="M878.15,40.15 L885.85,47.85 M885.85,40.15 L878.15,47.85" stroke="#C62828" stroke-width="2.2"/>
+  <text x="706.0" y="48.0" font-size="13" fill="#263238" text-anchor="start" font-weight="600">KubeVela</text>
+  <text x="706.0" y="68.0" font-size="10" fill="#455A64" text-anchor="start" font-style="italic">with OCM integration</text>
+  <text x="706.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">– different application model</text>
+  <text x="706.0" y="122.0" font-size="11" fill="#263238" text-anchor="start">– own cluster gateway</text>
+  <text x="706.0" y="144.0" font-size="11" fill="#263238" text-anchor="start">– not ManifestWork-based</text>
+  <rect x="916.0" y="20.0" width="214.0" height="190.0" rx="10" fill="#FFFFFF" stroke="#607D8B" stroke-width="1.5"/>
+  <circle cx="1106" cy="44" r="10" fill="#FFFFFF" stroke="#C62828" stroke-width="1.6"/>
+  <path d="M1102.15,40.15 L1109.85,47.85 M1109.85,40.15 L1102.15,47.85" stroke="#C62828" stroke-width="2.2"/>
+  <text x="930.0" y="48.0" font-size="13" fill="#263238" text-anchor="start" font-weight="600">Karmada</text>
+  <text x="930.0" y="68.0" font-size="10" fill="#455A64" text-anchor="start" font-style="italic"></text>
+  <text x="930.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">– replaces OCM propagation</text>
+  <text x="930.0" y="122.0" font-size="11" fill="#263238" text-anchor="start">– conflicts with SR-6</text>
+</svg>
