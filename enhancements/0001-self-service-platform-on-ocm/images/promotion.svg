@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="420" viewBox="0 0 1160 420" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Promotion: dv to te inside non-production through admission checks; te to pr only through an approved pull request on releases-pr</title>
+  <defs><marker id="a_2E7D32" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker><marker id="a_6B4FA8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B4FA8"/></marker><marker id="a_E65100" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E65100"/></marker><marker id="a_C62828" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C62828"/></marker><marker id="a_3949AB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3949AB"/></marker></defs>
+  <rect x="0" y="0" width="1160" height="420" fill="#FFFFFF"/>
+  <rect x="20.0" y="20.0" width="1120.0" height="150.0" rx="12" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="36.0" y="44.0" font-size="13" fill="#1F4F82" text-anchor="start" font-weight="600">Non-production stack (np-hub)</text>
+  <rect x="40.0" y="64.0" width="170.0" height="80.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="125.0" y="93.0" font-size="12" fill="#1B5E20" text-anchor="middle" font-weight="600">dv binding</text>
+  <text x="125.0" y="109.0" font-size="10" fill="#455A64" text-anchor="middle">ReleaseBinding</text>
+  <text x="125.0" y="123.0" font-size="10" fill="#455A64" text-anchor="middle">release 7f9c2e1</text>
+  <rect x="250.0" y="64.0" width="220.0" height="80.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="360.0" y="93.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">Admission webhook</text>
+  <text x="360.0" y="109.0" font-size="10" fill="#455A64" text-anchor="middle">PromotionPath dv → te</text>
+  <text x="360.0" y="123.0" font-size="10" fill="#455A64" text-anchor="middle">release healthy in dv?</text>
+  <rect x="510.0" y="64.0" width="170.0" height="80.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="595.0" y="93.0" font-size="12" fill="#1B5E20" text-anchor="middle" font-weight="600">te binding</text>
+  <text x="595.0" y="109.0" font-size="10" fill="#455A64" text-anchor="middle">same release</text>
+  <text x="595.0" y="123.0" font-size="10" fill="#455A64" text-anchor="middle">te overrides</text>
+  <rect x="730.0" y="64.0" width="380.0" height="80.0" rx="8" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <text x="920.0" y="93.0" font-size="12" fill="#A33A00" text-anchor="middle" font-weight="600">kubectl ssp release export --to pr</text>
+  <text x="920.0" y="109.0" font-size="10" fill="#455A64" text-anchor="middle">writes frozen release + pr binding + evidence</text>
+  <text x="920.0" y="123.0" font-size="10" fill="#455A64" text-anchor="middle">to a branch of releases-pr, as the developer</text>
+  <path d="M210.0,104.0 L250.0,104.0" fill="none" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#a_2E7D32)"/>
+  <path d="M470.0,104.0 L510.0,104.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <path d="M680.0,104.0 L730.0,104.0" fill="none" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#a_2E7D32)"/>
+  <rect x="20.0" y="190.0" width="1120.0" height="80.0" rx="12" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <text x="36.0" y="214.0" font-size="13" fill="#A33A00" text-anchor="start" font-weight="600">Git (releases-pr)</text>
+  <rect x="300.0" y="202.0" width="240.0" height="58.0" rx="8" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <text x="420.0" y="227.0" font-size="12" fill="#A33A00" text-anchor="middle" font-weight="600">Pull request</text>
+  <text x="420.0" y="243.0" font-size="10" fill="#455A64" text-anchor="middle">status checks: schema, policy, provenance</text>
+  <rect x="580.0" y="202.0" width="240.0" height="58.0" rx="8" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="700.0" y="227.0" font-size="12" fill="#8E1B1B" text-anchor="middle" font-weight="600">Operator approval</text>
+  <text x="700.0" y="243.0" font-size="10" fill="#455A64" text-anchor="middle">CODEOWNERS · required (SR-9)</text>
+  <rect x="860.0" y="202.0" width="200.0" height="58.0" rx="8" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <text x="960.0" y="227.0" font-size="12" fill="#A33A00" text-anchor="middle" font-weight="600">Signed merge to main</text>
+  <text x="960.0" y="243.0" font-size="10" fill="#455A64" text-anchor="middle">by the Git host</text>
+  <path d="M920.0,144.0 L920.0,175.0 L420.0,175.0 L420.0,202.0" fill="none" stroke="#E65100" stroke-width="1.6" marker-end="url(#a_E65100)"/>
+  <path d="M540.0,231.0 L580.0,231.0" fill="none" stroke="#E65100" stroke-width="1.6" marker-end="url(#a_E65100)"/>
+  <path d="M820.0,231.0 L860.0,231.0" fill="none" stroke="#C62828" stroke-width="1.6" marker-end="url(#a_C62828)"/>
+  <rect x="20.0" y="290.0" width="1120.0" height="100.0" rx="12" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="36.0" y="314.0" font-size="13" fill="#8E1B1B" text-anchor="start" font-weight="600">Production stack (pr-hub)</text>
+  <rect x="140.0" y="322.0" width="200.0" height="58.0" rx="8" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="240.0" y="347.0" font-size="12" fill="#283593" text-anchor="middle" font-weight="600">Flux applies</text>
+  <text x="240.0" y="363.0" font-size="10" fill="#455A64" text-anchor="middle">signed commits only</text>
+  <rect x="380.0" y="322.0" width="200.0" height="58.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="480.0" y="347.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">SSP: BuildRun</text>
+  <text x="480.0" y="363.0" font-size="10" fill="#455A64" text-anchor="middle">same commit SHA</text>
+  <rect x="620.0" y="322.0" width="200.0" height="58.0" rx="8" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="720.0" y="347.0" font-size="12" fill="#283593" text-anchor="middle" font-weight="600">pr-build</text>
+  <text x="720.0" y="363.0" font-size="10" fill="#455A64" text-anchor="middle">rebuild · sign · push</text>
+  <rect x="860.0" y="322.0" width="200.0" height="58.0" rx="8" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="960.0" y="347.0" font-size="12" fill="#8E1B1B" text-anchor="middle" font-weight="600">pr binding</text>
+  <text x="960.0" y="363.0" font-size="10" fill="#455A64" text-anchor="middle">Ready on pr clusters</text>
+  <path d="M960.0,260.0 L960.0,280.0 L240.0,280.0 L240.0,322.0" fill="none" stroke="#C62828" stroke-width="1.6" marker-end="url(#a_C62828)"/>
+  <path d="M340.0,351.0 L380.0,351.0" fill="none" stroke="#3949AB" stroke-width="1.6" marker-end="url(#a_3949AB)"/>
+  <path d="M580.0,351.0 L620.0,351.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <path d="M820.0,351.0 L860.0,351.0" fill="none" stroke="#3949AB" stroke-width="1.6" marker-end="url(#a_3949AB)"/>
+  <text x="580.0" y="410.0" font-size="11" fill="#455A64" text-anchor="middle" font-style="italic">The only thing that crosses from non-production to production is the approved commit in Git (SR-3).</text>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="300" viewBox="0 0 1160 300" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Graduation from alpha to beta to GA</title>
+  <defs><marker id="a_607D8B" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#607D8B"/></marker></defs>
+  <rect x="0" y="0" width="1160" height="300" fill="#FFFFFF"/>
+  <path d="M30.0,60.0 L1130.0,60.0" fill="none" stroke="#607D8B" stroke-width="3" marker-end="url(#a_607D8B)"/>
+  <circle cx="50" cy="60" r="12" fill="#2E7D32"/>
+  <rect x="20.0" y="90.0" width="360.0" height="190.0" rx="10" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="36.0" y="116.0" font-size="15" fill="#1B5E20" text-anchor="start" font-weight="600">Alpha · v1alpha1</text>
+  <text x="36.0" y="146.0" font-size="12" fill="#263238" text-anchor="start">• clusters from Git: local, AKS, VKS</text>
+  <text x="36.0" y="174.0" font-size="12" fill="#263238" text-anchor="start">• core kinds work end to end in np</text>
+  <text x="36.0" y="202.0" font-size="12" fill="#263238" text-anchor="start">• one application in production (pilot)</text>
+  <text x="36.0" y="230.0" font-size="12" fill="#263238" text-anchor="start">• Backstage plugins; SPIRE in both stacks</text>
+  <path d="M50.0,72.0 L50.0,90.0" fill="none" stroke="#2E7D32" stroke-width="1.5"/>
+  <circle cx="430" cy="60" r="12" fill="#2F6FB0"/>
+  <rect x="400.0" y="90.0" width="360.0" height="190.0" rx="10" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="416.0" y="116.0" font-size="15" fill="#1F4F82" text-anchor="start" font-weight="600">Beta · v1beta1</text>
+  <text x="416.0" y="146.0" font-size="12" fill="#263238" text-anchor="start">• endpoints, dependencies, resources</text>
+  <text x="416.0" y="174.0" font-size="12" fill="#263238" text-anchor="start">• release lines, observability, alerts</text>
+  <text x="416.0" y="202.0" font-size="12" fill="#263238" text-anchor="start">• OCM agents on SPIFFE (new OCM release)</text>
+  <text x="416.0" y="230.0" font-size="12" fill="#263238" text-anchor="start">• three teams in pr, one shared cluster</text>
+  <path d="M430.0,72.0 L430.0,90.0" fill="none" stroke="#2F6FB0" stroke-width="1.5"/>
+  <circle cx="810" cy="60" r="12" fill="#6B4FA8"/>
+  <rect x="780.0" y="90.0" width="360.0" height="190.0" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="796.0" y="116.0" font-size="15" fill="#4A3480" text-anchor="start" font-weight="600">GA · v1</text>
+  <text x="796.0" y="146.0" font-size="12" fill="#263238" text-anchor="start">• six months on beta without breaks</text>
+  <text x="796.0" y="174.0" font-size="12" fill="#263238" text-anchor="start">• scale targets met</text>
+  <text x="796.0" y="202.0" font-size="12" fill="#263238" text-anchor="start">• open questions resolved</text>
+  <text x="796.0" y="230.0" font-size="12" fill="#263238" text-anchor="start">• Operator and SRE runbooks</text>
+  <path d="M810.0,72.0 L810.0,90.0" fill="none" stroke="#6B4FA8" stroke-width="1.5"/>
+</svg>

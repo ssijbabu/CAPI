@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="620" viewBox="0 0 1040 620" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Sequence from a ReleaseBinding in Git to workloads running on each selected cluster, and status back</title>
+  <defs><marker id="a_3949AB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3949AB"/></marker><marker id="a_6B4FA8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B4FA8"/></marker><marker id="a_00838F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00838F"/></marker><marker id="a_2E7D32" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker></defs>
+  <rect x="0" y="0" width="1040" height="620" fill="#FFFFFF"/>
+  <rect x="35.0" y="20.0" width="190.0" height="50.0" rx="8" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="130.0" y="41.5" font-size="13" fill="#283593" text-anchor="middle" font-weight="600">Flux</text>
+  <text x="130.0" y="57.5" font-size="10" fill="#455A64" text-anchor="middle">np-hub</text>
+  <path d="M130.0,70.0 L130.0,590.0" fill="none" stroke="#3949AB" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <rect x="285.0" y="20.0" width="190.0" height="50.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="380.0" y="41.5" font-size="13" fill="#4A3480" text-anchor="middle" font-weight="600">SSP controllers</text>
+  <text x="380.0" y="57.5" font-size="10" fill="#455A64" text-anchor="middle">np-hub</text>
+  <path d="M380.0,70.0 L380.0,590.0" fill="none" stroke="#6B4FA8" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <rect x="545.0" y="20.0" width="190.0" height="50.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="640.0" y="41.5" font-size="13" fill="#00695C" text-anchor="middle" font-weight="600">OCM hub controllers</text>
+  <text x="640.0" y="57.5" font-size="10" fill="#455A64" text-anchor="middle">np-hub</text>
+  <path d="M640.0,70.0 L640.0,590.0" fill="none" stroke="#00838F" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <rect x="805.0" y="20.0" width="190.0" height="50.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="900.0" y="41.5" font-size="13" fill="#1B5E20" text-anchor="middle" font-weight="600">Work agent</text>
+  <text x="900.0" y="57.5" font-size="10" fill="#455A64" text-anchor="middle">each managed cluster</text>
+  <path d="M900.0,70.0 L900.0,590.0" fill="none" stroke="#2E7D32" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <path d="M130.0,100.0 L380.0,100.0" fill="none" stroke="#3949AB" stroke-width="1.6" marker-end="url(#a_3949AB)"/>
+  <text x="255.0" y="93.0" font-size="11" fill="#283593" text-anchor="middle">1  apply ReleaseBinding in app-checkout</text>
+  <path d="M380.0,134.0 L410.0,134.0 L410.0,150.0 L384.0,150.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <rect x="414.0" y="133" width="233.5" height="18" fill="#FFFFFF"/>
+  <text x="418.0" y="146.0" font-size="11" fill="#4A3480" text-anchor="start">2  admission: promotion path, release health</text>
+  <path d="M380.0,176.0 L410.0,176.0 L410.0,192.0 L384.0,192.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <rect x="414.0" y="175" width="178.3" height="18" fill="#FFFFFF"/>
+  <text x="418.0" y="188.0" font-size="11" fill="#4A3480" text-anchor="start">3  render type + traits + overrides</text>
+  <path d="M380.0,226.0 L640.0,226.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <text x="510.0" y="219.0" font-size="11" fill="#4A3480" text-anchor="middle">4  Placement + ManifestWorkReplicaSet</text>
+  <path d="M640.0,260.0 L670.0,260.0 L670.0,276.0 L644.0,276.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+  <rect x="674.0" y="259" width="202.3" height="18" fill="#FFFFFF"/>
+  <text x="678.0" y="272.0" font-size="11" fill="#00695C" text-anchor="start">5  PlacementDecision (env label, sets)</text>
+  <path d="M640.0,302.0 L670.0,302.0 L670.0,318.0 L644.0,318.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+  <rect x="674.0" y="301" width="209.5" height="18" fill="#FFFFFF"/>
+  <text x="678.0" y="314.0" font-size="11" fill="#00695C" text-anchor="start">6  ManifestWork per cluster namespace</text>
+  <path d="M900.0,352.0 L640.0,352.0" fill="none" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#a_2E7D32)"/>
+  <text x="770.0" y="345.0" font-size="11" fill="#1B5E20" text-anchor="middle">7  watch own cluster namespace (outbound)</text>
+  <path d="M900.0,386.0 L870.0,386.0 L870.0,402.0 L896.0,402.0" fill="none" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#a_2E7D32)"/>
+  <rect x="705.9" y="385" width="156.1" height="18" fill="#FFFFFF"/>
+  <text x="709.9" y="398.0" font-size="11" fill="#1B5E20" text-anchor="start">8  apply as ssp-app-checkout</text>
+  <path d="M900.0,436.0 L640.0,436.0" fill="none" stroke="#2E7D32" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a_2E7D32)"/>
+  <text x="770.0" y="429.0" font-size="11" fill="#1B5E20" text-anchor="middle">9  status + feedback</text>
+  <path d="M640.0,478.0 L380.0,478.0" fill="none" stroke="#00838F" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a_00838F)"/>
+  <text x="510.0" y="471.0" font-size="11" fill="#00695C" text-anchor="middle">10  replica set summary + feedback</text>
+  <path d="M380.0,512.0 L410.0,512.0 L410.0,528.0 L384.0,528.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <rect x="414.0" y="511" width="198.3" height="18" fill="#FFFFFF"/>
+  <text x="418.0" y="524.0" font-size="11" fill="#4A3480" text-anchor="start">11  ReleaseBinding.status per cluster</text>
+  <path d="M380.0,562.0 L130.0,562.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a_6B4FA8)"/>
+  <text x="255.0" y="555.0" font-size="11" fill="#4A3480" text-anchor="middle">12  Ready condition → Kustomization health</text>
+  <text x="520.0" y="608.0" font-size="11" fill="#455A64" text-anchor="middle" font-style="italic">Solid: desired state. Dashed: status. The work agent always initiates the connection to the hub.</text>
+</svg>

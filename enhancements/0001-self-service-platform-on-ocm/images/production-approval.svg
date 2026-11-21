@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="360" viewBox="0 0 1160 360" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Production approval is enforced in three places: the Git host, Flux signature verification and hub admission; change windows hold merged releases</title>
+  <defs><marker id="a_607D8B" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#607D8B"/></marker></defs>
+  <rect x="0" y="0" width="1160" height="360" fill="#FFFFFF"/>
+  <rect x="20.0" y="30.0" width="230.0" height="150.0" rx="10" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <text x="34.0" y="54.0" font-size="14" fill="#A33A00" text-anchor="start" font-weight="600">1  Git host</text>
+  <text x="34.0" y="74.0" font-size="11" fill="#455A64" text-anchor="start" font-weight="600">releases-pr main is protected</text>
+  <text x="34.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">• Operator review (CODEOWNERS)</text>
+  <text x="34.0" y="118.0" font-size="11" fill="#263238" text-anchor="start">• required status checks</text>
+  <text x="34.0" y="136.0" font-size="11" fill="#263238" text-anchor="start">• no direct push, no admin bypass</text>
+  <circle cx="228" cy="50" r="10" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.6"/>
+  <path d="M224.15,50 L227.3,53.5 L232.2,46.5" fill="none" stroke="#2E7D32" stroke-width="2.2"/>
+  <path d="M250.0,115.0 L290.0,115.0" fill="none" stroke="#607D8B" stroke-width="2" marker-end="url(#a_607D8B)"/>
+  <path d="M135.0,180.0 L135.0,250.0" fill="none" stroke="#C62828" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="135.0" cy="260" r="10" fill="#FFFFFF" stroke="#C62828" stroke-width="1.6"/>
+  <path d="M131.15,256.15 L138.85,263.85 M138.85,256.15 L131.15,263.85" stroke="#C62828" stroke-width="2.2"/>
+  <text x="135.0" y="290.0" font-size="11" fill="#8E1B1B" text-anchor="middle" font-weight="600">direct push to main</text>
+  <text x="135.0" y="306.0" font-size="10" fill="#8E1B1B" text-anchor="middle" font-style="italic">is stopped here</text>
+  <rect x="290.0" y="30.0" width="230.0" height="150.0" rx="10" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="304.0" y="54.0" font-size="14" fill="#283593" text-anchor="start" font-weight="600">2  Flux on pr-hub</text>
+  <text x="304.0" y="74.0" font-size="11" fill="#455A64" text-anchor="start" font-weight="600">GitRepository.spec.verify</text>
+  <text x="304.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">• applies only merge commits</text>
+  <text x="304.0" y="118.0" font-size="11" fill="#263238" text-anchor="start">• signed by the Git host</text>
+  <text x="304.0" y="136.0" font-size="11" fill="#263238" text-anchor="start">• anything else is not applied</text>
+  <circle cx="498" cy="50" r="10" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.6"/>
+  <path d="M494.15,50 L497.3,53.5 L502.2,46.5" fill="none" stroke="#2E7D32" stroke-width="2.2"/>
+  <path d="M520.0,115.0 L560.0,115.0" fill="none" stroke="#607D8B" stroke-width="2" marker-end="url(#a_607D8B)"/>
+  <path d="M405.0,180.0 L405.0,250.0" fill="none" stroke="#C62828" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="405.0" cy="260" r="10" fill="#FFFFFF" stroke="#C62828" stroke-width="1.6"/>
+  <path d="M401.15,256.15 L408.85,263.85 M408.85,256.15 L401.15,263.85" stroke="#C62828" stroke-width="2.2"/>
+  <text x="405.0" y="290.0" font-size="11" fill="#8E1B1B" text-anchor="middle" font-weight="600">commit pushed around protection</text>
+  <text x="405.0" y="306.0" font-size="10" fill="#8E1B1B" text-anchor="middle" font-style="italic">is stopped here</text>
+  <rect x="560.0" y="30.0" width="230.0" height="150.0" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="574.0" y="54.0" font-size="14" fill="#4A3480" text-anchor="start" font-weight="600">3  pr-hub admission</text>
+  <text x="574.0" y="74.0" font-size="11" fill="#455A64" text-anchor="start" font-weight="600">who may write app kinds</text>
+  <text x="574.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">• only Flux service accounts</text>
+  <text x="574.0" y="118.0" font-size="11" fill="#263238" text-anchor="start">• people are read-only</text>
+  <text x="574.0" y="136.0" font-size="11" fill="#263238" text-anchor="start">• Operators included</text>
+  <circle cx="768" cy="50" r="10" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.6"/>
+  <path d="M764.15,50 L767.3,53.5 L772.2,46.5" fill="none" stroke="#2E7D32" stroke-width="2.2"/>
+  <path d="M790.0,115.0 L830.0,115.0" fill="none" stroke="#607D8B" stroke-width="2" marker-end="url(#a_607D8B)"/>
+  <path d="M675.0,180.0 L675.0,250.0" fill="none" stroke="#C62828" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="675.0" cy="260" r="10" fill="#FFFFFF" stroke="#C62828" stroke-width="1.6"/>
+  <path d="M671.15,256.15 L678.85,263.85 M678.85,256.15 L671.15,263.85" stroke="#C62828" stroke-width="2.2"/>
+  <text x="675.0" y="290.0" font-size="11" fill="#8E1B1B" text-anchor="middle" font-weight="600">kubectl apply by a person</text>
+  <text x="675.0" y="306.0" font-size="10" fill="#8E1B1B" text-anchor="middle" font-style="italic">is stopped here</text>
+  <rect x="830.0" y="30.0" width="230.0" height="150.0" rx="10" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.5"/>
+  <text x="844.0" y="54.0" font-size="14" fill="#A84300" text-anchor="start" font-weight="600">4  Change window</text>
+  <text x="844.0" y="74.0" font-size="11" fill="#455A64" text-anchor="start" font-weight="600">on the pr Environment</text>
+  <text x="844.0" y="100.0" font-size="11" fill="#263238" text-anchor="start">• outside the window the</text>
+  <text x="844.0" y="118.0" font-size="11" fill="#263238" text-anchor="start">• binding stays Pending</text>
+  <text x="844.0" y="136.0" font-size="11" fill="#263238" text-anchor="start">• until the window opens</text>
+  <circle cx="1038" cy="50" r="10" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.6"/>
+  <path d="M1034.15,50 L1037.3,53.5 L1042.2,46.5" fill="none" stroke="#2E7D32" stroke-width="2.2"/>
+  <text x="580.0" y="342.0" font-size="11" fill="#455A64" text-anchor="middle" font-style="italic">Rollback is a revert pull request with the same approval; the previous release is unchanged in Git.</text>
+</svg>

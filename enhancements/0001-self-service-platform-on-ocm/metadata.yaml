@@ -1,0 +1,17 @@
+title: Self-Service Application Platform on Open Cluster Management
+authors:
+  - "@ssijbabu"
+reviewers:
+  - TBD
+approvers:
+  - TBD
+creation-date: 2026-11-21
+last-updated: 2026-11-21
+status: provisional
+see-also:
+  - "../../Proposal/Requirements.md"
+  - "../../Proposal/Self-Service-Kubernetes-Platform-Proposal.md"
+  - "../../Proposal/Reference-Deployment-Design.md"
+  - "../../Research/OpenChoreo-Use-Cases.md"
+replaces: []
+superseded-by: []

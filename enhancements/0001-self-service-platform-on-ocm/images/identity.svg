@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="560" viewBox="0 0 1160 560" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>SPIFFE identity: a SPIRE server per stack, agents as OCM add-ons, and SVIDs used for registration, cloud access, telemetry and signing; the two trust domains are not federated</title>
+  <defs><marker id="a_0078D4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0078D4"/></marker><marker id="a_AD1457" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#AD1457"/></marker><marker id="a_00838F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00838F"/></marker></defs>
+  <rect x="0" y="0" width="1160" height="560" fill="#FFFFFF"/>
+  <rect x="20.0" y="20.0" width="800.0" height="520.0" rx="14" fill="#FFFBFD" stroke="#AD1457" stroke-width="1.5"/>
+  <text x="36.0" y="46.0" font-size="14" fill="#880E4F" text-anchor="start" font-weight="600">Trust domain np.ssp.internal</text>
+  <rect x="40.0" y="64.0" width="480.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#00838F" stroke-width="1.5"/>
+  <text x="54.0" y="86.0" font-size="13" fill="#00695C" text-anchor="start" font-weight="600">np-hub</text>
+  <rect x="54.0" y="100.0" width="150.0" height="60.0" rx="8" fill="#FCE4EC" stroke="#AD1457" stroke-width="1.5"/>
+  <text x="129.0" y="126.0" font-size="12" fill="#880E4F" text-anchor="middle" font-weight="600">SPIRE server</text>
+  <text x="129.0" y="142.0" font-size="10" fill="#455A64" text-anchor="middle">issues SVIDs</text>
+  <rect x="54.0" y="166.0" width="150.0" height="56.0" rx="8" fill="#FCE4EC" stroke="#AD1457" stroke-width="1.5"/>
+  <text x="129.0" y="190.0" font-size="12" fill="#880E4F" text-anchor="middle" font-weight="600">OIDC discovery</text>
+  <text x="129.0" y="206.0" font-size="10" fill="#455A64" text-anchor="middle">JWT-SVID issuer</text>
+  <rect x="220.0" y="100.0" width="140.0" height="60.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="290.0" y="119.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">OCM hub</text>
+  <text x="290.0" y="135.0" font-size="10" fill="#455A64" text-anchor="middle">agent identity from</text>
+  <text x="290.0" y="149.0" font-size="10" fill="#455A64" text-anchor="middle">new OCM release</text>
+  <rect x="370.0" y="100.0" width="136.0" height="60.0" rx="8" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="438.0" y="126.0" font-size="12" fill="#283593" text-anchor="middle" font-weight="600">Flux · SSP</text>
+  <text x="438.0" y="142.0" font-size="10" fill="#455A64" text-anchor="middle">JWT-SVID</text>
+  <rect x="560.0" y="64.0" width="240.0" height="170.0" rx="10" fill="#FFFFFF" stroke="#0078D4" stroke-width="1.5"/>
+  <text x="574.0" y="86.0" font-size="13" fill="#005A9E" text-anchor="start" font-weight="600">Azure</text>
+  <rect x="574.0" y="100.0" width="210.0" height="52.0" rx="8" fill="#E5F1FB" stroke="#0078D4" stroke-width="1.5"/>
+  <text x="679.0" y="122.0" font-size="12" fill="#005A9E" text-anchor="middle" font-weight="600">Entra ID</text>
+  <text x="679.0" y="138.0" font-size="10" fill="#455A64" text-anchor="middle">federated credentials</text>
+  <rect x="574.0" y="166.0" width="100.0" height="56.0" rx="8" fill="#E5F1FB" stroke="#0078D4" stroke-width="1.5"/>
+  <text x="624.0" y="190.0" font-size="12" fill="#005A9E" text-anchor="middle" font-weight="600">Key Vault</text>
+  <text x="624.0" y="206.0" font-size="10" fill="#455A64" text-anchor="middle">no secret</text>
+  <rect x="684.0" y="166.0" width="100.0" height="56.0" rx="8" fill="#E5F1FB" stroke="#0078D4" stroke-width="1.5"/>
+  <text x="734.0" y="190.0" font-size="12" fill="#005A9E" text-anchor="middle" font-weight="600">ACR</text>
+  <text x="734.0" y="206.0" font-size="10" fill="#455A64" text-anchor="middle">pull · push</text>
+  <path d="M506.0,130.0 L574.0,126.0" fill="none" stroke="#0078D4" stroke-width="1.6" marker-end="url(#a_0078D4)"/>
+  <text x="541.0" y="150.0" font-size="11" fill="#005A9E" text-anchor="middle" font-style="italic">token</text>
+  <text x="541.0" y="164.0" font-size="11" fill="#005A9E" text-anchor="middle" font-style="italic">exchange</text>
+  <path d="M204.0,194.0 L240.0,194.0 L240.0,246.0 L680.0,246.0 L680.0,152.0" fill="none" stroke="#AD1457" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a_AD1457)"/>
+  <text x="460.0" y="262.0" font-size="10" fill="#880E4F" text-anchor="middle" font-style="italic">issuer trusted by Entra ID</text>
+  <path d="M679.0,152.0 L624.0,166.0" fill="none" stroke="#0078D4" stroke-width="1.2" marker-end="url(#a_0078D4)"/>
+  <path d="M679.0,152.0 L734.0,166.0" fill="none" stroke="#0078D4" stroke-width="1.2" marker-end="url(#a_0078D4)"/>
+  <rect x="40.0" y="290.0" width="480.0" height="230.0" rx="10" fill="#FFFFFF" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="54.0" y="312.0" font-size="13" fill="#1B5E20" text-anchor="start" font-weight="600">Managed cluster (AKS or VKS)</text>
+  <rect x="54.0" y="326.0" width="140.0" height="60.0" rx="8" fill="#FCE4EC" stroke="#AD1457" stroke-width="1.5"/>
+  <text x="124.0" y="352.0" font-size="12" fill="#880E4F" text-anchor="middle" font-weight="600">spire-agent</text>
+  <text x="124.0" y="368.0" font-size="10" fill="#455A64" text-anchor="middle">OCM add-on</text>
+  <rect x="210.0" y="326.0" width="140.0" height="60.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="280.0" y="352.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">klusterlet</text>
+  <text x="280.0" y="368.0" font-size="10" fill="#455A64" text-anchor="middle">X.509-SVID</text>
+  <rect x="366.0" y="326.0" width="140.0" height="60.0" rx="8" fill="#FFF8E1" stroke="#EF6C00" stroke-width="1.5"/>
+  <text x="436.0" y="352.0" font-size="12" fill="#A84300" text-anchor="middle" font-weight="600">telemetry</text>
+  <text x="436.0" y="368.0" font-size="10" fill="#455A64" text-anchor="middle">mTLS to observe</text>
+  <rect x="210.0" y="400.0" width="296.0" height="56.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="358.0" y="424.0" font-size="12" fill="#1B5E20" text-anchor="middle" font-weight="600">Application pods</text>
+  <text x="358.0" y="440.0" font-size="10" fill="#455A64" text-anchor="middle">workload identity → Entra → Key Vault (CSI)</text>
+  <text x="54.0" y="480.0" font-size="11" fill="#455A64" text-anchor="start" font-weight="600">Node attestation:</text>
+  <text x="54.0" y="498.0" font-size="11" fill="#263238" text-anchor="start">AKS · azure_imds (managed identity, no secret)</text>
+  <text x="54.0" y="514.0" font-size="11" fill="#8E1B1B" text-anchor="start">VKS · single-use join token, 10 minutes (OQ 2)</text>
+  <path d="M124.0,326.0 L124.0,234.0" fill="none" stroke="#AD1457" stroke-width="1.6" marker-end="url(#a_AD1457)"/>
+  <text x="130.0" y="282.0" font-size="11" fill="#880E4F" text-anchor="start" font-style="italic">attest, then SVIDs</text>
+  <path d="M280.0,326.0 L280.0,160.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+  <text x="286.0" y="282.0" font-size="11" fill="#00695C" text-anchor="start" font-style="italic">register + work</text>
+  <rect x="560.0" y="290.0" width="240.0" height="230.0" rx="10" fill="#FFFFFF" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="574.0" y="312.0" font-size="13" fill="#283593" text-anchor="start" font-weight="600">np-build</text>
+  <rect x="574.0" y="326.0" width="210.0" height="60.0" rx="8" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="679.0" y="352.0" font-size="12" fill="#283593" text-anchor="middle" font-weight="600">Build workflow</text>
+  <text x="679.0" y="368.0" font-size="10" fill="#455A64" text-anchor="middle">SVID per application</text>
+  <rect x="574.0" y="400.0" width="210.0" height="56.0" rx="8" fill="#FCE4EC" stroke="#AD1457" stroke-width="1.5"/>
+  <text x="679.0" y="424.0" font-size="12" fill="#880E4F" text-anchor="middle" font-weight="600">Keyless signature</text>
+  <text x="679.0" y="440.0" font-size="10" fill="#455A64" text-anchor="middle">verified on every cluster</text>
+  <path d="M734.0,326.0 L734.0,222.0" fill="none" stroke="#0078D4" stroke-width="1.6" marker-end="url(#a_0078D4)"/>
+  <text x="740.0" y="282.0" font-size="11" fill="#005A9E" text-anchor="start" font-style="italic">push</text>
+  <rect x="880.0" y="20.0" width="260.0" height="520.0" rx="14" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <text x="1010.0" y="46.0" font-size="13" fill="#8E1B1B" text-anchor="middle" font-weight="600">Trust domain pr.ssp.internal</text>
+  <text x="900.0" y="90.0" font-size="12" fill="#8E1B1B" text-anchor="start" font-weight="600">Same layout:</text>
+  <text x="900.0" y="112.0" font-size="11" fill="#263238" text-anchor="start">SPIRE server on pr-hub</text>
+  <text x="900.0" y="134.0" font-size="11" fill="#263238" text-anchor="start">agents on pr clusters</text>
+  <text x="900.0" y="156.0" font-size="11" fill="#263238" text-anchor="start">own Entra federation</text>
+  <text x="900.0" y="178.0" font-size="11" fill="#263238" text-anchor="start">own Key Vault and ACR</text>
+  <text x="900.0" y="200.0" font-size="11" fill="#263238" text-anchor="start"></text>
+  <text x="900.0" y="222.0" font-size="12" fill="#8E1B1B" text-anchor="start" font-weight="600">Not federated with np:</text>
+  <text x="900.0" y="244.0" font-size="11" fill="#263238" text-anchor="start">no SVID from one stack</text>
+  <text x="900.0" y="266.0" font-size="11" fill="#263238" text-anchor="start">is trusted by the other</text>
+  <circle cx="850" cy="280" r="12" fill="#FFFFFF" stroke="#C62828" stroke-width="1.6"/>
+  <path d="M845.05,275.05 L854.95,284.95 M854.95,275.05 L845.05,284.95" stroke="#C62828" stroke-width="2.2"/>
+  <path d="M850.0,30.0 L850.0,262.0" fill="none" stroke="#C62828" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <path d="M850.0,298.0 L850.0,530.0" fill="none" stroke="#C62828" stroke-width="1.5" stroke-dasharray="6 4"/>
+</svg>

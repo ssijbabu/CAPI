@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="620" viewBox="0 0 1220 620" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Cluster provisioning: a KubernetesCluster in Git becomes a Cluster API cluster, is imported into OCM, receives its add-ons and becomes Ready</title>
+  <defs><marker id="a_E65100" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E65100"/></marker><marker id="a_3949AB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3949AB"/></marker><marker id="a_6B4FA8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B4FA8"/></marker><marker id="a_2F6FB0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2F6FB0"/></marker><marker id="a_00838F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00838F"/></marker><marker id="a_2E7D32" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker></defs>
+  <rect x="0" y="0" width="1220" height="620" fill="#FFFFFF"/>
+  <rect x="200.0" y="30.0" width="810.0" height="430.0" rx="14" fill="#FAFDFD" stroke="#00838F" stroke-width="1.5"/>
+  <text x="216.0" y="54.0" font-size="13" fill="#00695C" text-anchor="start" font-weight="600">np-hub (created once, outside SSP)</text>
+  <rect x="20.0" y="74.0" width="160.0" height="84.0" rx="8" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <text x="100.0" y="105.0" font-size="12" fill="#A33A00" text-anchor="middle" font-weight="600">fleet-np</text>
+  <text x="100.0" y="121.0" font-size="10" fill="#455A64" text-anchor="middle">clusters/payments-dv.yaml</text>
+  <text x="100.0" y="135.0" font-size="10" fill="#455A64" text-anchor="middle">pull request, reviewed</text>
+  <rect x="220.0" y="74.0" width="120.0" height="84.0" rx="8" fill="#E8EAF6" stroke="#3949AB" stroke-width="1.5"/>
+  <text x="280.0" y="105.0" font-size="12" fill="#283593" text-anchor="middle" font-weight="600">Flux</text>
+  <text x="280.0" y="121.0" font-size="10" fill="#455A64" text-anchor="middle">applies to</text>
+  <text x="280.0" y="135.0" font-size="10" fill="#455A64" text-anchor="middle">the hub</text>
+  <rect x="360.0" y="74.0" width="200.0" height="84.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="460.0" y="98.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">KubernetesCluster</text>
+  <text x="460.0" y="114.0" font-size="10" fill="#455A64" text-anchor="middle">type · team · env</text>
+  <text x="460.0" y="128.0" font-size="10" fill="#455A64" text-anchor="middle">size · version</text>
+  <text x="460.0" y="142.0" font-size="10" fill="#455A64" text-anchor="middle">admission checks</text>
+  <rect x="580.0" y="74.0" width="200.0" height="84.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="680.0" y="105.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">SSP cluster controller</text>
+  <text x="680.0" y="121.0" font-size="10" fill="#455A64" text-anchor="middle">Java Operator SDK</text>
+  <text x="680.0" y="135.0" font-size="10" fill="#455A64" text-anchor="middle">renders the topology</text>
+  <rect x="800.0" y="74.0" width="190.0" height="84.0" rx="8" fill="#EEF4FB" stroke="#2F6FB0" stroke-width="1.5"/>
+  <text x="895.0" y="105.0" font-size="12" fill="#1F4F82" text-anchor="middle" font-weight="600">Cluster API Cluster</text>
+  <text x="895.0" y="121.0" font-size="10" fill="#455A64" text-anchor="middle">ns payments-dv</text>
+  <text x="895.0" y="135.0" font-size="10" fill="#455A64" text-anchor="middle">ClusterClass topology</text>
+  <path d="M180.0,116.0 L220.0,116.0" fill="none" stroke="#E65100" stroke-width="1.6" marker-end="url(#a_E65100)"/>
+  <path d="M340.0,116.0 L360.0,116.0" fill="none" stroke="#3949AB" stroke-width="1.6" marker-end="url(#a_3949AB)"/>
+  <path d="M560.0,116.0 L580.0,116.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <path d="M780.0,116.0 L800.0,116.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <text x="1030.0" y="52.0" font-size="11" fill="#1F4F82" text-anchor="start" font-weight="600">PROVIDER</text>
+  <rect x="1030.0" y="64.0" width="170.0" height="50.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="1115.0" y="85.0" font-size="12" fill="#1B5E20" text-anchor="middle" font-weight="600">local · CAPD</text>
+  <text x="1115.0" y="101.0" font-size="10" fill="#455A64" text-anchor="middle">Docker containers</text>
+  <path d="M990.0,116.0 L1010.0,116.0 L1010.0,89.0 L1030.0,89.0" fill="none" stroke="#2F6FB0" stroke-width="1.2" marker-end="url(#a_2F6FB0)"/>
+  <rect x="1030.0" y="124.0" width="170.0" height="50.0" rx="8" fill="#E5F1FB" stroke="#0078D4" stroke-width="1.5"/>
+  <text x="1115.0" y="145.0" font-size="12" fill="#005A9E" text-anchor="middle" font-weight="600">aks · CAPZ</text>
+  <text x="1115.0" y="161.0" font-size="10" fill="#455A64" text-anchor="middle">AKS managed cluster</text>
+  <path d="M990.0,116.0 L1010.0,116.0 L1010.0,149.0 L1030.0,149.0" fill="none" stroke="#2F6FB0" stroke-width="1.2" marker-end="url(#a_2F6FB0)"/>
+  <rect x="1030.0" y="184.0" width="170.0" height="50.0" rx="8" fill="#F5F7F8" stroke="#607D8B" stroke-width="1.5"/>
+  <text x="1115.0" y="205.0" font-size="12" fill="#37474F" text-anchor="middle" font-weight="600">vks · Supervisor</text>
+  <text x="1115.0" y="221.0" font-size="10" fill="#455A64" text-anchor="middle">VKS in a vSphere Namespace</text>
+  <path d="M990.0,116.0 L1010.0,116.0 L1010.0,209.0 L1030.0,209.0" fill="none" stroke="#2F6FB0" stroke-width="1.2" marker-end="url(#a_2F6FB0)"/>
+  <text x="1115.0" y="252.0" font-size="10" fill="#1F4F82" text-anchor="middle" font-style="italic">local first; AKS and VKS later</text>
+  <rect x="580.0" y="230.0" width="200.0" height="84.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="680.0" y="254.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">ManagedCluster</text>
+  <text x="680.0" y="270.0" font-size="10" fill="#455A64" text-anchor="middle">payments-dv</text>
+  <text x="680.0" y="284.0" font-size="10" fill="#455A64" text-anchor="middle">labels: team, env, stack</text>
+  <text x="680.0" y="298.0" font-size="10" fill="#455A64" text-anchor="middle">cluster set: team-payments</text>
+  <rect x="800.0" y="230.0" width="190.0" height="84.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="895.0" y="254.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">OCM ClusterImporter</text>
+  <text x="895.0" y="270.0" font-size="10" fill="#455A64" text-anchor="middle">finds Cluster API cluster</text>
+  <text x="895.0" y="284.0" font-size="10" fill="#455A64" text-anchor="middle">reads its kubeconfig</text>
+  <text x="895.0" y="298.0" font-size="10" fill="#455A64" text-anchor="middle">deploys the klusterlet</text>
+  <rect x="360.0" y="230.0" width="200.0" height="84.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="460.0" y="254.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">KubernetesCluster status</text>
+  <text x="460.0" y="270.0" font-size="10" fill="#455A64" text-anchor="middle">Pending → Provisioning</text>
+  <text x="460.0" y="284.0" font-size="10" fill="#455A64" text-anchor="middle">→ Registering → Ready</text>
+  <text x="460.0" y="298.0" font-size="10" fill="#455A64" text-anchor="middle">version · nodes · add-ons</text>
+  <path d="M680.0,158.0 L680.0,230.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" marker-end="url(#a_6B4FA8)"/>
+  <text x="686.0" y="200.0" font-size="11" fill="#4A3480" text-anchor="start" font-style="italic">creates</text>
+  <path d="M895.0,158.0 L895.0,230.0" fill="none" stroke="#2F6FB0" stroke-width="1.6" marker-end="url(#a_2F6FB0)"/>
+  <text x="901.0" y="200.0" font-size="11" fill="#1F4F82" text-anchor="start" font-style="italic">watches</text>
+  <path d="M580.0,272.0 L560.0,272.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+  <rect x="1030.0" y="290.0" width="170.0" height="110.0" rx="8" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <text x="1115.0" y="320.0" font-size="12" fill="#1B5E20" text-anchor="middle" font-weight="600">payments-dv</text>
+  <text x="1115.0" y="336.0" font-size="10" fill="#455A64" text-anchor="middle">klusterlet</text>
+  <text x="1115.0" y="350.0" font-size="10" fill="#455A64" text-anchor="middle">spire-agent · telemetry</text>
+  <text x="1115.0" y="364.0" font-size="10" fill="#455A64" text-anchor="middle">policy · gateway</text>
+  <text x="1115.0" y="378.0" font-size="10" fill="#455A64" text-anchor="middle">(new cluster)</text>
+  <path d="M990.0,272.0 L1010.0,272.0 L1010.0,320.0 L1030.0,320.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+  <text x="1012.0" y="312.0" font-size="11" fill="#00695C" text-anchor="start" font-style="italic">klusterlet</text>
+  <path d="M1030.0,380.0 L720.0,380.0 L720.0,314.0" fill="none" stroke="#2E7D32" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a_2E7D32)"/>
+  <text x="870.0" y="396.0" font-size="10" fill="#1B5E20" text-anchor="middle" font-style="italic">joins and reports (outbound)</text>
+  <rect x="360.0" y="350.0" width="200.0" height="84.0" rx="8" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <text x="460.0" y="381.0" font-size="12" fill="#00695C" text-anchor="middle" font-weight="600">Add-on Placements</text>
+  <text x="460.0" y="397.0" font-size="10" fill="#455A64" text-anchor="middle">every SSP cluster</text>
+  <text x="460.0" y="411.0" font-size="10" fill="#455A64" text-anchor="middle">add-ons from the type</text>
+  <path d="M560.0,412.0 L1015.0,412.0 L1015.0,370.0 L1030.0,370.0" fill="none" stroke="#00838F" stroke-width="1.2" marker-end="url(#a_00838F)"/>
+  <path d="M460.0,350.0 L460.0,314.0" fill="none" stroke="#00838F" stroke-width="1.6" marker-end="url(#a_00838F)"/>
+  <text x="466.0" y="338.0" font-size="11" fill="#00695C" text-anchor="start" font-style="italic">health</text>
+  <text x="610.0" y="604.0" font-size="11" fill="#455A64" text-anchor="middle" font-style="italic">VKS clusters are created on the Supervisor, which OCM&#x27;s importer does not watch, so SSP applies OCM&#x27;s import manifests once itself.</text>
+  <rect x="20.0" y="230.0" width="160.0" height="84.0" rx="8" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <text x="100.0" y="254.0" font-size="12" fill="#4A3480" text-anchor="middle" font-weight="600">ClusterType</text>
+  <text x="100.0" y="270.0" font-size="10" fill="#455A64" text-anchor="middle">local-small · aks-standard</text>
+  <text x="100.0" y="284.0" font-size="10" fill="#455A64" text-anchor="middle">vks-medium</text>
+  <text x="100.0" y="298.0" font-size="10" fill="#455A64" text-anchor="middle">from platform repo</text>
+  <path d="M180.0,272.0 L200.0,272.0 L200.0,180.0 L460.0,180.0 L460.0,158.0" fill="none" stroke="#6B4FA8" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#a_6B4FA8)"/>
+  <text x="330.0" y="194.0" font-size="10" fill="#4A3480" text-anchor="middle" font-style="italic">validates against</text>
+  <text x="20.0" y="494.0" font-size="11" fill="#37474F" text-anchor="start" font-weight="600">DAY 2 (SAME FILE IN GIT)</text>
+  <rect x="20.0" y="506.0" width="220.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="130.0" y="534.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Scale</text>
+  <text x="130.0" y="550.0" font-size="10" fill="#455A64" text-anchor="middle">change size → replica counts</text>
+  <rect x="252.0" y="506.0" width="420.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="462.0" y="534.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Upgrade</text>
+  <text x="462.0" y="550.0" font-size="10" fill="#455A64" text-anchor="middle">change version → Cluster API rolls nodes; pr needs Operator approval</text>
+  <rect x="684.0" y="506.0" width="520.0" height="64.0" rx="8" fill="#FFFFFF" stroke="#90A4AE" stroke-width="1.5"/>
+  <text x="944.0" y="534.0" font-size="12" fill="#263238" text-anchor="middle" font-weight="600">Delete</text>
+  <text x="944.0" y="550.0" font-size="10" fill="#455A64" text-anchor="middle">remove the file → refused while apps are placed there; then ManagedCluster, Cluster API Cluster, namespace</text>
+</svg>

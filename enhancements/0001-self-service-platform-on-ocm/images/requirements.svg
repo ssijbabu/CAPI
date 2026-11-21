@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="350" viewBox="0 0 1120 350" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>How SSP meets each requirement SR-1 to SR-9</title>
+  <defs></defs>
+  <rect x="0" y="0" width="1120" height="350" fill="#FFFFFF"/>
+  <rect x="20.0" y="20.0" width="352.0" height="96.0" rx="10" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <rect x="34.0" y="34.0" width="38.6" height="17" rx="4" fill="#2E7D32"/>
+  <text x="53.3" y="46.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-1</text>
+  <text x="90.0" y="47.0" font-size="13" fill="#1B5E20" text-anchor="start" font-weight="600">Clusters per team per environment</text>
+  <path d="M34.0,66.0 L358.0,66.0" fill="none" stroke="#2E7D32" stroke-width="1"/>
+  <text x="34.0" y="84.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="34.0" y="101.0" font-size="11" fill="#263238" text-anchor="start">KubernetesCluster per team and env, provisioned</text>
+  <rect x="384.0" y="20.0" width="352.0" height="96.0" rx="10" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <rect x="398.0" y="34.0" width="38.6" height="17" rx="4" fill="#C62828"/>
+  <text x="417.3" y="46.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-2</text>
+  <text x="454.0" y="47.0" font-size="13" fill="#8E1B1B" text-anchor="start" font-weight="600">Isolated pr with its own control plane</text>
+  <path d="M398.0,66.0 L722.0,66.0" fill="none" stroke="#C62828" stroke-width="1"/>
+  <text x="398.0" y="84.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="398.0" y="101.0" font-size="11" fill="#263238" text-anchor="start">second hub, build, observe, SPIRE, registry</text>
+  <rect x="748.0" y="20.0" width="352.0" height="96.0" rx="10" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+  <rect x="762.0" y="34.0" width="38.6" height="17" rx="4" fill="#E65100"/>
+  <text x="781.3" y="46.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-3</text>
+  <text x="818.0" y="47.0" font-size="13" fill="#A33A00" text-anchor="start" font-weight="600">Git is the only link</text>
+  <path d="M762.0,66.0 L1086.0,66.0" fill="none" stroke="#E65100" stroke-width="1"/>
+  <text x="762.0" y="84.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="762.0" y="101.0" font-size="11" fill="#263238" text-anchor="start">Flux pulls; pr reads only its repos; rebuild</text>
+  <rect x="20.0" y="128.0" width="352.0" height="96.0" rx="10" fill="#FCE4EC" stroke="#AD1457" stroke-width="1.5"/>
+  <rect x="34.0" y="142.0" width="38.6" height="17" rx="4" fill="#AD1457"/>
+  <text x="53.3" y="154.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-4</text>
+  <text x="90.0" y="155.0" font-size="13" fill="#880E4F" text-anchor="start" font-weight="600">SPIFFE for every component</text>
+  <path d="M34.0,174.0 L358.0,174.0" fill="none" stroke="#AD1457" stroke-width="1"/>
+  <text x="34.0" y="192.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="34.0" y="209.0" font-size="11" fill="#263238" text-anchor="start">SPIRE per stack, agent add-on everywhere</text>
+  <rect x="384.0" y="128.0" width="352.0" height="96.0" rx="10" fill="#FCE4EC" stroke="#AD1457" stroke-width="1.5"/>
+  <rect x="398.0" y="142.0" width="38.6" height="17" rx="4" fill="#AD1457"/>
+  <text x="417.3" y="154.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-5</text>
+  <text x="454.0" y="155.0" font-size="13" fill="#880E4F" text-anchor="start" font-weight="600">No stored secrets or long-lived certs</text>
+  <path d="M398.0,174.0 L722.0,174.0" fill="none" stroke="#AD1457" stroke-width="1"/>
+  <text x="398.0" y="192.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="398.0" y="209.0" font-size="11" fill="#263238" text-anchor="start">short SVIDs, federation, CSI, passwordless</text>
+  <rect x="748.0" y="128.0" width="352.0" height="96.0" rx="10" fill="#E0F2F1" stroke="#00838F" stroke-width="1.5"/>
+  <rect x="762.0" y="142.0" width="38.6" height="17" rx="4" fill="#00838F"/>
+  <text x="781.3" y="154.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-6</text>
+  <text x="818.0" y="155.0" font-size="13" fill="#00695C" text-anchor="start" font-weight="600">OCM architecture</text>
+  <path d="M762.0,174.0 L1086.0,174.0" fill="none" stroke="#00838F" stroke-width="1"/>
+  <text x="762.0" y="192.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="762.0" y="209.0" font-size="11" fill="#263238" text-anchor="start">hub, one namespace per cluster, ManifestWork</text>
+  <rect x="20.0" y="236.0" width="352.0" height="96.0" rx="10" fill="#F3F0FA" stroke="#6B4FA8" stroke-width="1.5"/>
+  <rect x="34.0" y="250.0" width="38.6" height="17" rx="4" fill="#6B4FA8"/>
+  <text x="53.3" y="262.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-7</text>
+  <text x="90.0" y="263.0" font-size="13" fill="#4A3480" text-anchor="start" font-weight="600">One control plane namespace per app</text>
+  <path d="M34.0,282.0 L358.0,282.0" fill="none" stroke="#6B4FA8" stroke-width="1"/>
+  <text x="34.0" y="300.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="34.0" y="317.0" font-size="11" fill="#263238" text-anchor="start">app-&lt;name&gt; on the hub, own MWRS</text>
+  <rect x="384.0" y="236.0" width="352.0" height="96.0" rx="10" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>
+  <rect x="398.0" y="250.0" width="38.6" height="17" rx="4" fill="#2E7D32"/>
+  <text x="417.3" y="262.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-8</text>
+  <text x="454.0" y="263.0" font-size="13" fill="#1B5E20" text-anchor="start" font-weight="600">Teams can share a cluster</text>
+  <path d="M398.0,282.0 L722.0,282.0" fill="none" stroke="#2E7D32" stroke-width="1"/>
+  <text x="398.0" y="300.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="398.0" y="317.0" font-size="11" fill="#263238" text-anchor="start">shared-&lt;env&gt; sets, per-app executor and policy</text>
+  <rect x="748.0" y="236.0" width="352.0" height="96.0" rx="10" fill="#FDECEA" stroke="#C62828" stroke-width="1.5"/>
+  <rect x="762.0" y="250.0" width="38.6" height="17" rx="4" fill="#C62828"/>
+  <text x="781.3" y="262.5" font-size="11" fill="#FFFFFF" text-anchor="middle" font-weight="600">SR-9</text>
+  <text x="818.0" y="263.0" font-size="13" fill="#8E1B1B" text-anchor="start" font-weight="600">Operator approves production</text>
+  <path d="M762.0,282.0 L1086.0,282.0" fill="none" stroke="#C62828" stroke-width="1"/>
+  <text x="762.0" y="300.0" font-size="9" fill="#455A64" text-anchor="start" font-weight="600">HOW</text>
+  <text x="762.0" y="317.0" font-size="11" fill="#263238" text-anchor="start">CODEOWNERS, signed merges, Flux-only writes</text>
+</svg>
