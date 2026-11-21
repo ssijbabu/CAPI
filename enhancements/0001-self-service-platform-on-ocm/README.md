@@ -786,9 +786,9 @@ How each group of OpenChoreo use cases is provided by SSP, and when.
 5. **Production rebuild.** Is rebuilding from the commit in production required, or may production pull a signed image from a production registry that a separate, approved copy job fills?
 6. **Platform changes in production.** Does SR-9 cover `fleet-pr` and `platform` tag changes as well as application releases? This design assumes it does.
 7. **Shared clusters in production.** Are shared clusters allowed in `pr`, or only in `dv` and `te`?
-8. **API group name.** `ssp.io` is a placeholder.
-9. **Cluster API kubeconfig Secrets (SR-5).** Cluster API stores an admin kubeconfig Secret per cluster on the hub, and OCM's importer reads it. Is that acceptable with tight access and short-lived certificates, or must the admin credential be removed after import?
-10. **Who approves cluster requests in non-production?** Platform engineer review on every `fleet-np` request, or automatic merge within limits (types, sizes, count per team)?
+8. **API group name.** `ssp.io` is a placeholder. *Decided 2026-11-21: keep `ssp.io`.*
+9. **Cluster API kubeconfig Secrets (SR-5).** Cluster API stores an admin kubeconfig Secret per cluster on the hub, and OCM's importer reads it. Is that acceptable with tight access and short-lived certificates, or must the admin credential be removed after import? *Decided 2026-11-21: keep the Secret on the hub; OCM's importer may read only that Secret, through a Role per cluster.*
+10. **Who approves cluster requests in non-production?** Platform engineer review on every `fleet-np` request, or automatic merge within limits (types, sizes, count per team)? *Decided 2026-11-21: a platform engineer approves every request; no automatic merge.*
 
 ## Infrastructure Needed
 

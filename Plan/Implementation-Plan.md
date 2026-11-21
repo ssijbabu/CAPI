@@ -84,9 +84,9 @@ The KEP's open questions, with the day each must be answered so that the plan do
 
 | Open question | Needed by | Blocks |
 |---|---|---|
-| OQ 8 · API group name | Day 2 · Tue 24 Nov 2026 | The first CRDs (cluster kinds) |
-| OQ 10 · Who approves cluster requests in non-production | Day 9 · Thu 3 Dec 2026 | `fleet-np` protection for `clusters/` |
-| OQ 9 · Cluster API kubeconfig Secrets and SR-5 | Day 11 · Mon 7 Dec 2026 | Cluster registration (week 3) |
+| OQ 8 · API group name (decided 21 Nov 2026: keep `ssp.io`) | Day 2 · Tue 24 Nov 2026 | The first CRDs (cluster kinds) |
+| OQ 10 · Who approves cluster requests in non-production (decided 21 Nov 2026: a platform engineer, every request) | Day 9 · Thu 3 Dec 2026 | `fleet-np` protection for `clusters/` |
+| OQ 9 · Cluster API kubeconfig Secrets and SR-5 (decided 21 Nov 2026: keep the Secret, importer reads only it) | Day 11 · Mon 7 Dec 2026 | Cluster registration (week 3) |
 | OQ 3 · Template engine in Java: is cel-java enough for OpenChoreo's syntax | Day 22 · Tue 22 Dec 2026 | Week 5 onwards |
 | OQ 5 · Production rebuild or approved copy | Day 50 · Tue 2 Feb 2027 | Production stack (week 12) |
 | OQ 1 · Git host authentication without stored secrets | Day 51 · Wed 3 Feb 2027 | Flux in shared environments (week 14) |
