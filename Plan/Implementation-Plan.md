@@ -89,10 +89,10 @@ The KEP's open questions, with the day each must be answered so that the plan do
 | OQ 9 · Cluster API kubeconfig Secrets and SR-5 (decided 21 Nov 2026: keep the Secret, importer reads only it) | Day 11 · Mon 7 Dec 2026 | Cluster registration (week 3) |
 | OQ 3 · Template engine in Java: is cel-java enough for OpenChoreo's syntax (decided 21 Nov 2026: yes, cel-java) | Day 22 · Tue 22 Dec 2026 | Week 5 onwards |
 | OQ 5 · Production rebuild or approved copy | Day 50 · Tue 2 Feb 2027 | Production stack (week 12) |
-| OQ 1 · Git host authentication without stored secrets | Day 51 · Wed 3 Feb 2027 | Flux in shared environments (week 14) |
-| OQ 6 · SR-9 scope for platform changes | Day 53 · Fri 5 Feb 2027 | `fleet-pr` protection (week 12) |
-| OQ 2 · VKS bootstrap token | Day 55 · Tue 9 Feb 2027 | VKS provider (week 13) |
-| OQ 4 · Image pulls on VKS | Day 55 · Tue 9 Feb 2027 | VKS provider (week 13) |
+| OQ 1 · Git host authentication without stored secrets (decided 22 Nov 2026: Entra-federated Git host; GitHub App key in Key Vault only if GitHub is required) | Day 51 · Wed 3 Feb 2027 | Flux in shared environments (week 14) |
+| OQ 6 · SR-9 scope for platform changes (decided 22 Nov 2026: SR-9 covers `fleet-pr` and `platform` tag changes) | Day 53 · Fri 5 Feb 2027 | `fleet-pr` protection (week 12) |
+| OQ 2 · VKS bootstrap token (decided 22 Nov 2026: no join token; clusters attest with their OCM add-on certificate) | Day 55 · Tue 9 Feb 2027 | VKS provider (week 13) |
+| OQ 4 · Image pulls on VKS (decided 22 Nov 2026: kubelet service-account-token credential provider with Entra federation) | Day 55 · Tue 9 Feb 2027 | VKS provider (week 13) |
 | OQ 7 · Shared clusters in production | Day 116 · Wed 5 May 2027 | Week 24 onboarding |
 
 ## Daily Routine
